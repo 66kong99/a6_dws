@@ -1,0 +1,34 @@
+# For Visual Studio
+# Files
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.vs
+*.zip
+*.sln
+*.db
+*.VC.db
+*.exe
+*.ilk
+*.pdb
+*.cd
+
+# Folders
+.vs/
+.vscode/
+**/Debug/
+Debug/
+
+# Gradle ignore
+.gradle/
+.idea/
+build/
+gradle/
+build.gradle
+gradlew
+gradlew.bat
+settings.gradle
+#a6_dws/
+
+# a6_dws가 또 있는데, 일단은 커밋 허용시켜 놓았습니다
+# 커밋 비허용하려면 위에있는 주석 지우면 됩니다
