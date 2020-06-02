@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CalculatorTest" tests="4" skipped="0" failures="1" errors="0" timestamp="2020-05-28T02:31:48" hostname="DESKTOP-SA5D7VJ" time="0.01">
+<testsuite name="CalculatorTest" tests="4" skipped="0" failures="1" errors="0" timestamp="2020-06-02T00:57:37" hostname="DESKTOP-SA5D7VJ" time="0.011">
   <properties/>
-  <testcase name="add()" classname="CalculatorTest" time="0.005"/>
+  <testcase name="add()" classname="CalculatorTest" time="0.006"/>
   <testcase name="div()" classname="CalculatorTest" time="0.0"/>
   <testcase name="mul()" classname="CalculatorTest" time="0.003">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;21&gt; but was: &lt;42&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;21&gt; but was: &lt;42&gt;
@@ -68,7 +68,7 @@
 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
 	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:182)
 	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:164)
-	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:412)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:413)
 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
 	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:48)
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
@@ -77,7 +77,7 @@
 	at java.lang.Thread.run(Thread.java:748)
 </failure>
   </testcase>
-  <testcase name="sub()" classname="CalculatorTest" time="0.001"/>
+  <testcase name="sub()" classname="CalculatorTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
