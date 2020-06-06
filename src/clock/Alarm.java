@@ -1,61 +1,39 @@
+package clock;
 
 import java.util.*;
 
-/**
- * 
- */
-public class Alarm {
+public class Alarm extends Mode{
 
-    /**
-     * Default constructor
-     */
     public Alarm() {
     }
 
-    /**
-     * 
-     */
     public char alarmIndex;
 
-    /**
-     * 
-     */
-    public alarm Alarm[];
 
+    public Alarm Alarm[];
+    public void requestAlarmInfo(char alarmIndex) {
 
-
-
-    /**
-     * @param char alarmIndex 
-     * @return
-     */
-    public void requestAlarmInfo(void char alarmIndex) {
-        // TODO implement here
-        return null;
     }
 
-    /**
-     * @return
-     */
     public void increaseAlarmValue() {
-        // TODO implement here
-        return null;
+
     }
 
-    /**
-     * @return
-     */
+
     public void changeAlarmIndex() {
-        // TODO implement here
-        return null;
-    }
 
-    /**
-     * @return
-     */
+    }
     public void changeAlarmToggle() {
-        // TODO implement here
-        return null;
+
     }
 
+    public void QPressed() {
+
+    }
+    public void WPressed() {
+
+    }
+    public void SPressed() {
+
+    }
 }

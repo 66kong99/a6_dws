@@ -1,257 +1,57 @@
+package clock;
 
-import java.util.*;
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-/**
- * 
- */
-public class WatchSystem {
 
-    /**
-     * Default constructor
-     */
+public class WatchSystem extends JPanel implements KeyListener, Runnable {
+    private ModeManager Watch;
+
+    private long KeyPressedTime;
+    private long KeyReleasedTime;
+    private long delay = 1000;
+
     public WatchSystem() {
+        KeyPressedTime = 0;
+        KeyReleasedTime = 0;
+        Watch = new ModeManager();
     }
 
-    /**
-     * 
-     */
-    public bool button[];
+    // Q(81) W(87)
+    // A(65) S(83)
+    // Longpress == Q, W, S Only
 
-    /**
-     * 
-     */
-    public char* curModePointer;
-
-    /**
-     * 
-     */
-    public Timer timeoutTimer;
-
-
-
-
-
-
-
-
-    /**
-     * 
-     */
-    public Buzzer 1;
-
-    /**
-     * 특정 모드 화면을 display함
-     * @param bool[] button 
-     * @return
-     */
-    public char enterMode(void bool[] button) {
-        // TODO implement here
-        return "0";
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // 안씀
     }
 
-    /**
-     * @param bool[] button 
-     * @param char curMode 
-     * @return
-     */
-    public char enterSetTime(void bool[] button, void char curMode) {
-        // TODO implement here
-        return "0";
+    public void keyPressed(KeyEvent e){
+        KeyPressedTime = e.getWhen();
     }
 
-    /**
-     * @param bool[] button 
-     * @param char curMode 
-     * @return
-     */
-    public char enterSetTimer(void bool[] button, void char curMode) {
-        // TODO implement here
-        return "0";
+    public void keyReleased(KeyEvent e){
+        int keycode = e.getKeyCode();
+        KeyReleasedTime = e.getWhen();
+        boolean Longpress = (KeyPressedTime - KeyReleasedTime) != 0;
+        if (keycode == KeyEvent.VK_Q)
+            Watch.getCurMode().QPressed(Longpress);
+        else if (keycode == KeyEvent.VK_A)
+            this.APressed();
+        else if (keycode == KeyEvent.VK_W)
+            Watch.getCurMode().WPressed(Longpress);
+        else if (keycode == KeyEvent.VK_S)
+            Watch.getCurMode().SPressed(Longpress);
     }
 
-    /**
-     * @param bool[] button 
-     * @param char curMode 
-     * @return
-     */
-    public char enterSetAlarm(void bool[] button, void char curMode) {
-        // TODO implement here
-        return "0";
+    private void APressed(){
+        Watch.changeToMode((char)(Watch.getIntCurMode() + 1));
+        // 이후 curMode가 실행되어야함
     }
 
-    /**
-     * @param char curMode 
-     * @return
-     */
-    public void increaseUnit(void char curMode) {
-        // TODO implement here
-        return null;
-    }
+    @Override
+    public void run() {
 
-    /**
-     * @param char curMode 
-     * @return
-     */
-    public void changeUnit(void char curMode) {
-        // TODO implement here
-        return null;
     }
-
-    /**
-     * @param bool[] button 
-     * @param char curMode 
-     * @return
-     */
-    public void endSetTime(void bool[] button, void char curMode) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param bool[] button 
-     * @param char curMode 
-     * @return
-     */
-    public void endSetTimer(void bool[] button, void char curMode) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param bool[] button 
-     * @param char curMode 
-     * @return
-     */
-    public void endSetAlarm(void bool[] button, void char curMode) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param bool[] button 
-     * @return
-     */
-    public char enterSwapMode(void bool[] button) {
-        // TODO implement here
-        return "0";
-    }
-
-    /**
-     * @param bool[] button 
-     * @return
-     */
-    public void activateModeButton(void bool[] button) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param bool[] button 
-     * @return
-     */
-    public void cancelSwapMode(void bool[] button) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param bool[] button 
-     * @return
-     */
-    public void stopBeepButton(void bool[] button) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param bool[] button 
-     * @return
-     */
-    public void initTimeoutTimer(void bool[] button) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param char *curModePointer 
-     * @return
-     */
-    public void reset(void char *curModePointer) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param char * curModePointer 
-     * @return
-     */
-    public void pause(void char * curModePointer) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void startStopw() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void startTimer() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void startGame() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void split() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void nextAlarm() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void switchAlarm() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void selectCity() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public void dinosaurJump() {
-        // TODO implement here
-        return null;
-    }
-
 }

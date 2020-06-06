@@ -1,42 +1,28 @@
+package clock;
 
-import java.util.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-/**
- * 
- */
 public class Buzzer {
+    private AudioClip beepSound;
 
-    /**
-     * Default constructor
-     */
     public Buzzer() {
+        try {
+            beepSound = Applet.newAudioClip(new URL("file", "", "data/beep.wav"));
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+    }
+    public void beep(int repeatTime) {
+        for(int i = 0; i < repeatTime; i++){
+            beepSound.play();
+        }
     }
 
-    /**
-     * 
-     */
-    public char repeatTime;
-
-
-
-
-
-
-    /**
-     * @param char repeatTime 
-     * @return
-     */
-    public void beep(void char repeatTime) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
     public void stopBeep() {
-        // TODO implement here
-        return null;
+        beepSound.stop();
     }
 
 }

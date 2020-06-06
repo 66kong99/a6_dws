@@ -1,78 +1,39 @@
+package clock;
 
 import java.util.*;
 
-/**
- * 
- */
-public class Timer {
-
-    /**
-     * Default constructor
-     */
+public class Timer extends Mode {
+    private char timerHour;
+    private char timerMin;
+    private char timerSec;
+    private boolean isPaused;
     public Timer() {
     }
 
-    /**
-     * 
-     */
-    public char timerHour;
-
-    /**
-     * 
-     */
-    public char timerMin;
-
-    /**
-     * 
-     */
-    public char timerSec;
-
-    /**
-     * 
-     */
-    public bool isPaused;
-
-
-
-
-    /**
-     * @return
-     */
-    public void requestTimerTime() {
-        // TODO implement here
-        return null;
+    private void requestTimerTime() {
     }
 
-    /**
-     * @return
-     */
-    public void increaseTimerValue() {
-        // TODO implement here
-        return null;
+    private void increaseTimerValue() {
     }
 
-    /**
-     * @return
-     */
-    public void decreaseTimer() {
-        // TODO implement here
-        return null;
+    private void decreaseTimer() {
     }
 
-    /**
-     * @return
-     */
-    public void pauseTimer() {
-        // TODO implement here
-        return null;
+    private void pauseTimer() {
     }
 
-    /**
-     * @return
-     */
-    public void resetTimer() {
-        // TODO implement here
-        return null;
+    private void resetTimer() {
+    }
+
+    public void QPressed() {
+
+    }
+    public void SPressed(){
+        decreaseTimer();
+    }
+    public void WPressed(){
+        if(isPaused == false)
+            pauseTimer();
     }
 
 }

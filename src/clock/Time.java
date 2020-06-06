@@ -1,10 +1,12 @@
+package clock;
+
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class Time {
+public class Time extends JFrame implements Mode{
     private Thread timeThread;
     private JLabel timeLabel;
     public LocalDateTime curTime = LocalDateTime.now();
@@ -20,7 +22,7 @@ public class Time {
         timeLabel.setText("<html>"+ curTime.format(DateTimeFormatter.ofPattern("yyyy MM dd E"))+"<br/>"+curTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))+"</html>");
         timeLabel.setVerticalAlignment(SwingConstants.CENTER);
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        Font font = new Font("Gothic", Font.BOLD, 35);
+        Font font = new Font("data/scoreboard.ttf", Font.BOLD, 35);
         timeLabel.setFont(font);
 
         timeFrame.add(timeLabel);
@@ -68,5 +70,19 @@ public class Time {
         time.updateTime();
     }
 
+    @Override
+    public void QPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void WPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) {
+
+    }
 }
 

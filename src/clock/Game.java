@@ -6,17 +6,16 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import clock.Hurdle;
-import clock.Dinosaur;
-import clock.Background;
+import util.Resource;
 
-public class Game extends JPanel implements Runnable {
+public class Game extends JPanel implements Runnable, Mode {
     private static final int START_GAME_STATE = 0;
     private static final int GAME_PLAYING_STATE = 1;
     private static final int GAME_OVER_STATE = 2;
 
     private Background background;
     private Dinosaur dinosaur;
+    private Hurdle hurdleManager;
     private Thread thread;
     private boolean buttenPressed;
 
@@ -26,15 +25,15 @@ public class Game extends JPanel implements Runnable {
     private BufferedImage gameOverButtonImage;
 
     public Game(){
-        dinosaur = new dinosaur();
-        background = new background(GameWindow.SCREEN_WIDTH, dinosaur);
+        dinosaur = new Dinosaur();
+        background = new Background(GameWindow.SCREEN_WIDTH, dinosaur);
         dinosaur.setSpeedX(4);
         replayButtonImage = Resource.getResourceImage("data/replay_button.png");
         gameOverButtonImage = Resource.getResourceImage("data/gameover_text.png");
-        hurdleManager = new hurdle(dinosaur);
+        hurdleManager = new Hurdle(dinosaur);
     }
 
-    public void launchstartGame(){
+    public void start(){
         thread = new Thread(this);
         thread.start();
     }
@@ -61,7 +60,7 @@ public class Game extends JPanel implements Runnable {
                 break;
             case GAME_PLAYING_STATE:
             case GAME_OVER_STATE:
-                land.draw(g);
+                background.draw(g);
                 hurdleManager.draw(g);
                 dinosaur.draw(g);
                 g.setColor(Color.BLACK);
@@ -128,4 +127,18 @@ public class Game extends JPanel implements Runnable {
         dinosaur.reset();
     }
 
+    @Override
+    public void QPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void WPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) {
+
+    }
 }

@@ -1,10 +1,10 @@
-
+package clock;
 import java.util.*;
 
 /**
  * 
  */
-public class Stopwatch {
+public class Stopwatch extends Mode{
 
     /**
      * Default constructor
@@ -79,4 +79,18 @@ public class Stopwatch {
         return null;
     }
 
+    @Override
+    public void QPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void WPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) {
+
+    }
 }

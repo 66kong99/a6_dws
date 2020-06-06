@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animation {
-    private List<Bufferedimage> list;
+    private List<BufferedImage> list;
     private long deltaTime;
     private int currentFrame = 0;
     private long previousTime;
 
     public Animation(int deltaTime){
         this.deltaTime = deltaTime;
-        list = new ArrayList<Bufferedimage>();
+        list = new ArrayList<BufferedImage>();
         previousTime = 0;
     }
 
     public void updateFrame(){
-        if(System.currentTimeMillis() - previoustime >= deltaTime){
+        if(System.currentTimeMillis() - previousTime >= deltaTime){
             if (++currentFrame >= list.size()){
                 currentFrame = 0;
             }
