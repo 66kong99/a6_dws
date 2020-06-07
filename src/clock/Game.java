@@ -38,7 +38,7 @@ public class Game extends JPanel implements Runnable, Mode {
         thread.start();
     }
 
-    public void gameUpdate(){
+    public void update(){
         if (gameState == GAME_PLAYING_STATE){
             background.update();
             dinosaur.update();
@@ -51,8 +51,6 @@ public class Game extends JPanel implements Runnable, Mode {
     }
 
     public void paint(Graphics g){
-        g.setColor(Color.decode("#F7F7F7"));
-        g.fillRect(0, 0, getWidth(), getHeight());
 
         switch(gameState){
             case START_GAME_STATE:
@@ -87,7 +85,7 @@ public class Game extends JPanel implements Runnable, Mode {
         long lag = 0;
 
         while(true){
-            gameUpdate();
+            update();
             repaint();
             endProcessGame = System.nanoTime();
             elapsed = (lastTime + msPerFrame - System.nanoTime());
@@ -106,7 +104,7 @@ public class Game extends JPanel implements Runnable, Mode {
         }
     }
 
-    public void buttenPressed(){
+    public void buttonPressed(){
         switch (gameState) {
             case START_GAME_STATE:
                 gameState = GAME_PLAYING_STATE;
@@ -129,16 +127,16 @@ public class Game extends JPanel implements Runnable, Mode {
 
     @Override
     public void QPressed(boolean Longpress) {
-
+        buttonPressed();
     }
 
     @Override
     public void WPressed(boolean Longpress) {
-
+        buttonPressed();
     }
 
     @Override
     public void SPressed(boolean Longpress) {
-
+        buttonPressed();
     }
 }

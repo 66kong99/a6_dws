@@ -3,6 +3,8 @@ package clock;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Graphics;
+import java.awt.Color;
 
 
 public class WatchSystem extends JPanel implements KeyListener, Runnable {
@@ -11,6 +13,8 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
     private long KeyPressedTime;
     private long KeyReleasedTime;
     private long delay = 1000;
+
+    private Thread thread;
 
     public WatchSystem() {
         KeyPressedTime = 0;
@@ -27,6 +31,11 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
         // 안씀
     }
 
+    public void start(){
+        thread = new Thread(this);
+        thread.start();
+    }
+
     public void keyPressed(KeyEvent e){
         KeyPressedTime = e.getWhen();
     }
@@ -36,7 +45,7 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
         KeyReleasedTime = e.getWhen();
         boolean Longpress = (KeyPressedTime - KeyReleasedTime) != 0;
         if (keycode == KeyEvent.VK_Q)
-            Watch.getCurMode().QPressed(Longpress);
+            Watch.QPressed(Longpress);
         else if (keycode == KeyEvent.VK_A)
             this.APressed();
         else if (keycode == KeyEvent.VK_W)
@@ -50,8 +59,47 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
         // 이후 curMode가 실행되어야함
     }
 
+    public void paint(Graphics g){
+        g.setColor(Color.decode("#F7F7F7"));
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        Watch.paint(g);
+    }
+
     @Override
     public void run() {
+        int fps = 100;
+        long msPerFrame = 1000 * 1000000 / fps;
+        long lastTime = 0;
+        long elapsed;
+        long timeout = 0;
+
+        int msSleep;
+        int nanoSleep;
+        
+        long endProcess;
+        long lag = 0;
+
+        while(true){
+            Watch.update();
+            repaint();
+            endProcess = System.nanoTime();
+            elapsed = (lastTime + msPerFrame - System.nanoTime());
+            timeout = elapsed;
+            msSleep = (int)(elapsed / 1000000);
+            nanoSleep = (int)(elapsed % 1000000);
+            if(msSleep <= 0){
+                lastTime = System.nanoTime();
+                continue;
+            }
+            try{
+                Thread.sleep(msSleep, nanoSleep);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            lastTime = System.nanoTime();
+
+        }
 
     }
 }

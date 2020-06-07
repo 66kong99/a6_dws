@@ -16,6 +16,8 @@ public class ModeManager {
     private char curMode;
     private boolean activated[];
 
+    private boolean isSwapMode;
+
     public ModeManager() {
         alarm = new Alarm();
         game = new Game();
@@ -32,6 +34,8 @@ public class ModeManager {
         activated[5] = false;
 
         curMode = 0; // Timer
+
+        isSwapMode = false;
 
     }
     public char getIntCurMode(){ return curMode; }
@@ -79,6 +83,61 @@ public class ModeManager {
         activated[Mode] = true;
     }
 
+    public void update(){
+        alarm.compare(time.curTime);
+        switch(curMode){
+            case 0:
+                return time;
+            case 1:
+                return alarm;
+            case 2:
+                return game;
+            case 3:
+                return timer;
+            case 4:
+                return worldtime;
+            case 5:
+                return stopwatch;
+            default:
+                break;
+        }
+        getCurMode().update();
+    }
+
+    public void paint(Graphics g){
+        String[] data = new String[2];
+        if (curMode == 2) // game
+            game.paint(g);
+        else
+            switch(curMode){
+                case 0:
+                    return time;
+                case 1:
+                    data = alarm.paint();
+                    break;
+                case 3:
+                    data = timer.paint();
+                    break;
+                case 4:
+                    data = worldtime.paint();
+                case 5:
+                    data = stopwatch.paint();
+                default:
+                    break;
+            }
+        return null;
+
+    }
+    public void QPressed(boolean Longpress){
+        if(isSwapMode == true){
+
+        }
+        if (Longpress == true){
+            deactivateMode();
+        }
+        else
+            getCurMode().QPressed(Longpress);
+    }
 
     public void returnTimeMode() {
 // timeout
