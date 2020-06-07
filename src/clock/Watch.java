@@ -3,9 +3,6 @@ package clock;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.nio.Buffer;
 
 import util.Resource;

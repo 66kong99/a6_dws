@@ -5,7 +5,7 @@ import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Buzzer extends Mode{
+public class Buzzer {
     private AudioClip beepSound;
 
     public boolean isBeep;
@@ -28,20 +28,5 @@ public class Buzzer extends Mode{
     public void stopBeep() {
         beepSound.stop();
         isBeep = false;
-    }
-
-    @Override
-    public void QPressed(boolean Longpress) {
-
-    }
-
-    @Override
-    public void WPressed(boolean Longpress) {
-
-    }
-
-    @Override
-    public void SPressed(boolean Longpress) {
-
     }
 }

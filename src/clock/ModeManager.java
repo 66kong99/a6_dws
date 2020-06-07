@@ -141,13 +141,13 @@ public class ModeManager {
                     data = alarm.requestAlarm();
                     break;
                 case 3:
-                    data = timer.paint();
+                    data = timer.requestTimer();
                     break;
                 case 4:
-                    data = worldtime.paint();
+                    data = worldtime.requestWorldtime();
                     break;
                 case 5:
-                    data = stopwatch.paint();
+                    data = stopwatch.requestStopwTime();
                     break;
                 default:
                     break;

@@ -1,9 +1,6 @@
 package clock;
 import java.util.*;
 
-/**
- * 
- */
 public class Stopwatch implements Mode{
     public Stopwatch() {
     }

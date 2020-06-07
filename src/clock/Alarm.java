@@ -2,15 +2,15 @@ package clock;
 
 import java.util.*;
 
-public class Alarm extends Mode{
-    private static final int NORMAL_ALARM_STATE = 0;
-    private static final int CHANGE_ALARM_STATE = 1;
+public class Alarm implements Mode{
 
     private List<Calendar> alarms;
     private List<Boolean> toggle;
     private Buzzer beep;
 
     private byte index;
+    private int timeUnit[];
+    private int Unit = 0;
 
     private boolean isSetAlarm;
 
@@ -18,13 +18,18 @@ public class Alarm extends Mode{
         alarms = new LinkedList<Calendar>();
         toggle = new LinkedList<Boolean>();
         beep = new Buzzer();
+        timeUnit = new int[3];
         isSetAlarm = false;
         index = 0;
     }
 
     public void setAlarm() {
+        for(int i : timeUnit)
+            i = 0;
 
     }
+
+    public void update(){ }
 
     public void changeAlarmIndex() {
         index++;
@@ -42,7 +47,11 @@ public class Alarm extends Mode{
         else
             swit = "ON";
         Calendar temp = alarms.get(index);
-        return new String[]{"ALARM" + index, temp.get(Calendar.HOUR_OF_DAY) + ":" + temp.get(Calendar.MINUTE), swit};
+        if (isSetAlarm){
+            return new String[]{"ALARM" + index, timeUnit[0] + ":" + timeUnit[1], Integer.toString(timeUnit[2])};
+        }else {
+            return new String[]{"ALARM" + index, temp.get(Calendar.HOUR_OF_DAY) + ":" + temp.get(Calendar.MINUTE), swit};
+        }
     }
 
     public void compare(Calendar curTime){
@@ -87,6 +96,12 @@ public class Alarm extends Mode{
             beep.stopBeep();
             return;
         }
+        if (Longpress && !isSetAlarm) {
+            isSetAlarm = !isSetAlarm;
+            setAlarm();
+        }
+        if (Longpress && isSetAlarm)
+            Unit++;
         changeAlarmToggle();
 
     }
