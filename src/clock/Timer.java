@@ -2,7 +2,7 @@ package clock;
 
 import java.util.*;
 
-public class Timer extends Mode {
+public class Timer implements Mode {
     private char timerHour;
     private char timerMin;
     private char timerSec;
@@ -36,4 +36,18 @@ public class Timer extends Mode {
             pauseTimer();
     }
 
+    @Override
+    public void QPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void WPressed(boolean Longpress) {
+
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) {
+
+    }
 }

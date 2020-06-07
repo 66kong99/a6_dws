@@ -1,7 +1,10 @@
 package clock;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.*;
+import javax.swing.*;
 
 public class ModeManager {
     private Alarm alarm; // 1
@@ -18,6 +21,8 @@ public class ModeManager {
 
     private boolean isSwapMode;
 
+    private JLabel top, main, sub;
+
     public ModeManager() {
         alarm = new Alarm();
         game = new Game();
@@ -27,6 +32,21 @@ public class ModeManager {
         stopwatch = new Stopwatch();
 
         beep = new Buzzer();
+
+        top = new JLabel(time.requestCurTime()[0], SwingConstants.LEFT);
+        main = new JLabel(time.requestCurTime()[1], SwingConstants.LEFT);
+        sub = new JLabel(time.requestCurTime()[2], SwingConstants.LEFT);
+
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 32);
+            Font font2 = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 85);
+            Font font3 = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 28);
+            top.setFont(font);
+            main.setFont(font2);
+            sub.setFont(font3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         activated = new boolean[6];
         Arrays.fill(activated, true);
@@ -75,7 +95,7 @@ public class ModeManager {
                     second = i;
                     break;
                 }
-        return (first * 10) + second;
+        return (first * 10) + second; // 0인 Time은 deactivate되지 않으므로 안전하다
     }
 
 
@@ -87,11 +107,14 @@ public class ModeManager {
         alarm.compare(time.curTime);
         switch(curMode){
             case 0:
-                return time;
+                time.update();
+                break;
             case 1:
-                return alarm;
+                alarm.update();
+                break;
             case 2:
-                return game;
+                game.update();
+                break;
             case 3:
                 return timer;
             case 4:
@@ -101,33 +124,42 @@ public class ModeManager {
             default:
                 break;
         }
-        getCurMode().update();
+        // getCurMode().update();
+        // method 이름이 통일되면 이거로 하면 된다
     }
 
     public void paint(Graphics g){
-        String[] data = new String[2];
+        String[] data = new String[3];
         if (curMode == 2) // game
             game.paint(g);
         else
-            switch(curMode){
+            switch(curMode) {
                 case 0:
-                    return time;
+                    data = time.requestCurTime();
+                    break;
                 case 1:
-                    data = alarm.paint();
+                    data = alarm.requestAlarm();
                     break;
                 case 3:
                     data = timer.paint();
                     break;
                 case 4:
                     data = worldtime.paint();
+                    break;
                 case 5:
                     data = stopwatch.paint();
+                    break;
                 default:
                     break;
             }
-        return null;
+        // getCurMode().paint();
+        // method 이름이 통일되면 이거로 하면 된다
 
+        top.setText(data[0]);
+        main.setText(data[1]);
+        sub.setText(data[2]);
     }
+
     public void QPressed(boolean Longpress){
         if(isSwapMode == true){
 

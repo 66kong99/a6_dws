@@ -23,7 +23,7 @@ public class Alarm extends Mode{
     }
 
     public void setAlarm() {
-        isSetAlarm = true;
+
     }
 
     public void changeAlarmIndex() {
@@ -34,13 +34,15 @@ public class Alarm extends Mode{
         toggle.set(index, !toggle.get(index));
     }
 
-    public void update(){
+    public String[] requestAlarm(){
+        String swit = new String();
 
-    }
-
-    public String[] paint(){
+        if (toggle.get(index) == false)
+            swit = "OFF";
+        else
+            swit = "ON";
         Calendar temp = alarms.get(index);
-        return new String[]{"ALARM" + index, temp.get(Calendar.HOUR_OF_DAY) + ":" + temp.get(Calendar.MINUTE) + ":" + toggle.get(index)};
+        return new String[]{"ALARM" + index, temp.get(Calendar.HOUR_OF_DAY) + ":" + temp.get(Calendar.MINUTE), swit};
     }
 
     public void compare(Calendar curTime){
@@ -66,7 +68,12 @@ public class Alarm extends Mode{
                 beep.stopBeep();
                 return;
         }
+        if (isSetAlarm == true) {
+            isSetAlarm = false;
+            return;
+        }
         if (Longpress == true){
+            isSetAlarm = true;
             setAlarm();
         }
         else{

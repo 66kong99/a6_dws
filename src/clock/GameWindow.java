@@ -23,6 +23,6 @@ public class GameWindow extends JFrame {
 
     public void startGame() {
         setVisible(true);
-        game.launchstartGame();
+        game.start();
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import util.Resource;
 
-public class Game extends JPanel implements Runnable, Mode {
+public class Game extends JPanel implements Mode, Runnable {
     private static final int START_GAME_STATE = 0;
     private static final int GAME_PLAYING_STATE = 1;
     private static final int GAME_OVER_STATE = 2;
