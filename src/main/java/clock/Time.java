@@ -57,14 +57,14 @@ public class Time extends JFrame implements Mode{
 
         timeBufferArr[2] = secBuffer.toString();
 
-        this.curTime.add(Calendar.MILLISECOND, 5);
+        this.curTime.add(Calendar.MILLISECOND, 10);
 
         return timeBufferArr;
     }
 
 
     public void updateTime() {
-        requestCurTime();
+
     }
 
     public void increaseTimeValue() {

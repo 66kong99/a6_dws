@@ -63,6 +63,7 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
     public void keyReleased(KeyEvent e){
         int keycode = e.getKeyCode();
         KeyReleasedTime = e.getWhen();
+        System.out.println(KeyPressedTime + "\n" + KeyReleasedTime);
         boolean Longpress = (KeyReleasedTime - KeyPressedTime) >= 100;
         if (keycode == KeyEvent.VK_Q)
             Watch.QPressed(Longpress);
@@ -75,7 +76,8 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
     }
 
     private void APressed(){
-        Watch.changeToMode((char)(Watch.getIntCurMode() + 1));
+        System.out.println("APressed");
+        Watch.changeToMode(Watch.nextMode());
         Watch.getCurMode().APressed();
         // 이후 curMode가 실행되어야함
     }

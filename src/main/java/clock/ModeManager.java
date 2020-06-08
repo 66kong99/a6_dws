@@ -23,6 +23,7 @@ public class ModeManager {
 
     private Font top, main, sub;
 
+
 //    public JLabel top, main, sub;
 
     public ModeManager() {
@@ -30,7 +31,7 @@ public class ModeManager {
         game = new Game();
         time = new Time();
         timer = new Timer();
-        worldtime = new Worldtime();
+        worldtime = new Worldtime(time.curTime);
         stopwatch = new Stopwatch();
 
         beep = new Buzzer();
@@ -41,15 +42,15 @@ public class ModeManager {
 
         try {
             top = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 60);
-            main = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 135);
-            sub = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 28);
+            main = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 170);
+            sub = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 60);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         activated = new boolean[6];
         Arrays.fill(activated, true);
-        activated[4] = false;
+        activated[3] = false;
         activated[5] = false;
 
         curMode = 0; // Timer
@@ -79,8 +80,21 @@ public class ModeManager {
         return null;
     }
 
+    public char nextMode(){
+        for(int i = curMode+1;;) {
+            i = i % 6;
+            System.out.println(i);
+            if (activated[i] == true) {
+                System.out.println(i + " : true");
+                return (char)i;
+            }
+            i++;
+        }
+
+    }
+
     public void changeToMode(char Mode) {
-        this.curMode = (char)(Mode % 4);
+        this.curMode = Mode;
     }
 
     // Swap Mode 실행시 deactivate되어있는 Mode들을 불러와준다
@@ -118,7 +132,7 @@ public class ModeManager {
 //                timer.update();
                 break;
             case 4:
-//                worldtime.update(time.curTime);
+                worldtime.update(time.curTime);
                 break;
             case 5:
                 stopwatch.updateStopw();
@@ -131,12 +145,13 @@ public class ModeManager {
 
     public void paint(Graphics g){
         String[] data = new String[3];
+        data = time.requestCurTime();
         if (curMode == 2) // game
             game.paint(g);
         else {
             switch (curMode) {
                 case 0:
-                    data = time.requestCurTime();
+//                    data = time.requestCurTime();
                     break;
                 case 1:
                     data = alarm.requestAlarm();
@@ -145,23 +160,21 @@ public class ModeManager {
 //                    data = timer.requestTimer();
                     break;
                 case 4:
-//                    data = worldtime.requestWorldtime();
+                    data = worldtime.requestWorldtime(time.curTime);
                     break;
                 case 5:
-                    data = stopwatch.requestStopwTime();
+//                    data = stopwatch.requestStopwTime();
                     break;
                 default:
                     break;
             }
-            // getCurMode().paint();
-            // method 이름이 통일되면 이거로 하면 된다
-            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2]);
+//            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2]);
             g.setFont(top);
             g.drawString(data[0], 100, 488);
             g.setFont(main);
-            g.drawString(data[1], 100, 700);
+            g.drawString(data[1], 95, 700);
             g.setFont(sub);
-            g.drawString(data[2], 500, 500);
+            g.drawString(data[2], 540, 700);
         }
     }
 

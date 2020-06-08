@@ -64,8 +64,8 @@ public class Game extends JPanel implements Mode, Runnable {
                 g.setColor(Color.BLACK);
                 g.drawString("HI " + dinosaur.score, 500, 420);
                 if (gameState == GAME_OVER_STATE){
-                    g.drawImage(gameOverButtonImage, 200, 430, null);
-                    g.drawImage(replayButtonImage, 283, 450, null);
+                    g.drawImage(gameOverButtonImage, 275, 530, null);
+                    g.drawImage(replayButtonImage, 357, 550, null);
                 }
                 break;
         }

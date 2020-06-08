@@ -48,16 +48,17 @@ public class Alarm implements Mode{
 
     public String[] requestAlarm(){
         String swit = new String();
+        Calendar temp = alarms.get(index);
+
 
         if (toggle.get(index) == false)
             swit = "OFF";
         else
-            swit = "ON";
-        Calendar temp = alarms.get(index);
+            swit = " ON";
         if (isSetAlarm){
-            return new String[]{"ALARM " + index, timeUnit[0] + ":" + timeUnit[1], Integer.toString(timeUnit[2])};
+            return new String[]{"ALARM " + index, String.format("%02d", timeUnit[0]) + ":" + String.format("%02d", timeUnit[1]), Integer.toString(timeUnit[2])};
         }else {
-            return new String[]{"ALARM " + index, temp.get(Calendar.HOUR_OF_DAY) + ":" + temp.get(Calendar.MINUTE), swit};
+            return new String[]{"ALARM " + index, String.format("%02d", temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", temp.get(Calendar.MINUTE)), swit};
         }
     }
 
