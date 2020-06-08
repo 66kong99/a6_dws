@@ -9,7 +9,7 @@ import javax.swing.*;
 public class ModeManager {
     private Alarm alarm; // 1
     private Game game; // 2
-    private Time time; // 0
+    public Time time; // 0
     private Timer timer; // 3
     private Worldtime worldtime; // 4
     private Stopwatch stopwatch; // 5
@@ -18,6 +18,7 @@ public class ModeManager {
     private char tempMode;
     private char curMode;
     private boolean activated[];
+    private int deactivate[];
 
     private boolean isSwapMode;
 
@@ -50,8 +51,11 @@ public class ModeManager {
 
         activated = new boolean[6];
         Arrays.fill(activated, true);
-        activated[3] = false;
+        activated[4] = false;
         activated[5] = false;
+        deactivate = new int[2];
+        deactivate[0] = 4;
+        deactivate[1] = 5;
 
         curMode = 0; // Timer
 
@@ -97,20 +101,40 @@ public class ModeManager {
         this.curMode = Mode;
     }
 
-    // Swap Mode 실행시 deactivate되어있는 Mode들을 불러와준다
-    public int deactivateMode() {
-        int first = 0, second = 0;
-        for(int i = 0; i < 6; i++)
+    // calling deactivating mode
+    public String[] deactivateMode() {
+        String temp[] = new String[3];
+        for (int i = 0; i < 6; i++)
             if (activated[i] == false)
-                if(first == 0)
-                    first = i;
-                else {
-                    second = i;
+                if (temp[0] == null) {
+                    temp[0] = getModeName(i);
+                    deactivate[0] = i;
+                } else {
+                    temp[1] = getModeName(i);
+                    deactivate[1] = i;
                     break;
                 }
-        return (first * 10) + second; // 0인 Time은 deactivate되지 않으므로 안전하다
+        System.out.println(deactivate[0] + " " + deactivate[1]);
+        return temp; // time didn't deactivated(time's number is 0)
     }
 
+    public String getModeName(int Mode){
+        switch(Mode){
+            case 0:
+                return "Time";
+            case 1:
+                return "Alarm";
+            case 2:
+                return "Game";
+            case 3:
+                return "Timer";
+            case 4:
+                return "Worldtime";
+            case 5:
+                return "Stopwatch";
+        }
+        return null;
+    }
 
     public void activateMode(char Mode) {
         activated[Mode] = true;
@@ -129,7 +153,6 @@ public class ModeManager {
                 game.update();
                 break;
             case 3:
-//                timer.update();
                 break;
             case 4:
                 worldtime.update(time.curTime);
@@ -139,31 +162,37 @@ public class ModeManager {
             default:
                 break;
         }
-        // getCurMode().update();
-        // method 이름이 통일되면 이거로 하면 된다
     }
 
     public void paint(Graphics g){
         String[] data = new String[3];
         data = time.requestCurTime();
-        if (curMode == 2) // game
+        if (isSwapMode) {
+            data = deactivateMode();
+            g.setFont(top);
+            g.drawString(data[0], 100, 488);
+            g.drawString(data[1], 100, 688);
+            g.drawString("->", 570, 488);
+            g.drawString("->", 570, 688);
+        }
+        else if (curMode == 2)// game
             game.paint(g);
         else {
             switch (curMode) {
                 case 0:
-//                    data = time.requestCurTime();
+//                    data = time.requestCurTime(); // Time always update and draw
                     break;
                 case 1:
                     data = alarm.requestAlarm();
                     break;
                 case 3:
-//                    data = timer.requestTimer();
+                    data = timer.requestTimerTime();
                     break;
                 case 4:
                     data = worldtime.requestWorldtime(time.curTime);
                     break;
                 case 5:
-//                    data = stopwatch.requestStopwTime();
+                    data = stopwatch.requestStopwTime();
                     break;
                 default:
                     break;
@@ -182,11 +211,34 @@ public class ModeManager {
         if(isSwapMode == true){
 
         }
-        if (Longpress == true){
+        if (Longpress == true && curMode != 0){
+            isSwapMode = true;
             deactivateMode();
         }
         else
             getCurMode().QPressed(Longpress);
+    }
+
+    public void WPressed(boolean Longpress){
+        if (isSwapMode){
+            activated[curMode] = false;
+
+            curMode = (char)deactivate[0];
+            activated[deactivate[0]] = true;
+            isSwapMode = false;
+        }else
+            getCurMode().WPressed(Longpress);
+    }
+
+    public void SPressed(boolean Longpress){
+        if (isSwapMode) {
+            activated[curMode] = false;
+
+            curMode = (char)deactivate[1];
+            activated[deactivate[1]] = true;
+            isSwapMode = false;
+        } else
+            getCurMode().SPressed(Longpress);
     }
 
     public void returnTimeMode() {

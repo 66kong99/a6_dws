@@ -10,23 +10,23 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.Buffer;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 
 public class WatchSystem extends JPanel implements KeyListener, Runnable {
     public ModeManager Watch;
 
-    private long KeyPressedTime;
-    private long KeyReleasedTime;
     private BufferedImage background;
+    private int isLongpress;
 
     private Font font;
 
     private Thread thread;
 
     public WatchSystem() {
-        KeyPressedTime = 0;
-        KeyReleasedTime = 0;
+        isLongpress = 0;
+
         Watch = new ModeManager();
 
         background = Resource.getResourceImage("data/clock.png");
@@ -45,10 +45,11 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
     // Q(81) W(87)
     // A(65) S(83)
     // Longpress == Q, W, S Only
+    //
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // 안씀
+        // NOT using
     }
 
     public void start(){
@@ -57,29 +58,30 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
     }
 
     public void keyPressed(KeyEvent e){
-        KeyPressedTime = e.getWhen();
+        System.out.println(isLongpress);
+        isLongpress++;
     }
 
     public void keyReleased(KeyEvent e){
         int keycode = e.getKeyCode();
-        KeyReleasedTime = e.getWhen();
-        System.out.println(KeyPressedTime + "\n" + KeyReleasedTime);
-        boolean Longpress = (KeyReleasedTime - KeyPressedTime) >= 100;
+
+        boolean Longpress = (isLongpress >= 10);
+        System.out.println(Longpress);
         if (keycode == KeyEvent.VK_Q)
             Watch.QPressed(Longpress);
         else if (keycode == KeyEvent.VK_A)
             this.APressed();
         else if (keycode == KeyEvent.VK_W)
-            Watch.getCurMode().WPressed(Longpress);
+            Watch.WPressed(Longpress);
         else if (keycode == KeyEvent.VK_S)
-            Watch.getCurMode().SPressed(Longpress);
+            Watch.SPressed(Longpress);
+        isLongpress = 0;
     }
 
     private void APressed(){
         System.out.println("APressed");
         Watch.changeToMode(Watch.nextMode());
         Watch.getCurMode().APressed();
-        // 이후 curMode가 실행되어야함
     }
 
     public void paint(Graphics g){
@@ -111,8 +113,9 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
             Watch.update();
             repaint();
             endProcess = System.nanoTime();
-            elapsed = (lastTime + msPerFrame - System.nanoTime()); // 진행된 시간
+            elapsed = (lastTime + msPerFrame - System.nanoTime());
             timeout = TimeUnit.SECONDS.convert(elapsed, TimeUnit.NANOSECONDS);
+//            System.out.println(timeout + "\n" + elapsed);
             if (timeout == 10){ // TimeOut
                 timeout = 0;
                 Watch.returnTimeMode();

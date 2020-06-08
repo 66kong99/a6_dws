@@ -7,12 +7,11 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Stopwatch extends JFrame implements Mode {
-    private JLabel stopwLabel, stopwLabel2,stopwLabel3;
+public class Stopwatch implements Mode {
     public Calendar stopwTime;
     public Calendar splitstopwTime;
 
-    private boolean isPaused;
+    private static boolean isPaused;
     private boolean isSplit;
     private boolean buttoncount = true; //button switch for starting or pausing stopwatch
 
@@ -20,14 +19,16 @@ public class Stopwatch extends JFrame implements Mode {
     public Stopwatch() {
         this.stopwTime = Calendar.getInstance();
         stopwTime.clear();
+
         isPaused = true;
         isSplit = false;
-
     }
 
 
-    public void requestStopwTime() {
+    public String[] requestStopwTime() {
+        String[] stopwBufferArr = new String[3];
         if(this.stopwTime.get(Calendar.HOUR_OF_DAY)==0) {
+
             Calendar tempStopwTime = (Calendar) stopwTime.clone();
 
             StringBuffer nameBuffer = new StringBuffer(); // stopwatch
@@ -35,7 +36,7 @@ public class Stopwatch extends JFrame implements Mode {
             StringBuffer csecBuffer = new StringBuffer(); //:csec
 
             nameBuffer.append("Stopwatch");
-            stopwLabel.setText(nameBuffer.toString());
+            stopwBufferArr[0] = nameBuffer.toString();
 
             stopwBuffer.append(tempStopwTime.get(Calendar.MINUTE) < 10 ? "0" : "");
             stopwBuffer.append(tempStopwTime.get(Calendar.MINUTE));
@@ -43,41 +44,23 @@ public class Stopwatch extends JFrame implements Mode {
             stopwBuffer.append(tempStopwTime.get(Calendar.SECOND) < 10 ? "0" : "");
             stopwBuffer.append(tempStopwTime.get(Calendar.SECOND));
 
-            stopwLabel2.setText(stopwBuffer.toString());
+            stopwBufferArr[1] = stopwBuffer.toString();
 
             csecBuffer.append(":");
             csecBuffer.append(tempStopwTime.get(Calendar.MILLISECOND) < 100 ? "0" : "");
             csecBuffer.append(tempStopwTime.get(Calendar.MILLISECOND) / 10);
 
-            stopwLabel3.setText(csecBuffer.toString());
+            stopwBufferArr[2] = csecBuffer.toString();
 
             if (this.isPaused == false)
                 this.stopwTime.add(Calendar.MILLISECOND, 10);
 
         }
+        return stopwBufferArr;
     }
 
     public void updateStopw(){
-        while(true){
 
-
-            /*
-            여기서 increase, reset,pause,split 제어가 필요함
-             */
-            requestStopwTime();// or requestSplit
-
-
-
-
-            try{
-                Thread.sleep(10);
-            }
-            catch(InterruptedException e){
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
-            }
-
-        }
     }
 
 
@@ -100,17 +83,25 @@ public class Stopwatch extends JFrame implements Mode {
 
     }
 
-    public void requestSplit() {
+    public String[] requestSplit() {
+        String[] splitBufferArr = new String[3];
         this.isSplit = true;
+
         if(this.isPaused == false && this.isSplit == true) {
+
             splitstopwTime.set(Calendar.MINUTE, stopwTime.get(Calendar.MINUTE));
             splitstopwTime.set(Calendar.SECOND, stopwTime.get(Calendar.SECOND));
             splitstopwTime.set(Calendar.MILLISECOND, stopwTime.get(Calendar.MILLISECOND));
 
             Calendar tempStopwTime = (Calendar) splitstopwTime.clone();
 
+            StringBuffer nameBuffer = new StringBuffer();
             StringBuffer stopwBuffer = new StringBuffer(); //  minute:sec
             StringBuffer csecBuffer = new StringBuffer(); //:csec
+
+            nameBuffer.append("Split");
+            splitBufferArr[0] = nameBuffer.toString();
+
 
             stopwBuffer.append(tempStopwTime.get(Calendar.MINUTE) < 10 ? "0" : "");
             stopwBuffer.append(tempStopwTime.get(Calendar.MINUTE));
@@ -118,19 +109,20 @@ public class Stopwatch extends JFrame implements Mode {
             stopwBuffer.append(tempStopwTime.get(Calendar.SECOND) < 10 ? "0" : "");
             stopwBuffer.append(tempStopwTime.get(Calendar.SECOND));
 
-            stopwLabel2.setText(stopwBuffer.toString());
+            splitBufferArr[1] = stopwBuffer.toString();
 
             csecBuffer.append(":");
             csecBuffer.append(tempStopwTime.get(Calendar.MILLISECOND) < 100 ? "0" : "");
             csecBuffer.append(tempStopwTime.get(Calendar.MILLISECOND) / 10);
 
-            stopwLabel3.setText(csecBuffer.toString());
+            splitBufferArr[2] = csecBuffer.toString();
         }
+        return splitBufferArr;
     }
+
 
     @Override
     public void QPressed(boolean Longpress) {
-
     }
 
     @Override
@@ -140,37 +132,20 @@ public class Stopwatch extends JFrame implements Mode {
 
     @Override
     public void WPressed(boolean Longpress) {
-
-    }
-
-    @Override
-    public void SPressed(boolean Longpress) {
-
-    }
-}
-
-/*
-    public String[] paint(){
-    }
-    */
-
-    /*
-    @Override
-    public void QPressed(boolean Longpress) {
-    }
-    @Override
-    public void WPressed(boolean Longpress) {
-        if(Longpress == true)
+        if(isPaused == true)
             resetStopw();
         else
             requestSplit();
     }
     @Override
     public void SPressed(boolean Longpress) {
-        if(Longpress == false||buttoncount == true)
+        if(Longpress == false&&isPaused == true) {
             increaseStopw();
-        if(Longpress == false||buttoncount == false)
+            return;
+        }
+        if(Longpress == false&&isPaused == false) {
             pauseStopw();
-        buttoncount != buttoncount;
+            return;
+        }
     }
-    */
+}

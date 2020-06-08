@@ -32,7 +32,7 @@ public class Alarm implements Mode{
 
     public void setAlarm() {
         Calendar temp = Calendar.getInstance();
-        temp.set(0, 0, 0, timeUnit[0], timeUnit[1], timeUnit[2]);
+        temp.set(0, 0, 0, timeUnit[2], timeUnit[1], timeUnit[0]);
         alarms.set(index, temp);
     }
 
@@ -49,16 +49,26 @@ public class Alarm implements Mode{
     public String[] requestAlarm(){
         String swit = new String();
         Calendar temp = alarms.get(index);
-
+        if (timeUnit[0] == 61){
+            timeUnit[1]++;
+            timeUnit[0] = 0;
+        }
+        if (timeUnit[1] == 61){
+            timeUnit[2]++;
+            timeUnit[1] = 0;
+        }
+        if (timeUnit[2] == 25){
+            timeUnit[2] = 0;
+        }
 
         if (toggle.get(index) == false)
             swit = "OFF";
         else
             swit = " ON";
         if (isSetAlarm){
-            return new String[]{"ALARM " + index, String.format("%02d", timeUnit[0]) + ":" + String.format("%02d", timeUnit[1]), Integer.toString(timeUnit[2])};
+            return new String[]{"ALARM " + (index+1), String.format("%02d", timeUnit[2]) + ":" + String.format("%02d", timeUnit[1]), Integer.toString(timeUnit[0])};
         }else {
-            return new String[]{"ALARM " + index, String.format("%02d", temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", temp.get(Calendar.MINUTE)), swit};
+            return new String[]{"ALARM " + (index+1), String.format("%02d", temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", temp.get(Calendar.MINUTE)), swit};
         }
     }
 
