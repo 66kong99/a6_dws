@@ -170,10 +170,10 @@ public class ModeManager {
         if (isSwapMode) {
             data = deactivateMode();
             g.setFont(top);
-            g.drawString(data[0], 100, 488);
-            g.drawString(data[1], 100, 688);
-            g.drawString("->", 570, 488);
-            g.drawString("->", 570, 688);
+            g.drawString(data[0], 100, 388);
+            g.drawString(data[1], 100, 588);
+            g.drawString("->", 570, 388);
+            g.drawString("->", 570, 588);
         }
         else if (curMode == 2)// game
             game.paint(g);
@@ -199,11 +199,11 @@ public class ModeManager {
             }
 //            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2]);
             g.setFont(top);
-            g.drawString(data[0], 100, 488);
+            g.drawString(data[0], 100, 388);
             g.setFont(main);
-            g.drawString(data[1], 95, 700);
+            g.drawString(data[1], 95, 600);
             g.setFont(sub);
-            g.drawString(data[2], 540, 700);
+            g.drawString(data[2], 540, 600);
         }
     }
 

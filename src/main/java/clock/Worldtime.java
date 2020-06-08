@@ -31,8 +31,6 @@ public class Worldtime implements Mode{
             return new String[] {"WORLD-" + city[curCity], String.format("%02d", worldClock.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", worldClock.get(Calendar.MINUTE)), ":" + String.format("%02d", worldClock.get(Calendar.SECOND))};
     }
 
-    /*public String[] paint() { // {"STOPWATCH", "시:분:초"} 형식으로 리턴해주면 됨
-    }*/
 
     public void changeCity() {
         // TODO implement here
@@ -58,9 +56,9 @@ public class Worldtime implements Mode{
             worldClock.add(Calendar.HOUR_OF_DAY, 1);
     }
 
-    public void update(Calendar curTime){ //mode manager에서 update시 호출, 한국 시간 가져옴
+    public void update(Calendar curTime){ // get korea time
         GMT9 = (Calendar)curTime.clone();
-    } // ModeManager에서 update
+    } // updated by modemanager
 
     @Override
     public void QPressed(boolean Longpress) {

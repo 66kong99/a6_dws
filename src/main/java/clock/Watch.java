@@ -11,7 +11,7 @@ import util.Resource;
 
 public class Watch extends JFrame{
     public static final int SCREEN_WIDTH = 735;
-    public static final int SCREEN_HEIGHT = 1135;
+    public static final int SCREEN_HEIGHT = 935;
 
     private Thread timeThread;
 
@@ -19,7 +19,7 @@ public class Watch extends JFrame{
 
     public Watch(){
         super("Watch");
-        Dimension dim = new Dimension(735, 1135);
+        Dimension dim = new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setLocation(200, 200);

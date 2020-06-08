@@ -62,10 +62,10 @@ public class Game extends JPanel implements Mode, Runnable {
                 hurdleManager.draw(g);
                 dinosaur.draw(g);
                 g.setColor(Color.BLACK);
-                g.drawString("HI " + dinosaur.score, 500, 420);
+                g.drawString("HI " + dinosaur.score, 500, 320);
                 if (gameState == GAME_OVER_STATE){
-                    g.drawImage(gameOverButtonImage, 275, 530, null);
-                    g.drawImage(replayButtonImage, 357, 550, null);
+                    g.drawImage(gameOverButtonImage, 275, 430, null);
+                    g.drawImage(replayButtonImage, 357, 450, null);
                 }
                 break;
         }

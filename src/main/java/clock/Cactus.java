@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Cactus {
-    public static final int Y_LAND = 675;
+    public static final int Y_LAND = 575;
 
     private int CactusposX;
     private int width;

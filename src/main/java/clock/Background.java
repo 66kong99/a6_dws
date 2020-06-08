@@ -10,7 +10,7 @@ import java.util.Random;
 import util.Resource;
 
 public class Background {
-    public static final int LAND_POSY = 653;
+    public static final int LAND_POSY = 553;
 
     private List<ImageBackground> listBackground;
     private BufferedImage land1;

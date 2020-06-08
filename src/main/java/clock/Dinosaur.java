@@ -11,7 +11,7 @@ import util.Animation;
 import util.Resource;
 
 public class Dinosaur {
-    public static final int LAND_POSY = 630;
+    public static final int LAND_POSY = 530;
     public static final float GRAVITY = 0.4f;
 
     private static final int NORMAL_RUN = 0;
