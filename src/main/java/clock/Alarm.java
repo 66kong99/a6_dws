@@ -24,7 +24,7 @@ public class Alarm implements Mode{
 
         Calendar temp = Calendar.getInstance();
         temp.set(0, 0, 0, 0, 0, 0);
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 4; i++) {
             alarms.add(temp);
             toggle.add(true);
         }
@@ -32,7 +32,7 @@ public class Alarm implements Mode{
 
     public void setAlarm() {
         Calendar temp = Calendar.getInstance();
-        temp.set(0, 0, 0, timeUnit[2], timeUnit[1], timeUnit[0]);
+        temp.set(0, 0, 0, timeUnit[1], timeUnit[0], 0);
         alarms.set(index, temp);
     }
 
@@ -53,12 +53,8 @@ public class Alarm implements Mode{
             timeUnit[1]++;
             timeUnit[0] = 0;
         }
-        if (timeUnit[1] == 61){
-            timeUnit[2]++;
+        if (timeUnit[1] == 25){
             timeUnit[1] = 0;
-        }
-        if (timeUnit[2] == 25){
-            timeUnit[2] = 0;
         }
 
         if (toggle.get(index) == false)
@@ -66,7 +62,7 @@ public class Alarm implements Mode{
         else
             swit = " ON";
         if (isSetAlarm){
-            return new String[]{"ALARM " + (index+1), String.format("%02d", timeUnit[2]) + ":" + String.format("%02d", timeUnit[1]), Integer.toString(timeUnit[0])};
+            return new String[]{"ALARM " + (index+1), String.format("%02d", timeUnit[1]) + ":" + String.format("%02d", timeUnit[0]), "SET"};
         }else {
             return new String[]{"ALARM " + (index+1), String.format("%02d", temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", temp.get(Calendar.MINUTE)), swit};
         }

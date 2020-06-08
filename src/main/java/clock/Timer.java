@@ -5,11 +5,12 @@ import java.util.*;
 
 public class Timer implements Mode{
     public Calendar timerTime;
-    private static int timerUnit;
     private Buzzer beep;
 
     private static boolean isPaused;
     private static boolean isSetTimer;
+    private static int timerUnit[];
+    private int Unit = 0;
 
 
     public Timer() {
@@ -18,98 +19,77 @@ public class Timer implements Mode{
 
         this.isPaused = true;
         this.isSetTimer = false;
-        this.timerUnit = 1;
+
+        this.timerUnit = new int[3];
         this.beep = new Buzzer();
     }
 
     public String[] requestTimerTime() {
-        String[] timerBufferArr = new String[3];
+        if (!isSetTimer) {
+            String[] timerBufferArr = new String[3];
 
-        Calendar tempTime = (Calendar) this.timerTime.clone();
+            Calendar tempTime = (Calendar) this.timerTime.clone();
 
 
-        StringBuffer nameBuffer = new StringBuffer();
-        StringBuffer timerBuffer = new StringBuffer();
-        StringBuffer secBuffer = new StringBuffer();
+            StringBuffer nameBuffer = new StringBuffer();
+            StringBuffer timerBuffer = new StringBuffer();
+            StringBuffer secBuffer = new StringBuffer();
 
-        nameBuffer.append("Timer");
+            nameBuffer.append("Timer");
 
-        timerBufferArr[0] = nameBuffer.toString();
+            timerBufferArr[0] = nameBuffer.toString();
 
-        timerBuffer.append(tempTime.get(Calendar.HOUR_OF_DAY) < 10 ? "0" : "");
-        timerBuffer.append(tempTime.get(Calendar.HOUR_OF_DAY));
-        timerBuffer.append(":");
-        timerBuffer.append(tempTime.get(Calendar.MINUTE) < 10 ? "0" : "");
-        timerBuffer.append(tempTime.get(Calendar.MINUTE));
+            timerBuffer.append(tempTime.get(Calendar.HOUR_OF_DAY) < 10 ? "0" : "");
+            timerBuffer.append(tempTime.get(Calendar.HOUR_OF_DAY));
+            timerBuffer.append(":");
+            timerBuffer.append(tempTime.get(Calendar.MINUTE) < 10 ? "0" : "");
+            timerBuffer.append(tempTime.get(Calendar.MINUTE));
 
-        timerBufferArr[1] = timerBuffer.toString();
+            timerBufferArr[1] = timerBuffer.toString();
 
-        secBuffer.append(":");
-        secBuffer.append(tempTime.get(Calendar.SECOND) < 10 ? "0" : "");
-        secBuffer.append(tempTime.get(Calendar.SECOND));
+            secBuffer.append(":");
+            secBuffer.append(tempTime.get(Calendar.SECOND) < 10 ? "0" : "");
+            secBuffer.append(tempTime.get(Calendar.SECOND));
 
-        timerBufferArr[2] = secBuffer.toString();
+            timerBufferArr[2] = secBuffer.toString();
 
-        if(this.isPaused == false && (this.timerTime.get(Calendar.SECOND)!=0 || this.timerTime.get(Calendar.MINUTE)!=0 || this.timerTime.get(Calendar.HOUR_OF_DAY)!=0))
-            this.timerTime.add(Calendar.MILLISECOND, -10);
+            if (this.isPaused == false && (this.timerTime.get(Calendar.SECOND) != 0 || this.timerTime.get(Calendar.MINUTE) != 0 || this.timerTime.get(Calendar.HOUR_OF_DAY) != 0))
+                this.timerTime.add(Calendar.MILLISECOND, -10);
 
-        return timerBufferArr;
-    }
-
-    public void increaseTimerValue() {
-        switch(this.timerUnit){
-
-            case 1:
-
-                if(this.timerTime.get(Calendar.SECOND) == 0)
-                    this.timerTime.add(Calendar.MINUTE, -1);
-
-                this.timerTime.add(Calendar.SECOND, 1);
-
-                break;
-            case 2 :
-                if(this.timerTime.get(Calendar.MINUTE) == 0)
-                    this.timerTime.add(Calendar.HOUR_OF_DAY, -1);
-
-                this.timerTime.add(Calendar.MINUTE, 1);
-
-                break;
-
-            case 3:
-                if(this.timerTime.get(Calendar.HOUR_OF_DAY) == 0)
-                    this.timerTime.add(Calendar.DATE, -1);
-
-                this.timerTime.add(Calendar.HOUR_OF_DAY, 1);
-
-                break;
-
-            default:
-                break;
+            return timerBufferArr;
         }
-    }
-
-
-
-    public void changeTimerUnit(){
-        this.timerUnit++;
-        if(timerUnit >= 4)
-            this.timerUnit = 1;
+        System.out.println("down");
+        if (timerUnit[0] == 61){
+            timerUnit[1]++;
+            timerUnit[0] = 0;
+        }
+        if (timerUnit[1] == 61){
+            timerUnit[1] = 0;
+        }
+        if (timerUnit[2] == 25){
+            timerUnit[2] = 0;
+        }
+        return new String[]{"Timer", String.format("%02d", timerUnit[2]) + ":" + String.format("%02d", timerUnit[1]), ":" + String.format("%02d", timerUnit[0])};
     }
 
     public void decreaseTimer() {
-        // TODO implement here
         this.isPaused = false;
     }
 
     public void pauseTimer() {
-        // TODO implement here
         this.isPaused = true;
     }
 
     public void resetTimer() {
-        // TODO implement here
         this.isPaused = true;
         this.timerTime.clear();
+    }
+
+    public void setTimer(){
+        timerTime.set(0, 0, 0, timerUnit[2], timerUnit[1], timerUnit[0]);
+        timerUnit[0] = 0;
+        timerUnit[1] = 0;
+        timerUnit[2] = 0;
     }
 
     @Override
@@ -130,20 +110,15 @@ public class Timer implements Mode{
     public void WPressed(boolean Longpress) {
         if(beep.isBeep == true) {
             beep.stopBeep();
-
+            return;
         }
 
-        if(Longpress == false && isPaused == false){
-            resetTimer();
+        if(isSetTimer){
+            isSetTimer = false;
+            setTimer();
+            return;
         }
-
-        if(Longpress == true){
-            if(isSetTimer == false){
-                isSetTimer = true;
-            }
-            else
-                isSetTimer = false;
-        }
+        resetTimer();
 
     }
 
@@ -151,22 +126,23 @@ public class Timer implements Mode{
     public void SPressed(boolean Longpress) {
         if(beep.isBeep == true) {
             beep.stopBeep();
-
+            return;
         }
-        if(Longpress == false && isSetTimer == false){
-            if(isPaused == true)
-                decreaseTimer();
-            else
-                pauseTimer();
+        if (Longpress && !isSetTimer){
+            isSetTimer = true;
+            Unit = 0;
+            return;
         }
-
-        if(isSetTimer == true){
-            if(Longpress == false)
-                increaseTimerValue();
-            else
-                changeTimerUnit();
+        if (isSetTimer) {
+            if (Longpress)
+                Unit++;
+            timerUnit[Unit]++;
+            return;
         }
-
+        if (isPaused)
+            decreaseTimer();
+        else
+            pauseTimer();
     }
 
     public void beepTimer(){

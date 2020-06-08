@@ -197,7 +197,7 @@ public class ModeManager {
                 default:
                     break;
             }
-//            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2]);
+            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2]);
             g.setFont(top);
             g.drawString(data[0], 100, 388);
             g.setFont(main);
