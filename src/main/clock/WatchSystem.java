@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.TimeUnit;
 
 
 public class WatchSystem extends JPanel implements KeyListener, Runnable {
@@ -55,6 +56,7 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
 
     private void APressed(){
         Watch.changeToMode((char)(Watch.getIntCurMode() + 1));
+        Watch.getCurMode().APressed();
         // 이후 curMode가 실행되어야함
     }
 
@@ -83,16 +85,19 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
             Watch.update();
             repaint();
             endProcess = System.nanoTime();
-            elapsed = (lastTime + msPerFrame - System.nanoTime());
-            timeout = elapsed;
+            elapsed = (lastTime + msPerFrame - System.nanoTime()); // 진행된 시간
+            timeout = TimeUnit.SECONDS.convert(elapsed, TimeUnit.NANOSECONDS);
+            if (timeout == 10){ // TimeOut
+                timeout = 0;
+                Watch.returnTimeMode();
+            }
             msSleep = (int)(elapsed / 1000000);
-            nanoSleep = (int)(elapsed % 1000000);
             if(msSleep <= 0){
                 lastTime = System.nanoTime();
                 continue;
             }
             try{
-                Thread.sleep(msSleep, nanoSleep);
+                Thread.sleep(msSleep);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }

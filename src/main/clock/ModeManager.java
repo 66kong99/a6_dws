@@ -107,7 +107,7 @@ public class ModeManager {
         alarm.compare(time.curTime);
         switch(curMode){
             case 0:
-                time.update();
+                time.updateTime();
                 break;
             case 1:
                 alarm.update();
@@ -118,9 +118,10 @@ public class ModeManager {
             case 3:
                 return timer;
             case 4:
-                return worldtime;
+                worldtime.update(time.curTime);
+                break;
             case 5:
-                return stopwatch;
+                stopwatch.updateStopw();
             default:
                 break;
         }
@@ -172,7 +173,7 @@ public class ModeManager {
     }
 
     public void returnTimeMode() {
-// timeout
+        curMode = 0;
     }
 }
 

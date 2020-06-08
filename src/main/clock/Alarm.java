@@ -8,7 +8,7 @@ public class Alarm implements Mode{
     private List<Boolean> toggle;
     private Buzzer beep;
 
-    private byte index;
+    private int index;
     private int timeUnit[];
     private int Unit = 0;
 
@@ -21,18 +21,23 @@ public class Alarm implements Mode{
         timeUnit = new int[3];
         isSetAlarm = false;
         index = 0;
+
+        for(int i = 0; i < 5; i++) {
+            setAlarm();
+            toggle.add(true);
+        }
     }
 
     public void setAlarm() {
-        for(int i : timeUnit)
-            i = 0;
-
+        Calendar temp = Calendar.getInstance();
+        temp.set(0, 0, 0, timeUnit[0], timeUnit[1], timeUnit[2]);
+        alarms.set(index, temp);
     }
 
     public void update(){ }
 
     public void changeAlarmIndex() {
-        index++;
+        index = (index+1) % alarms.size();
     }
 
     public void changeAlarmToggle() {
@@ -72,6 +77,14 @@ public class Alarm implements Mode{
     }
 
     @Override
+    public void APressed() {
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
+        }
+    }
+
+    @Override
     public void WPressed(boolean Longpress) {
         if(beep.isBeep == true) {
                 beep.stopBeep();
@@ -79,11 +92,13 @@ public class Alarm implements Mode{
         }
         if (isSetAlarm == true) {
             isSetAlarm = false;
+            setAlarm();
             return;
         }
-        if (Longpress == true){
+        if (Longpress && !isSetAlarm){
             isSetAlarm = true;
-            setAlarm();
+            for (int i : timeUnit)
+                i = 0;
         }
         else{
             changeAlarmIndex();
@@ -99,9 +114,16 @@ public class Alarm implements Mode{
         if (Longpress && !isSetAlarm) {
             isSetAlarm = !isSetAlarm;
             setAlarm();
+            return;
         }
-        if (Longpress && isSetAlarm)
+        if (Longpress && isSetAlarm) {
             Unit++;
+            return;
+        }
+        if (isSetAlarm) {
+            timeUnit[Unit]++;
+            return;
+        }
         changeAlarmToggle();
 
     }
