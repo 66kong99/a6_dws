@@ -92,6 +92,11 @@ public class Timer implements Mode{
         timerUnit[2] = 0;
     }
 
+    // W(LP) : setting mode
+    // S = Start
+    // S(LP) = changeUnit
+    // W = reset
+
     @Override
     public void QPressed(boolean Longpress) {
         if(beep.isBeep == true) {
@@ -113,11 +118,16 @@ public class Timer implements Mode{
             return;
         }
 
-        if(isSetTimer){
-            isSetTimer = false;
-            setTimer();
+        if(Longpress && !isSetTimer){
+            isSetTimer = true;
             return;
         }
+        if (isSetTimer){
+            setTimer();
+            isSetTimer = false;
+            return;
+        }
+
         resetTimer();
 
     }
@@ -128,17 +138,15 @@ public class Timer implements Mode{
             beep.stopBeep();
             return;
         }
-        if (Longpress && !isSetTimer){
-            isSetTimer = true;
-            Unit = 0;
-            return;
-        }
-        if (isSetTimer) {
-            if (Longpress)
+        if (isSetTimer){
+            if(Longpress) {
                 Unit++;
+                return;
+            }
             timerUnit[Unit]++;
             return;
         }
+
         if (isPaused)
             decreaseTimer();
         else

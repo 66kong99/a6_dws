@@ -7,15 +7,18 @@ import javax.swing.*;
 import java.io.*;
 
 
-public class Time extends JFrame implements Mode{
+public class Time implements Mode{
     private DayOfWeek[] dayOfWeeks = DayOfWeek.values();
-    private JLabel timeLabel, timeLabel2;
     private int timeUnit = 1;
+    private static boolean isSetTime;
+    private Buzzer beep;
     public Calendar curTime;
 
 
     public Time() {
         this.curTime = Calendar.getInstance();
+        this.isSetTime = false;
+        beep = new Buzzer();
     }
 
 
@@ -57,15 +60,19 @@ public class Time extends JFrame implements Mode{
 
         timeBufferArr[2] = secBuffer.toString();
 
-        this.curTime.add(Calendar.MILLISECOND, 10);
+
+        if(!isSetTime)
+            this.curTime.add(Calendar.MILLISECOND, 10);
 
         return timeBufferArr;
     }
 
-
-    public void updateTime() {
+    public void updateTime(){
 
     }
+
+
+
 
     public void increaseTimeValue() {
         switch(this.timeUnit){
@@ -97,6 +104,8 @@ public class Time extends JFrame implements Mode{
             default:
                 break;
         }
+
+
     }
 
 
@@ -105,29 +114,63 @@ public class Time extends JFrame implements Mode{
         if(timeUnit >= 4)
             timeUnit = 1;
     }
-
     @Override
     public void QPressed(boolean Longpress) {
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
+        }
 
     }
 
     @Override
     public void APressed() {
-
-    }
-
-    @Override
-    public void WPressed(boolean Longpress) {
-        if(Longpress == true){
-
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
         }
     }
 
     @Override
+    public void WPressed(boolean Longpress) {
+        System.out.println("W Pressed");
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
+        }
+
+        if(Longpress && !isSetTime){ //set Time
+            System.out.println("W Longpressed");
+            isSetTime = true;
+            return;
+        }
+
+        isSetTime = false;
+    }
+
+    @Override
     public void SPressed(boolean Longpress) {
-        if(Longpress == false)
+        System.out.println("S Pressed");
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
+        }
+        if(!Longpress && isSetTime){
             increaseTimeValue();
-        else
-            updateTime();
+            return;
+        }
+
+        if (Longpress && isSetTime) {
+            System.out.println("S Longpressed");
+            changeTimeUnit();
+            return;
+        }
+
+    }
+
+
+    public void beepSignalTime(){
+        if(this.curTime.get(Calendar.MINUTE) == 0)
+            beep.beep(3);
     }
 }

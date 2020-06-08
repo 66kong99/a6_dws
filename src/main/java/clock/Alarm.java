@@ -76,6 +76,11 @@ public class Alarm implements Mode{
 
     }
 
+    // W(LP) : setting mode
+    // S = Start
+    // S(LP) = changeUnit
+    // W = reset
+
     @Override
     public void QPressed(boolean Longpress) {
         if(beep.isBeep == true) {
