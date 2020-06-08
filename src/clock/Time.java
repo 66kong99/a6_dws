@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.io.*;
 
 
-public class Time extends JFrame implements Mode{
+public class Time extends JFrame{
     private DayOfWeek[] dayOfWeeks = DayOfWeek.values();
     private Thread timeThread;
     private JLabel timeLabel, timeLabel2;
@@ -141,6 +141,8 @@ public class Time extends JFrame implements Mode{
             default:
                 break;
         }
+
+
     }
 
 
@@ -159,7 +161,7 @@ public class Time extends JFrame implements Mode{
         time.updateTime();
 
     }
-
+    /*
     @Override
     public void QPressed(boolean Longpress) {
 
@@ -179,4 +181,7 @@ public class Time extends JFrame implements Mode{
         else
             updateTime();
     }
+
+    */
+
 }
