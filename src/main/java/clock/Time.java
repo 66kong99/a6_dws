@@ -1,5 +1,7 @@
 package clock;
 
+import sun.util.resources.cldr.es.CalendarData_es_AR;
+
 import java.time.DayOfWeek;
 import java.util.*;
 import java.awt.*;
@@ -7,13 +9,14 @@ import javax.swing.*;
 import java.io.*;
 
 
-<<<<<<< HEAD:src/clock/Time.java
-public class Time extends JFrame{
-=======
+
 public class Time implements Mode{
->>>>>>> e1989cefcea243d02851097845bf60b38f5ae3e3:src/main/java/clock/Time.java
+
     private DayOfWeek[] dayOfWeeks = DayOfWeek.values();
     private int timeUnit = 1;
+
+
+
     private static boolean isSetTime;
     private Buzzer beep;
     public Calendar curTime;
@@ -24,7 +27,6 @@ public class Time implements Mode{
         this.isSetTime = false;
         beep = new Buzzer();
     }
-
 
 
     public String[] requestCurTime() {
@@ -76,33 +78,59 @@ public class Time implements Mode{
     }
 
 
-
-
     public void increaseTimeValue() {
         switch(this.timeUnit){
 
             case 1:
 
+                this.curTime.add(Calendar.SECOND, 1);
+
                 if(this.curTime.get(Calendar.SECOND) == 0)
                     this.curTime.add(Calendar.MINUTE, -1);
 
-                this.curTime.add(Calendar.SECOND, 1);
-
                 break;
             case 2 :
-                if(this.curTime.get(Calendar.MINUTE) == 0)
-                    this.curTime.add(Calendar.HOUR_OF_DAY, -1);
 
                 this.curTime.add(Calendar.MINUTE, 1);
+
+                if(this.curTime.get(Calendar.MINUTE) == 0)
+                    this.curTime.add(Calendar.HOUR_OF_DAY, -1);
 
                 break;
 
             case 3:
-                if(this.curTime.get(Calendar.HOUR_OF_DAY) == 0)
-                    this.curTime.add(Calendar.DATE, -1);
 
                 this.curTime.add(Calendar.HOUR_OF_DAY, 1);
 
+                if(this.curTime.get(Calendar.HOUR_OF_DAY) == 0)
+                    this.curTime.add(Calendar.DATE, -1);
+
+                break;
+
+            case 4:
+
+                this.curTime.add(Calendar.DATE, 1);
+
+                if(this.curTime.get(Calendar.DATE) == 1)
+                    this.curTime.add(Calendar.MONTH, -1);
+
+                break;
+
+            case 5:
+
+                this.curTime.add(Calendar.MONTH, 1);
+
+                if(this.curTime.get(Calendar.MONTH) == Calendar.JANUARY)
+                    this.curTime.add(Calendar.YEAR, -1);
+
+                break;
+
+            case 6:
+
+                this.curTime.add(Calendar.YEAR, 1);
+
+                if(this.curTime.get(Calendar.YEAR) == 2100)
+                    this.curTime.set(Calendar.YEAR, 1970);
                 break;
 
             default:
@@ -113,20 +141,23 @@ public class Time implements Mode{
     }
 
 
+
+
     public void changeTimeUnit(){
         timeUnit++;
-        if(timeUnit >= 4)
+        if(timeUnit >= 7)
             timeUnit = 1;
     }
+
+
     @Override
     public void QPressed(boolean Longpress) {
         if(beep.isBeep == true) {
             beep.stopBeep();
             return;
         }
-
     }
-    /*
+
     @Override
     public void APressed() {
         if(beep.isBeep == true) {
@@ -178,6 +209,6 @@ public class Time implements Mode{
             beep.beep(3);
     }
 
-    */
+
 
 }
