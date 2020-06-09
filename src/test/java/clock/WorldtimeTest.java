@@ -34,7 +34,7 @@ class WorldtimeTest {
             worldtime.calWorldTime();
             assertEquals(temp3[(int)field5.get(worldtime)], "TOKYO");
             assertEquals((boolean)field3.get(worldtime), true);
-            assertEquals((temp2.getTimeInMillis() - temp1.getTimeInMillis()) / (60 * 60 * 1000), 0);
+            assertEquals((temp2.getTimeInMillis() - temp1.getTimeInMillis()) / (60 * 60 * 1000), 1);
             //assertEquals(temp2.get(Calendar.HOUR_OF_DAY) - 1, temp1.get(Calendar.HOUR_OF_DAY));
             assertEquals(temp2.get(Calendar.MINUTE), temp1.get(Calendar.MINUTE));
             assertEquals(temp2.get(Calendar.SECOND), temp1.get(Calendar.SECOND));
@@ -51,7 +51,7 @@ class WorldtimeTest {
             worldtime.calWorldTime();
             assertEquals(temp3[(int)field5.get(worldtime)], "SYDNEY");
             assertEquals((boolean)field3.get(worldtime), true);
-            assertEquals((temp2.getTimeInMillis() - temp1.getTimeInMillis()) / (60 * 60 * 1000), 1);
+            assertEquals((temp2.getTimeInMillis() - temp1.getTimeInMillis()) / (60 * 60 * 1000), 2);
             //assertEquals(temp2.get(Calendar.HOUR_OF_DAY) - 2, temp1.get(Calendar.HOUR_OF_DAY));
             assertEquals(temp2.get(Calendar.MINUTE), temp1.get(Calendar.MINUTE));
             assertEquals(temp2.get(Calendar.SECOND), temp1.get(Calendar.SECOND));
