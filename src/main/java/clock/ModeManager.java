@@ -28,12 +28,12 @@ public class ModeManager {
 //    public JLabel top, main, sub;
 
     public ModeManager() {
-        alarm = new Alarm();
-        game = new Game();
         time = new Time();
-        timer = new Timer();
-        worldtime = new Worldtime(time.curTime);
         stopwatch = new Stopwatch();
+        timer = new Timer();
+        alarm = new Alarm();
+        worldtime = new Worldtime(time.curTime);
+        game = new Game();
 
         beep = new Buzzer();
 
@@ -69,15 +69,15 @@ public class ModeManager {
             case 0:
                 return time;
             case 1:
-                return alarm;
+                return stopwatch;
             case 2:
-                return game;
-            case 3:
                 return timer;
+            case 3:
+                return alarm;
             case 4:
                 return worldtime;
             case 5:
-                return stopwatch;
+                return game;
             default:
                 break;
         }
@@ -123,15 +123,15 @@ public class ModeManager {
             case 0:
                 return "Time";
             case 1:
-                return "Alarm";
+                return "Stopwatch";
             case 2:
-                return "Game";
-            case 3:
                 return "Timer";
+            case 3:
+                return "Alarm";
             case 4:
                 return "Worldtime";
             case 5:
-                return "Stopwatch";
+                return "Game";
         }
         return null;
     }
@@ -144,13 +144,11 @@ public class ModeManager {
         alarm.compare(time.curTime);
         switch(curMode){
             case 0:
-                time.updateTime();
                 break;
             case 1:
-                alarm.update();
+                stopwatch.updateStopw();
                 break;
             case 2:
-                game.update();
                 break;
             case 3:
                 break;
@@ -158,7 +156,8 @@ public class ModeManager {
                 worldtime.update(time.curTime);
                 break;
             case 5:
-                stopwatch.updateStopw();
+                game.update();
+                break;
             default:
                 break;
         }
@@ -175,7 +174,7 @@ public class ModeManager {
             g.drawString("->", 570, 388);
             g.drawString("->", 570, 588);
         }
-        else if (curMode == 2)// game
+        else if (curMode == 5)// game
             game.paint(g);
         else {
             switch (curMode) {
@@ -183,16 +182,16 @@ public class ModeManager {
 //                    data = time.requestCurTime(); // Time always update and draw
                     break;
                 case 1:
-                    data = alarm.requestAlarm();
+                    data = stopwatch.requestStopwTime();
+                    break;
+                case 2:
+                    data = timer.requestTimerTime();
                     break;
                 case 3:
-                    data = timer.requestTimerTime();
+                    data = alarm.requestAlarm();
                     break;
                 case 4:
                     data = worldtime.requestWorldtime(time.curTime);
-                    break;
-                case 5:
-                    data = stopwatch.requestStopwTime();
                     break;
                 default:
                     break;
