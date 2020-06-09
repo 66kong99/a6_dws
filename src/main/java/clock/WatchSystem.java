@@ -20,7 +20,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
     public ModeManager Watch;
 
     private BufferedImage background;
-    private int isLongpress;
+    private long isLongpress;
 
     private Font font;
 
@@ -82,20 +82,23 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getX() + ":" +  e.getY());
+//        System.out.println(e.getX() + ":" +  e.getY());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        isLongpress++;
+//        System.out.println(System.nanoTime());
+        isLongpress = System.nanoTime();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+//        System.out.println(System.nanoTime() - isLongpress);
         int getX = e.getX();
         int getY = e.getY();
 
-        boolean Longpress = (isLongpress >= 10);
+        boolean Longpress = (System.nanoTime() - isLongpress) >= 1000000000;
+//        System.out.println(Longpress);
         if(getX < 60) {
             if(348 < getY && getY < 428){ // TOP-LEFT Button
                 Watch.QPressed(Longpress);
