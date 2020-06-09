@@ -209,7 +209,7 @@ public class ModeManager {
 
     public void QPressed(boolean Longpress){
         if(isSwapMode == true){
-
+            isSwapMode = false;
         }
         if (Longpress == true && curMode != 0){
             isSwapMode = true;

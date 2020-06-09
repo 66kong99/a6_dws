@@ -30,6 +30,7 @@ public class Watch extends JFrame{
         watchSystem = new WatchSystem();
 
         addKeyListener(watchSystem);
+        addMouseListener(watchSystem);
         add(watchSystem);
 
         pack();

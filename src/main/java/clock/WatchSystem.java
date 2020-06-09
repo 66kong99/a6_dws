@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +16,7 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 
-public class WatchSystem extends JPanel implements KeyListener, Runnable {
+public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable {
     public ModeManager Watch;
 
     private BufferedImage background;
@@ -78,6 +80,52 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
         isLongpress = 0;
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println(e.getX() + ":" +  e.getY());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        isLongpress++;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        int getX = e.getX();
+        int getY = e.getY();
+
+        boolean Longpress = (isLongpress >= 10);
+        if(getX < 60) {
+            if(348 < getY && getY < 428){ // TOP-LEFT Button
+                Watch.QPressed(Longpress);
+            }
+            else if(548 < getY && getY < 628){ // DOWN-LEFT Button
+                this.APressed();
+            }
+        }
+        else if(getX > 665) {
+            if(348 < getY && getY < 428){ // TOP-RIGHT Button
+                Watch.WPressed(Longpress);
+            }
+            else if(548 < getY && getY < 628){ // DOWN-RIGHT Button
+                Watch.SPressed(Longpress);
+            }
+        }
+        isLongpress = 0;
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+
     private void APressed(){
         System.out.println("APressed");
         Watch.changeToMode(Watch.nextMode());
@@ -135,4 +183,6 @@ public class WatchSystem extends JPanel implements KeyListener, Runnable {
         }
 
     }
+
+
 }
