@@ -1,13 +1,7 @@
-package clock;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.Buffer;
 
-import util.Resource;
+import clock.WatchSystem;
 
 public class Watch extends JFrame{
     public static final int SCREEN_WIDTH = 735;
