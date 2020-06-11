@@ -39,10 +39,10 @@ public class Dinosaur {
         posY = LAND_POSY;
         rectBound = new Rectangle();
         normalRunAnim = new Animation(90);
-        normalRunAnim.addFrame(Resource.getResourceImage(("data/main-character1.png")));
-        normalRunAnim.addFrame(Resource.getResourceImage(("data/main-character2.png")));
-        jumping = Resource.getResourceImage(("data/main-character3.png"));
-        deathImage = Resource.getResourceImage(("data/main-character4.png"));
+        normalRunAnim.addFrame(Resource.getResourceImage("resources/main-character1.png"));
+        normalRunAnim.addFrame(Resource.getResourceImage("resources/main-character2.png"));
+        jumping = Resource.getResourceImage("resources/main-character3.png");
+        deathImage = Resource.getResourceImage("resources/main-character4.png");
 
         scoreUpSound = new Buzzer();
     }

@@ -26,7 +26,7 @@ public class Timer implements Mode{
 
     public String[] requestTimerTime() {
         if (!isSetTimer) {
-            String[] timerBufferArr = new String[3];
+            String[] timerBufferArr = new String[4];
 
             Calendar tempTime = (Calendar) this.timerTime.clone();
 
@@ -53,9 +53,9 @@ public class Timer implements Mode{
 
             timerBufferArr[2] = secBuffer.toString();
 
+            timerBufferArr[3] = "X";
             if (this.isPaused == false && (this.timerTime.get(Calendar.SECOND) != 0 || this.timerTime.get(Calendar.MINUTE) != 0 || this.timerTime.get(Calendar.HOUR_OF_DAY) != 0))
                 this.timerTime.add(Calendar.MILLISECOND, -10);
-
             return timerBufferArr;
         }
         System.out.println("down");
@@ -69,7 +69,7 @@ public class Timer implements Mode{
         if (timerUnit[2] == 25){
             timerUnit[2] = 0;
         }
-        return new String[]{"Timer", String.format("%02d", timerUnit[2]) + ":" + String.format("%02d", timerUnit[1]), ":" + String.format("%02d", timerUnit[0])};
+        return new String[]{"Timer", String.format("%02d", timerUnit[2]) + ":" + String.format("%02d", timerUnit[1]), ":" + String.format("%02d", timerUnit[0]), "O"};
     }
 
     public void decreaseTimer() {
@@ -101,14 +101,17 @@ public class Timer implements Mode{
     public void QPressed(boolean Longpress) {
         if(beep.isBeep == true) {
             beep.stopBeep();
-
+            return;
         }
 
     }
 
     @Override
     public void APressed() {
-
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
+        }
     }
 
     @Override
@@ -118,26 +121,7 @@ public class Timer implements Mode{
             return;
         }
 
-        if(Longpress && !isSetTimer){
-            isSetTimer = true;
-            return;
-        }
-        if (isSetTimer){
-            setTimer();
-            isSetTimer = false;
-            return;
-        }
 
-        resetTimer();
-
-    }
-
-    @Override
-    public void SPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
         if (isSetTimer){
             if(Longpress) {
                 Unit++;
@@ -151,6 +135,28 @@ public class Timer implements Mode{
             decreaseTimer();
         else
             pauseTimer();
+
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) {
+        if(beep.isBeep == true) {
+            beep.stopBeep();
+            return;
+        }
+
+        if(Longpress && !isSetTimer){
+            isSetTimer = true;
+            return;
+        }
+
+        if (isSetTimer){
+            setTimer();
+            isSetTimer = false;
+            return;
+        }
+
+        resetTimer();
     }
 
     public void beepTimer(){

@@ -1,5 +1,7 @@
 package clock;
 
+import util.Resource;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,18 +9,22 @@ import java.util.*;
 import javax.swing.*;
 
 public class ModeManager {
-    private Alarm alarm; // 1
-    private Game game; // 2
+    private Alarm alarm; // 3
+    public Game game; // 5
     public Time time; // 0
-    private Timer timer; // 3
+    private Timer timer; // 2
     private Worldtime worldtime; // 4
-    private Stopwatch stopwatch; // 5
+    private Stopwatch stopwatch; // 1
     private Buzzer beep;
 
     private char tempMode;
     private char curMode;
     private boolean activated[];
     private int deactivate[];
+    private int count;
+
+    private boolean isGray;
+    private boolean isSet;
 
     private boolean isSwapMode;
 
@@ -42,9 +48,9 @@ public class ModeManager {
 //        sub = new JLabel(time.requestCurTime()[2], SwingConstants.LEFT);
 
         try {
-            top = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 60);
-            main = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 170);
-            sub = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 60);
+            top = Resource.getFont("resources/scoreboard.ttf", 60);
+            main = Resource.getFont("resources/scoreboard.ttf", 170);
+            sub = Resource.getFont("resources/scoreboard.ttf", 60);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,6 +65,8 @@ public class ModeManager {
 
         curMode = 0; // Timer
 
+        count = 0;
+        isGray = false;
         isSwapMode = false;
 
     }
@@ -98,6 +106,10 @@ public class ModeManager {
     }
 
     public void changeToMode(char Mode) {
+        if(game.gameState == 1)
+            return;
+        if(isSet)
+            return;
         this.curMode = Mode;
     }
 
@@ -163,8 +175,9 @@ public class ModeManager {
         }
     }
 
-    public void paint(Graphics g){
-        String[] data = new String[3];
+    public void paint(Graphics g){ // "Mode Name", "Hour, Minute", "sec", "O" or "X"
+        count ++;
+        String[] data = new String[4];
         data = time.requestCurTime();
         if (isSwapMode) {
             data = deactivateMode();
@@ -196,13 +209,27 @@ public class ModeManager {
                 default:
                     break;
             }
-//            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2]);
+            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2] + "\n" + data[3]);
+
+            g.setColor(Color.BLACK);
+            if (isGray && data[3] == "O"){
+                isSet = true;
+                g.setColor(Color.GRAY);
+            }
+            if (data[3] == "X")
+                isSet = false;
+
             g.setFont(top);
             g.drawString(data[0], 100, 388);
             g.setFont(main);
             g.drawString(data[1], 95, 600);
             g.setFont(sub);
             g.drawString(data[2], 540, 600);
+
+            if (count / 100 == 1) {
+                isGray = !isGray;
+                count = 0;
+            }
         }
     }
 
@@ -241,6 +268,12 @@ public class ModeManager {
     }
 
     public void returnTimeMode() {
+        if (stopwatch.isPaused == false)
+            return;
+        if (game.gameState == 1)
+            return;
+        if (isSet)
+            return;
         curMode = 0;
     }
 }

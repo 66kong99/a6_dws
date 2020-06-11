@@ -15,12 +15,15 @@ import java.nio.Buffer;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import util.Resource;
+
 
 public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable {
     public ModeManager Watch;
 
     private BufferedImage background;
     private long isLongpress;
+    private long timeOut;
 
     private Font font;
 
@@ -28,13 +31,14 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     public WatchSystem() {
         isLongpress = 0;
+        timeOut = 0;
 
         Watch = new ModeManager();
 
-        background = Resource.getResourceImage("data/clock.png");
+        background = Resource.getResourceImage("resources/clock.png");
 
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("data/scoreboard.ttf"))).deriveFont(Font.PLAIN, 32);
+            font = Resource.getFont("resources/scoreboard.ttf", 32);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -60,6 +64,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
     }
 
     public void keyPressed(KeyEvent e){
+        timeOut = 0;
         System.out.println(isLongpress);
         isLongpress++;
     }
@@ -71,8 +76,10 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         System.out.println(Longpress);
         if (keycode == KeyEvent.VK_Q)
             Watch.QPressed(Longpress);
-        else if (keycode == KeyEvent.VK_A)
-            this.APressed();
+        else if (keycode == KeyEvent.VK_A) {
+            if (Watch.getIntCurMode() != 5 && Watch.game.gameState != 1)
+                this.APressed();
+        }
         else if (keycode == KeyEvent.VK_W)
             Watch.WPressed(Longpress);
         else if (keycode == KeyEvent.VK_S)
@@ -87,6 +94,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mousePressed(MouseEvent e) {
+        timeOut = 0;
 //        System.out.println(System.nanoTime());
         isLongpress = System.nanoTime();
     }
@@ -148,44 +156,20 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void run() {
-        int fps = 100;
-        long msPerFrame = 1000 * 1000000 / fps;
-        long lastTime = 0;
-        long elapsed;
-        long timeout = 0;
-
-        int msSleep;
-        int nanoSleep;
-        
-        long endProcess;
-        long lag = 0;
-
         while(true){
             Watch.update();
             repaint();
-            endProcess = System.nanoTime();
-            elapsed = (lastTime + msPerFrame - System.nanoTime());
-            timeout = TimeUnit.SECONDS.convert(elapsed, TimeUnit.NANOSECONDS);
-//            System.out.println(timeout + "\n" + elapsed);
-            if (timeout == 10){ // TimeOut
-                timeout = 0;
+            timeOut += 10; // plus 10 milliseconds
+            if (timeOut == 10000){ // TimeOut
+                timeOut = 0;
                 Watch.returnTimeMode();
             }
-            msSleep = (int)(elapsed / 1000000);
-            if(msSleep <= 0){
-                lastTime = System.nanoTime();
-                continue;
-            }
             try{
-                Thread.sleep(msSleep);
+                Thread.sleep(10);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
-            lastTime = System.nanoTime();
-
         }
-
     }
-
 
 }

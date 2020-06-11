@@ -19,7 +19,7 @@ public class Game extends JPanel implements Mode, Runnable {
     private Thread thread;
     private boolean buttenPressed;
 
-    private int gameState = START_GAME_STATE;
+    public int gameState = START_GAME_STATE;
 
     private BufferedImage replayButtonImage;
     private BufferedImage gameOverButtonImage;
@@ -28,8 +28,8 @@ public class Game extends JPanel implements Mode, Runnable {
         dinosaur = new Dinosaur();
         background = new Background(550, dinosaur);
         dinosaur.setSpeedX(4);
-        replayButtonImage = Resource.getResourceImage("data/replay_button.png");
-        gameOverButtonImage = Resource.getResourceImage("data/gameover_text.png");
+        replayButtonImage = Resource.getResourceImage("resources/replay_button.png");
+        gameOverButtonImage = Resource.getResourceImage("resources/gameover_text.png");
         hurdleManager = new Hurdle(dinosaur);
     }
 
@@ -127,7 +127,7 @@ public class Game extends JPanel implements Mode, Runnable {
 
     @Override
     public void QPressed(boolean Longpress) {
-        buttonPressed();
+
     }
 
     @Override
@@ -137,7 +137,7 @@ public class Game extends JPanel implements Mode, Runnable {
 
     @Override
     public void WPressed(boolean Longpress) {
-        buttonPressed();
+
     }
 
     @Override

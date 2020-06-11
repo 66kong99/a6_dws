@@ -21,9 +21,9 @@ public class Background {
 
     public Background(int width, Dinosaur dinosaur){
         this.dinosaur = dinosaur;
-        land1 = Resource.getResourceImage("data/land1.png");
-        land2 = Resource.getResourceImage("data/land2.png");
-        land3 = Resource.getResourceImage("data/land3.png");
+        land1 = Resource.getResourceImage("resources/land1.png");
+        land2 = Resource.getResourceImage("resources/land2.png");
+        land3 = Resource.getResourceImage("resources/land3.png");
         int numberOfImageBackground = width / land1.getWidth() + 2;
         listBackground = new ArrayList<ImageBackground>();
         for(int i = 0; i < numberOfImageBackground; i++){

@@ -14,7 +14,7 @@ public class Time implements Mode{
 
     private DayOfWeek[] dayOfWeeks = DayOfWeek.values();
     private int timeUnit = 1;
-
+    private String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 
     private static boolean isSetTime;
@@ -30,7 +30,7 @@ public class Time implements Mode{
 
 
     public String[] requestCurTime() {
-        String[] timeBufferArr = new String[3];
+        String[] timeBufferArr = new String[4];
 
         Calendar tempTime = (Calendar) this.curTime.clone();
 
@@ -47,7 +47,7 @@ public class Time implements Mode{
         dateBuffer.append(tempTime.get(Calendar.DATE) < 10 ? "0" : "");
         dateBuffer.append(tempTime.get(Calendar.DATE));
         dateBuffer.append(" ");
-        dateBuffer.append(dayOfWeeks[((tempTime.get(Calendar.DAY_OF_WEEK))+5)%7]);
+        dateBuffer.append(dayOfWeek[(tempTime.get(Calendar.DAY_OF_WEEK)-1)%7]);
 
 
         timeBufferArr[0] = dateBuffer.toString();
@@ -67,8 +67,11 @@ public class Time implements Mode{
         timeBufferArr[2] = secBuffer.toString();
 
 
-        if(!isSetTime)
+        if(!isSetTime) {
+            timeBufferArr[3] = "X";
             this.curTime.add(Calendar.MILLISECOND, 10);
+        }else
+            timeBufferArr[3] = "O";
 
         return timeBufferArr;
     }
@@ -139,9 +142,6 @@ public class Time implements Mode{
 
 
     }
-
-
-
 
     public void changeTimeUnit(){
         timeUnit++;

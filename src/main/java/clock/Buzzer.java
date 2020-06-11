@@ -1,5 +1,7 @@
 package clock;
 
+import util.Resource;
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.MalformedURLException;
@@ -12,17 +14,21 @@ public class Buzzer {
 
     public Buzzer() {
         try {
-            beepSound = Applet.newAudioClip(new URL("file", "", "data/beep.wav"));
-        }catch (MalformedURLException e){
+            beepSound = Applet.newAudioClip(Resource.class.getClassLoader().getResource("resources/beep.wav"));
+        }catch (Exception e){
             e.printStackTrace();
         }
         isBeep = false;
     }
     public void beep(int repeatTime) {
         isBeep = true;
-        for(int i = 0; i < repeatTime; i++){
-            beepSound.play();
+        beepSound.loop();
+        try {
+            Thread.sleep(200 * repeatTime);
+        } catch (Exception e){
+            e.printStackTrace();
         }
+        beepSound.stop();
     }
 
     public void stopBeep() {

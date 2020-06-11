@@ -11,10 +11,8 @@ public class Stopwatch implements Mode {
     public Calendar stopwTime;
     public Calendar splitstopwTime;
 
-    private static boolean isPaused;
+    public static boolean isPaused;
     private boolean isSplit;
-    private boolean buttoncount = true; //button switch for starting or pausing stopwatch
-
 
     public Stopwatch() {
         this.stopwTime = Calendar.getInstance();
@@ -26,7 +24,7 @@ public class Stopwatch implements Mode {
 
 
     public String[] requestStopwTime() {
-        String[] stopwBufferArr = new String[3];
+        String[] stopwBufferArr = new String[4];
         if(this.stopwTime.get(Calendar.HOUR_OF_DAY)==0) {
 
             Calendar tempStopwTime = (Calendar) stopwTime.clone();
@@ -54,6 +52,8 @@ public class Stopwatch implements Mode {
 
             if (this.isPaused == false)
                 this.stopwTime.add(Calendar.MILLISECOND, 10);
+
+            stopwBufferArr[3] = "X";
 
         }
         return stopwBufferArr;
@@ -84,7 +84,7 @@ public class Stopwatch implements Mode {
     }
 
     public String[] requestSplit() {
-        String[] splitBufferArr = new String[3];
+        String[] splitBufferArr = new String[4];
         this.isSplit = true;
 
         if(this.isPaused == false && this.isSplit == true) {
@@ -116,7 +116,9 @@ public class Stopwatch implements Mode {
             csecBuffer.append(tempStopwTime.get(Calendar.MILLISECOND) / 10);
 
             splitBufferArr[2] = csecBuffer.toString();
+
         }
+        splitBufferArr[3] = "X";
         return splitBufferArr;
     }
 

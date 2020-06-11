@@ -18,8 +18,8 @@ public class Hurdle {
 
     public Hurdle(Dinosaur dinosaur){
         rand = new Random();
-        cactus1 = Resource.getResourceImage("data/cactus1.png");
-        cactus2 = Resource.getResourceImage("data/cactus2.png");
+        cactus1 = Resource.getResourceImage("resources/cactus1.png");
+        cactus2 = Resource.getResourceImage("resources/cactus2.png");
         Hurdles = new ArrayList<Cactus>();
         this.dinosaur = dinosaur;
         Hurdles.add(createCactus());
