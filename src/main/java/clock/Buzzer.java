@@ -23,12 +23,10 @@ public class Buzzer {
     public void beep(int repeatTime) {
         isBeep = true;
         beepSound.loop();
-        try {
-            Thread.sleep(200 * repeatTime);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        beepSound.stop();
+    }
+
+    public void beepOne(){
+        beepSound.play();
     }
 
     public void stopBeep() {

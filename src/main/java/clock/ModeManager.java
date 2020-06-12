@@ -209,22 +209,48 @@ public class ModeManager {
                 default:
                     break;
             }
-            System.out.println(data[0] + "\n" + data[1] + "\n" + data[2] + "\n" + data[3]);
+//            System.out.println(data[0] + " " + data[1] + " " + data[2] + " " + data[3]);
+//            System.out.println(data[3] == "1");
 
-            g.setColor(Color.BLACK);
-            if (isGray && data[3] == "O"){
-                isSet = true;
-                g.setColor(Color.GRAY);
-            }
             if (data[3] == "X")
                 isSet = false;
 
+            if (isGray && !data[3].equals("X")){
+                isSet = true;
+                g.setColor(Color.GRAY);
+            }else
+                g.setColor(Color.BLACK);
+
             g.setFont(top);
             g.drawString(data[0], 100, 388);
+
+            if (isGray && data[3].equals("3")){
+                isSet = true;
+                g.setColor(Color.GRAY);
+            } else
+                g.setColor(Color.BLACK);
+
             g.setFont(main);
-            g.drawString(data[1], 95, 600);
+            g.drawString(data[1].substring(0, 2), 95, 600);
+
+            g.drawString(data[1].substring(2, 3), 265, 600);
+
+            if (isGray && data[3].equals("2")){
+                isSet = true;
+                g.setColor(Color.GRAY);
+            } else
+                g.setColor(Color.BLACK);
+
+            g.drawString(data[1].substring(3, 5), 340, 600);
+
+            if (isGray && data[3].equals("1")){
+                isSet = true;
+                g.setColor(Color.GRAY);
+            } else
+                g.setColor(Color.BLACK);
+
             g.setFont(sub);
-            g.drawString(data[2], 540, 600);
+            g.drawString(data[2], 520, 600);
 
             if (count / 100 == 1) {
                 isGray = !isGray;

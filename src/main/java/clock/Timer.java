@@ -58,7 +58,7 @@ public class Timer implements Mode{
                 this.timerTime.add(Calendar.MILLISECOND, -10);
             return timerBufferArr;
         }
-        System.out.println("down");
+//        System.out.println("down");
         if (timerUnit[0] == 61){
             timerUnit[1]++;
             timerUnit[0] = 0;
@@ -69,7 +69,7 @@ public class Timer implements Mode{
         if (timerUnit[2] == 25){
             timerUnit[2] = 0;
         }
-        return new String[]{"Timer", String.format("%02d", timerUnit[2]) + ":" + String.format("%02d", timerUnit[1]), ":" + String.format("%02d", timerUnit[0]), "O"};
+        return new String[]{"Timer", String.format("%02d", timerUnit[2]) + ":" + String.format("%02d", timerUnit[1]), ":" + String.format("%02d", timerUnit[0]), String.format("%d", Unit+1)};
     }
 
     public void decreaseTimer() {
@@ -155,8 +155,8 @@ public class Timer implements Mode{
             isSetTimer = false;
             return;
         }
-
-        resetTimer();
+        if (isPaused)
+            resetTimer();
     }
 
     public void beepTimer(){

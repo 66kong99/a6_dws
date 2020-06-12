@@ -65,7 +65,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     public void keyPressed(KeyEvent e){
         timeOut = 0;
-        System.out.println(isLongpress);
+//        System.out.println(isLongpress);
         isLongpress++;
     }
 
@@ -73,7 +73,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         int keycode = e.getKeyCode();
 
         boolean Longpress = (isLongpress >= 10);
-        System.out.println(Longpress);
+//        System.out.println(Longpress);
         if (keycode == KeyEvent.VK_Q)
             Watch.QPressed(Longpress);
         else if (keycode == KeyEvent.VK_A) {
@@ -138,7 +138,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
 
     private void APressed(){
-        System.out.println("APressed");
+//        System.out.println("APressed");
         Watch.changeToMode(Watch.nextMode());
         Watch.getCurMode().APressed();
     }

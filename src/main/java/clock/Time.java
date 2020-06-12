@@ -71,7 +71,7 @@ public class Time implements Mode{
             timeBufferArr[3] = "X";
             this.curTime.add(Calendar.MILLISECOND, 10);
         }else
-            timeBufferArr[3] = "O";
+            timeBufferArr[3] = String.format("%d", timeUnit);
 
         return timeBufferArr;
     }
@@ -168,14 +168,14 @@ public class Time implements Mode{
 
     @Override
     public void WPressed(boolean Longpress) {
-        System.out.println("W Pressed");
+//        System.out.println("W Pressed");
         if(beep.isBeep == true) {
             beep.stopBeep();
             return;
         }
 
         if(Longpress && !isSetTime){ //set Time
-            System.out.println("W Longpressed");
+//            System.out.println("W Longpressed");
             isSetTime = true;
             return;
         }
@@ -185,7 +185,7 @@ public class Time implements Mode{
 
     @Override
     public void SPressed(boolean Longpress) {
-        System.out.println("S Pressed");
+//        System.out.println("S Pressed");
         if(beep.isBeep == true) {
             beep.stopBeep();
             return;
@@ -196,7 +196,7 @@ public class Time implements Mode{
         }
 
         if (Longpress && isSetTime) {
-            System.out.println("S Longpressed");
+//            System.out.println("S Longpressed");
             changeTimeUnit();
             return;
         }

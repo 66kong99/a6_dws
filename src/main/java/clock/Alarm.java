@@ -62,15 +62,15 @@ public class Alarm implements Mode{
         else
             swit = " ON";
         if (isSetAlarm){
-            return new String[]{"ALARM " + (index+1), String.format("%02d", timeUnit[1]) + ":" + String.format("%02d", timeUnit[0]), "SET", "O"};
+            return new String[]{"ALARM " + (index+1), String.format("%02d", timeUnit[1]) + ":" + String.format("%02d", timeUnit[0]), "SET", String.format("%d", Unit+2)};
         }else {
             return new String[]{"ALARM " + (index+1), String.format("%02d", temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", temp.get(Calendar.MINUTE)), swit, "X"};
         }
     }
 
     public void compare(Calendar curTime){
-        for (Calendar c : alarms){
-            if (c.equals(curTime) == true)
+        for (int i = 0; i < alarms.size(); i++){
+            if (alarms.get(i).equals(curTime) == true && toggle.get(i) == true)
                 beep.beep(30);
         }
 
@@ -105,15 +105,13 @@ public class Alarm implements Mode{
                 beep.stopBeep();
                 return;
         }
-        if (isSetAlarm == true) {
-            isSetAlarm = false;
-            setAlarm();
+        if (Longpress && isSetAlarm) {
+            Unit++;
             return;
         }
-        if (Longpress && !isSetAlarm){
-            isSetAlarm = true;
-            for (int i : timeUnit)
-                i = 0;
+        if (isSetAlarm) {
+            timeUnit[Unit]++;
+            return;
         }
         else{
             changeAlarmIndex();
@@ -126,18 +124,15 @@ public class Alarm implements Mode{
             beep.stopBeep();
             return;
         }
-        if (Longpress && !isSetAlarm) {
-            System.out.println("S Longpressed");
-            isSetAlarm = !isSetAlarm;
-            setAlarm();
-            return;
-        }
-        if (Longpress && isSetAlarm) {
-            Unit++;
+        if (Longpress && !isSetAlarm){
+            isSetAlarm = true;
+            for (int i : timeUnit)
+                i = 0;
             return;
         }
         if (isSetAlarm) {
-            timeUnit[Unit]++;
+            isSetAlarm = false;
+            setAlarm();
             return;
         }
         changeAlarmToggle();
