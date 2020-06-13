@@ -66,10 +66,8 @@ public class Time implements Mode{
 
         timeBufferArr[2] = secBuffer.toString();
 
-
         if(!isSetTime) {
             timeBufferArr[3] = "X";
-            this.curTime.add(Calendar.MILLISECOND, 10);
         }else
             timeBufferArr[3] = String.format("%d", timeUnit);
 
@@ -77,6 +75,7 @@ public class Time implements Mode{
     }
 
     public int updateTime(){
+        this.curTime.add(Calendar.MILLISECOND, 10);
         return 0;
     }
 
