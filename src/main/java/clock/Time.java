@@ -18,14 +18,14 @@ public class Time implements Mode{
 
 
     private static boolean isSetTime;
-    private Buzzer beep;
+    private int beep;
     public Calendar curTime;
 
 
     public Time() {
         this.curTime = Calendar.getInstance();
         this.isSetTime = false;
-        beep = new Buzzer();
+        beep = 0;
     }
 
 
@@ -76,8 +76,8 @@ public class Time implements Mode{
         return timeBufferArr;
     }
 
-    public void updateTime(){
-
+    public int updateTime(){
+        return 0;
     }
 
 
@@ -152,27 +152,15 @@ public class Time implements Mode{
 
     @Override
     public void QPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
     }
 
     @Override
     public void APressed() {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
     }
 
     @Override
     public void WPressed(boolean Longpress) {
 //        System.out.println("W Pressed");
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
 
         if(Longpress && !isSetTime){ //set Time
 //            System.out.println("W Longpressed");
@@ -186,10 +174,6 @@ public class Time implements Mode{
     @Override
     public void SPressed(boolean Longpress) {
 //        System.out.println("S Pressed");
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
         if(!Longpress && isSetTime){
             increaseTimeValue();
             return;
@@ -202,13 +186,5 @@ public class Time implements Mode{
         }
 
     }
-
-
-    public void beepSignalTime(){
-        if(this.curTime.get(Calendar.MINUTE) == 0)
-            beep.beep(3);
-    }
-
-
 
 }

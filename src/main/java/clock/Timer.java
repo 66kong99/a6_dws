@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Timer implements Mode{
     public Calendar timerTime;
-    private Buzzer beep;
 
     private static boolean isPaused;
     private static boolean isSetTimer;
@@ -21,7 +20,6 @@ public class Timer implements Mode{
         this.isSetTimer = false;
 
         this.timerUnit = new int[3];
-        this.beep = new Buzzer();
     }
 
     public String[] requestTimerTime() {
@@ -73,7 +71,8 @@ public class Timer implements Mode{
     }
 
     public void decreaseTimer() {
-        this.isPaused = false;
+        if(!(this.timerTime.get(Calendar.SECOND) ==0 && this.timerTime.get(Calendar.MINUTE) ==0 && this.timerTime.get(Calendar.HOUR_OF_DAY) == 0))
+          this.isPaused = false;
     }
 
     public void pauseTimer() {
@@ -99,29 +98,31 @@ public class Timer implements Mode{
 
     @Override
     public void QPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
-
     }
 
     @Override
     public void APressed() {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
     }
 
     @Override
-    public void WPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
+    public void WPressed(boolean Longpress) { // C
+        if(Longpress && !isSetTimer){
+            isSetTimer = true;
             return;
         }
 
+        if (isSetTimer){
+            setTimer();
+            isSetTimer = false;
+            return;
+        }
+        if (isPaused)
+            resetTimer();
 
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) { // D
         if (isSetTimer){
             if(Longpress) {
                 Unit++;
@@ -135,35 +136,14 @@ public class Timer implements Mode{
             decreaseTimer();
         else
             pauseTimer();
-
     }
 
-    @Override
-    public void SPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
-
-        if(Longpress && !isSetTimer){
-            isSetTimer = true;
-            return;
-        }
-
-        if (isSetTimer){
-            setTimer();
-            isSetTimer = false;
-            return;
-        }
-        if (isPaused)
-            resetTimer();
-    }
-
-    public void beepTimer(){
+    public int updateTimer(){
         if(isPaused == false && (this.timerTime.get(Calendar.SECOND) ==0 && this.timerTime.get(Calendar.MINUTE) ==0 && this.timerTime.get(Calendar.HOUR_OF_DAY) == 0)) {
-            beep.beep(10);
             isPaused = true;
+            return 1000;
         }
+        return 0;
     }
 
 }

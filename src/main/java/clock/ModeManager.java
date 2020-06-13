@@ -17,12 +17,12 @@ public class ModeManager {
     private Stopwatch stopwatch; // 1
     private Buzzer beep;
 
-    private char tempMode;
     private char curMode;
     private boolean activated[];
     private int deactivate[];
     private int count;
 
+    private static int beepCount;
     private boolean isGray;
     private boolean isSet;
 
@@ -42,6 +42,7 @@ public class ModeManager {
         game = new Game();
 
         beep = new Buzzer();
+        beepCount = 0;
 
 //        top = new JLabel(time.requestCurTime()[0], SwingConstants.LEFT);
 //        main = new JLabel(time.requestCurTime()[1], SwingConstants.LEFT);
@@ -148,19 +149,18 @@ public class ModeManager {
         return null;
     }
 
-    public void activateMode(char Mode) {
-        activated[Mode] = true;
-    }
-
     public void update(){
-        alarm.compare(time.curTime);
+        int tempCount = 0;
+        tempCount = alarm.updateAlarm(time.curTime);
         switch(curMode){
             case 0:
+                tempCount = time.updateTime();
                 break;
             case 1:
                 stopwatch.updateStopw();
                 break;
             case 2:
+                tempCount = timer.updateTimer();
                 break;
             case 3:
                 break;
@@ -173,6 +173,14 @@ public class ModeManager {
             default:
                 break;
         }
+        if(beepCount == 0)
+            beepCount = tempCount;
+        else {
+            if (beepCount % 100 == 0)
+                beep.beep();
+            beepCount--;
+        }
+        System.out.println(beepCount);
     }
 
     public void paint(Graphics g){ // "Mode Name", "Hour, Minute", "sec", "O" or "X"
@@ -212,7 +220,7 @@ public class ModeManager {
 //            System.out.println(data[0] + " " + data[1] + " " + data[2] + " " + data[3]);
 //            System.out.println(data[3] == "1");
 
-            if (data[3] == "X")
+            if (data[3].equals("X"))
                 isSet = false;
 
             if (isGray && !data[3].equals("X")){
@@ -233,7 +241,8 @@ public class ModeManager {
             g.setFont(main);
             g.drawString(data[1].substring(0, 2), 95, 600);
 
-            g.drawString(data[1].substring(2, 3), 265, 600);
+            g.setColor(Color.BLACK);
+            g.drawString(data[1].substring(2, 3), 265, 600); // :
 
             if (isGray && data[3].equals("2")){
                 isSet = true;
@@ -258,8 +267,18 @@ public class ModeManager {
             }
         }
     }
-
+    public void APressed(){
+        if(beepCount != 0){
+            beepCount = 0;
+            return;
+        }
+        getCurMode().APressed();
+    }
     public void QPressed(boolean Longpress){
+        if(beepCount != 0){
+            beepCount = 0;
+            return;
+        }
         if(isSwapMode == true){
             isSwapMode = false;
         }
@@ -272,6 +291,10 @@ public class ModeManager {
     }
 
     public void WPressed(boolean Longpress){
+        if(beepCount != 0){
+            beepCount = 0;
+            return;
+        }
         if (isSwapMode){
             activated[curMode] = false;
 
@@ -283,6 +306,10 @@ public class ModeManager {
     }
 
     public void SPressed(boolean Longpress){
+        if(beepCount != 0){
+            beepCount = 0;
+            return;
+        }
         if (isSwapMode) {
             activated[curMode] = false;
 

@@ -140,7 +140,7 @@ public class Stopwatch implements Mode {
             requestSplit();
     }
     @Override
-    public void SPressed(boolean Longpress) {
+    public void SPressed(boolean Longpress) { // D
         if(Longpress == false&&isPaused == true) {
             increaseStopw();
             return;

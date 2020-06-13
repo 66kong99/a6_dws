@@ -36,7 +36,13 @@ public class Alarm implements Mode{
         alarms.set(index, temp);
     }
 
-    public void update(){ }
+    public int updateAlarm(Calendar curTime) {
+        for (int i = 0; i < alarms.size(); i++) {
+            if (alarms.get(i).equals(curTime) == true && toggle.get(i) == true)
+                return 3000;
+        }
+        return 0;
+    }
 
     public void changeAlarmIndex() {
         index = (index+1) % alarms.size();
@@ -68,14 +74,6 @@ public class Alarm implements Mode{
         }
     }
 
-    public void compare(Calendar curTime){
-        for (int i = 0; i < alarms.size(); i++){
-            if (alarms.get(i).equals(curTime) == true && toggle.get(i) == true)
-                beep.beep(30);
-        }
-
-    }
-
     // W(LP) : setting mode
     // S = Start
     // S(LP) = changeUnit
@@ -83,49 +81,18 @@ public class Alarm implements Mode{
 
     @Override
     public void QPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
-
     }
 
     @Override
     public void APressed() {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
     }
 
     @Override
-    public void WPressed(boolean Longpress) {
-        System.out.println("W Pressed");
-        if(beep.isBeep == true) {
-                beep.stopBeep();
-                return;
-        }
-        if (Longpress && isSetAlarm) {
-            Unit++;
-            return;
-        }
-        if (isSetAlarm) {
-            timeUnit[Unit]++;
-            return;
-        }
-        else{
-            changeAlarmIndex();
-        }
-    }
-
-    @Override
-    public void SPressed(boolean Longpress) {
-        if(beep.isBeep == true) {
-            beep.stopBeep();
-            return;
-        }
+    public void WPressed(boolean Longpress) { // C
+//        System.out.println("W Pressed");
         if (Longpress && !isSetAlarm){
             isSetAlarm = true;
+            Unit = 0;
             for (int i : timeUnit)
                 i = 0;
             return;
@@ -133,6 +100,20 @@ public class Alarm implements Mode{
         if (isSetAlarm) {
             isSetAlarm = false;
             setAlarm();
+            return;
+        }
+
+        changeAlarmIndex();
+    }
+
+    @Override
+    public void SPressed(boolean Longpress) { // D
+        if (Longpress && isSetAlarm) {
+            Unit++;
+            return;
+        }
+        if (isSetAlarm) {
+            timeUnit[Unit]++;
             return;
         }
         changeAlarmToggle();

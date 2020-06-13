@@ -112,7 +112,7 @@ public class Dinosaur {
     public void upScore(){
         score += 20;
         if(score % 100 == 0){
-            scoreUpSound.beepOne();
+            scoreUpSound.beep();
         }
     }
 

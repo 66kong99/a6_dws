@@ -17,7 +17,6 @@ public class Game extends JPanel implements Mode, Runnable {
     private Dinosaur dinosaur;
     private Hurdle hurdleManager;
     private Thread thread;
-    private boolean buttenPressed;
 
     public int gameState = START_GAME_STATE;
 
@@ -81,13 +80,9 @@ public class Game extends JPanel implements Mode, Runnable {
         int msSleep;
         int nanoSleep;
 
-        long endProcessGame;
-        long lag = 0;
-
         while(true){
             update();
             repaint();
-            endProcessGame = System.nanoTime();
             elapsed = (lastTime + msPerFrame - System.nanoTime());
             msSleep = (int)(elapsed / 1000000);
             nanoSleep = (int)(elapsed % 1000000);
@@ -137,11 +132,10 @@ public class Game extends JPanel implements Mode, Runnable {
 
     @Override
     public void WPressed(boolean Longpress) {
-        buttonPressed();
     }
 
     @Override
     public void SPressed(boolean Longpress) {
-
+        buttonPressed();
     }
 }
