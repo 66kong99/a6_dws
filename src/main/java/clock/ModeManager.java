@@ -151,18 +151,12 @@ public class ModeManager {
 
     public void update(){
         int tempCount = 0;
-        tempCount = alarm.updateAlarm(time.curTime);
+        tempCount = Math.max(alarm.updateAlarm(time.curTime), timer.updateTimer());
+        stopwatch.updateStopw();
+
         switch(curMode){
             case 0:
-                tempCount = time.updateTime();
-                break;
-            case 1:
-                stopwatch.updateStopw();
-                break;
-            case 2:
-                tempCount = timer.updateTimer();
-                break;
-            case 3:
+                tempCount = Math.max(tempCount, time.updateTime());
                 break;
             case 4:
                 worldtime.update(time.curTime);
@@ -180,7 +174,7 @@ public class ModeManager {
                 beep.beep();
             beepCount--;
         }
-        System.out.println(beepCount);
+//        System.out.println(tempCount);
     }
 
     public void paint(Graphics g){ // "Mode Name", "Hour, Minute", "sec", "O" or "X"
@@ -230,7 +224,29 @@ public class ModeManager {
                 g.setColor(Color.BLACK);
 
             g.setFont(top);
-            g.drawString(data[0], 100, 388);
+            if(curMode == 0){//time keeping mode **** ** ** *** 14
+                g.drawString(data[0], 100, 388);
+                if(isGray) {
+                    if (data[3].equals("6")) {
+                        g.drawString(data[0].substring(0, 5), 100, 388);
+                        g.setColor(Color.BLACK);
+                        g.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
+                    }
+                    else if (data[3].equals("5")) {
+                        g.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
+                        g.setColor(Color.BLACK);
+                        g.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
+                        g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+                    }
+                    else if (data[3].equals("4")) {
+                        g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+                        g.setColor(Color.BLACK);
+                        g.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
+                    }
+                }
+            }
+            else // other mode
+                g.drawString(data[0], 100, 388);
 
             if (isGray && data[3].equals("3")){
                 isSet = true;

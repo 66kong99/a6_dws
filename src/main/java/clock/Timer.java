@@ -52,8 +52,7 @@ public class Timer implements Mode{
             timerBufferArr[2] = secBuffer.toString();
 
             timerBufferArr[3] = "X";
-            if (this.isPaused == false && (this.timerTime.get(Calendar.SECOND) != 0 || this.timerTime.get(Calendar.MINUTE) != 0 || this.timerTime.get(Calendar.HOUR_OF_DAY) != 0))
-                this.timerTime.add(Calendar.MILLISECOND, -10);
+
             return timerBufferArr;
         }
 //        System.out.println("down");
@@ -143,6 +142,8 @@ public class Timer implements Mode{
             isPaused = true;
             return 1000;
         }
+        if (this.isPaused == false && (this.timerTime.get(Calendar.SECOND) != 0 || this.timerTime.get(Calendar.MINUTE) != 0 || this.timerTime.get(Calendar.HOUR_OF_DAY) != 0))
+            this.timerTime.add(Calendar.MILLISECOND, -10);
         return 0;
     }
 

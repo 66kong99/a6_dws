@@ -50,9 +50,6 @@ public class Stopwatch implements Mode {
 
             stopwBufferArr[2] = csecBuffer.toString();
 
-            if (this.isPaused == false)
-                this.stopwTime.add(Calendar.MILLISECOND, 10);
-
             stopwBufferArr[3] = "X";
 
         }
@@ -60,7 +57,8 @@ public class Stopwatch implements Mode {
     }
 
     public void updateStopw(){
-
+        if (this.isPaused == false)
+            this.stopwTime.add(Calendar.MILLISECOND, 10);
     }
 
 
@@ -129,7 +127,6 @@ public class Stopwatch implements Mode {
 
     @Override
     public void APressed() {
-
     }
 
     @Override
