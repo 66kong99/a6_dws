@@ -1,6 +1,6 @@
 package clock;
 
-import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
+//import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -14,12 +14,9 @@ class TimeTest {
     @Test
     void requestCurTime() {
         Time t = new Time();
-        Calendar temp = (Calendar) t.curTime.clone(); // 현재시간을 저장한 임시 변수
-        t.requestCurTime(); // 10ms 증가
-        assertNotEquals(temp, t.curTime);// 10ms가 증가한 현재시간으로 이전의 시간과 다른지 확인
-        t.WPressed(true);//setTime 할 때 현재시간은 증가하지 않음
-        Calendar temp2 = (Calendar) t.curTime.clone(); // 현재시간을 저장한 임시 변수
-        assertEquals(temp2, t.curTime);
+        Calendar temp = (Calendar) t.curTime.clone(); // temporary valuable for curTime
+        t.requestCurTime(); // 10ms increasing
+        assertNotEquals(temp, t.curTime);// check curTime and previousTime
     }
 
     @Test

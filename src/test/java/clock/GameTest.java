@@ -17,7 +17,7 @@ class GameTest {
             Field field = game.getClass().getDeclaredField("gameState");
             field.setAccessible(true);
             int value = (int)field.get(game);
-            assertEquals(value, 0); // gameState = START_GAME_STATE 확인
+            assertEquals(value, 0); // gameState = START_GAME_STATE checking
             game.buttonPressed(); // gmae start
             value = (int)field.get(game);
             assertEquals(value, 1); // gameState = GAME_PLAYING_STATE

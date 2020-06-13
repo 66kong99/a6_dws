@@ -9,8 +9,8 @@ public class Alarm implements Mode{
     private Buzzer beep;
 
     private int index;
-    private int timeUnit[];
-    private int Unit = 0;
+    private static int timeUnit[];
+    private static int Unit = 0;
 
     private boolean isSetAlarm;
 
@@ -36,6 +36,26 @@ public class Alarm implements Mode{
         alarms.set(index, temp);
     }
 
+    public void increaseAlarmValue(){
+
+        timeUnit[Unit]++;
+        if (timeUnit[0] == 60){
+            if(timeUnit[1] > 0)
+                timeUnit[1]--;
+            timeUnit[0] = 0;
+        }
+        if (timeUnit[1] == 24){
+            timeUnit[1] = 0;
+        }
+    }
+
+    public void changeAlarmUnit(){
+        Unit++;
+        if(Unit == 2)
+            Unit = 0;
+    }
+
+
     public int updateAlarm(Calendar curTime) {
         for (int i = 0; i < alarms.size(); i++) {
             if (alarms.get(i).equals(curTime) == true && toggle.get(i) == true)
@@ -55,13 +75,6 @@ public class Alarm implements Mode{
     public String[] requestAlarm(){
         String swit = new String();
         Calendar temp = alarms.get(index);
-        if (timeUnit[0] == 61){
-            timeUnit[1]++;
-            timeUnit[0] = 0;
-        }
-        if (timeUnit[1] == 25){
-            timeUnit[1] = 0;
-        }
 
         if (toggle.get(index) == false)
             swit = "OFF";
@@ -109,11 +122,11 @@ public class Alarm implements Mode{
     @Override
     public void SPressed(boolean Longpress) { // D
         if (Longpress && isSetAlarm) {
-            Unit++;
+            changeAlarmUnit();
             return;
         }
         if (isSetAlarm) {
-            timeUnit[Unit]++;
+            increaseAlarmValue();
             return;
         }
         changeAlarmToggle();

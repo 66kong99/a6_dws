@@ -19,7 +19,7 @@ class StopwatchTest {
             Field field = st.getClass().getDeclaredField("isPaused");
             field.setAccessible(true);
             boolean value = (boolean)field.get(st);
-            assertTrue(value); // isPaused = true 확인
+            assertTrue(value); // isPaused = true checking
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -38,8 +38,8 @@ class StopwatchTest {
             st.SPressed(false); //pause stopw
             st.WPressed(false); //reset stopw
             boolean value = (boolean)field.get(st);
-            assertTrue(value); //isPaused = true 확인
-            assertEquals(st.stopwTime, cal); //reset 확인
+            assertTrue(value); //isPaused = true checking
+            assertEquals(st.stopwTime, cal); //reset checking
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -56,14 +56,14 @@ class StopwatchTest {
             field.setAccessible(true);
             st.SPressed(false); // increase stopw
             boolean value = (boolean)field.get(st);
-            assertFalse(value); // isPaused = false 확인
+            assertFalse(value); // isPaused = false checking
             try {
                 Thread.sleep(5000);
             } catch(InterruptedException e) {
                 e.printStackTrace();
-            }//stopw 5초
+            }//stopw 5second
             cal.add(Calendar.SECOND, 5);
-            assertEquals(st.stopwTime, cal); // stopw 5초 확인
+            assertEquals(st.stopwTime, cal); // stopw 5second checking
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -85,12 +85,12 @@ class StopwatchTest {
                 Thread.sleep(5000);
             } catch(InterruptedException e) {
                 e.printStackTrace();
-            }//stopw 5초
+            }//stopw 5second
             st.SPressed(false); // pause stopw
             boolean value = (boolean)field.get(st);
-            assertTrue(value); // isPaused = true 확인
+            assertTrue(value); // isPaused = true checking
             cal.add(Calendar.SECOND, 5);
-            assertEquals(st.stopwTime, cal); // stopw 5초 확인
+            assertEquals(st.stopwTime, cal); // stopw 5second checking
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
