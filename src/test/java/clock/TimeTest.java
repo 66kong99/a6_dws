@@ -1,6 +1,7 @@
 package clock;
 
 //import com.sun.org.apache.xerces.internal.xs.ItemPSVI;
+import com.sun.org.apache.bcel.internal.generic.FADD;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -14,9 +15,68 @@ class TimeTest {
     @Test
     void requestCurTime() {
         Time t = new Time();
+
+        Calendar tempTime = (Calendar) t.curTime.clone();
+        String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+
+        StringBuffer dateBuffer = new StringBuffer();
+        StringBuffer timeBuffer = new StringBuffer();
+        StringBuffer secBuffer = new StringBuffer();
+
+        dateBuffer.append(tempTime.get(Calendar.YEAR));
+        dateBuffer.append(" ");
+        dateBuffer.append(tempTime.get(Calendar.MONTH) + 1 < 10 ? "0" : "");
+        dateBuffer.append(tempTime.get(Calendar.MONTH)+1);
+        dateBuffer.append(" ");
+        dateBuffer.append(tempTime.get(Calendar.DATE) < 10 ? "0" : "");
+        dateBuffer.append(tempTime.get(Calendar.DATE));
+        dateBuffer.append(" ");
+        dateBuffer.append(dayOfWeek[(tempTime.get(Calendar.DAY_OF_WEEK)-1)%7]);
+
+        timeBuffer.append(tempTime.get(Calendar.HOUR_OF_DAY) < 10 ? "0" : "");
+        timeBuffer.append(tempTime.get(Calendar.HOUR_OF_DAY));
+        timeBuffer.append(":");
+        timeBuffer.append(tempTime.get(Calendar.MINUTE) < 10 ? "0" : "");
+        timeBuffer.append(tempTime.get(Calendar.MINUTE));
+
+        secBuffer.append(":");
+        secBuffer.append(tempTime.get(Calendar.SECOND) < 10 ? "0" : "");
+        secBuffer.append(tempTime.get(Calendar.SECOND));
+
+
+        String temp[] = t.requestCurTime();
+        assertEquals(dateBuffer.toString(), temp[0]); //compare between datebuffer and actual datebuffer
+        assertEquals(timeBuffer.toString(), temp[1]); //compare between timebuffer and actual timebuffer
+        assertEquals(secBuffer.toString(), temp[2]); //compare between secbuffer and actual secbuffer
+        assertEquals("X", temp[3]); //compare between "X" and fourth index of returned array(without setting time)
+
+        t.WPressed(true);
+        String temp2[] = t.requestCurTime();
+        try {
+            Field field = t.getClass().getDeclaredField("timeUnit");
+            field.setAccessible(true);
+            int temptimeUnit = (int)(field.get(t));
+            assertEquals(String.valueOf(temptimeUnit), temp2[3]);  //compare between "timeunit" and fourth index of returned array(with setting time)
+        }
+        catch(NoSuchFieldException e){
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void updateTime(){
+        Time t = new Time();
         Calendar temp = (Calendar) t.curTime.clone(); // temporary valuable for curTime
-        t.requestCurTime(); // 10ms increasing
+        t.updateTime(); // 10ms increasing
         assertNotEquals(temp, t.curTime);// check curTime and previousTime
+
+        Calendar temp2 = (Calendar) t.curTime.clone(); // temporary valuable for curTime
+        t.WPressed(true);// set time
+        t.updateTime();// 10ms increasing
+        assertNotEquals(temp2, t.curTime);// check curTime and previousTime
     }
 
     @Test
@@ -78,15 +138,22 @@ class TimeTest {
         try {
             Field field = t.getClass().getDeclaredField("timeUnit");
             field.setAccessible(true);
+
+            t.changeTimeUnit();
+            int temp =  (int)(field.get(t));
+            assertEquals(1, temp);
+
             t.WPressed(true);
-            for(int i =1 ; i<=5;i++) {
-                t.changeTimeUnit();
-                int temp = (int)(field.get(t));
-                assertEquals(i+1, temp);
+            for(int i = 1 ; i<=5;i++) {
+                t.changeTimeUnit(); // add timeunit by 1
+                int temp2 = (int)(field.get(t));
+                assertEquals(i+1, temp2); //compare timeunit and expected value
             }
             t.changeTimeUnit();
-            int temp = (int)(field.get(t));
-            assertEquals(1, temp);
+            int temp3 = (int)(field.get(t));
+            assertEquals(1, temp3);
+
+
         }
         catch(NoSuchFieldException e){
             e.printStackTrace();
