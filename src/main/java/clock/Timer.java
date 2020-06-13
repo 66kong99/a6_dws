@@ -77,7 +77,7 @@ public class Timer implements Mode{
     public void changeTimerUnit(){
         timerUnit++;
         if(timerUnit >= 4)
-            timerUnit = 0;
+            timerUnit = 1;
     }
 
     public void increaseTimerValue(){
