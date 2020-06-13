@@ -152,12 +152,10 @@ public class ModeManager {
     public void update(){
         int tempCount = 0;
         tempCount = Math.max(alarm.updateAlarm(time.curTime), timer.updateTimer());
+        tempCount = Math.max(tempCount, time.updateTime());
         stopwatch.updateStopw();
 
         switch(curMode){
-            case 0:
-                tempCount = Math.max(tempCount, time.updateTime());
-                break;
             case 4:
                 worldtime.update(time.curTime);
                 break;

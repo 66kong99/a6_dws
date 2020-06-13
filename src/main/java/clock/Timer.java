@@ -69,15 +69,6 @@ public class Timer implements Mode{
         this.timerTime.clear();
     }
 
-    /*public void setTimer(){
-        timerTime.set(0, 0, 0, timerUnit[2], timerUnit[1], timerUnit[0]);
-        timerUnit[0] = 0;
-        timerUnit[1] = 0;
-        timerUnit[2] = 0;
-    }
-
-     */
-
     // W(LP) : setting mode
     // S = Start
     // S(LP) = changeUnit
@@ -133,12 +124,10 @@ public class Timer implements Mode{
     public void WPressed(boolean Longpress) { // C
         if(Longpress && !isSetTimer){
             isSetTimer = true;
-            System.out.println("long wpresssed");
             return;
         }
 
         if (isSetTimer){
-//            setTimer();
             isSetTimer = false;
             return;
         }

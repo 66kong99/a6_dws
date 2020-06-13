@@ -74,8 +74,10 @@ public class Time implements Mode{
         return timeBufferArr;
     }
 
-    public int updateTime(){
+    public int updateTime() {
         this.curTime.add(Calendar.MILLISECOND, 10);
+        if(curTime.get(Calendar.MINUTE) == 0)
+            return 200;
         return 0;
     }
 

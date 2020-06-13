@@ -40,8 +40,6 @@ public class Alarm implements Mode{
 
         timeUnit[Unit]++;
         if (timeUnit[0] == 60){
-            if(timeUnit[1] > 0)
-                timeUnit[1]--;
             timeUnit[0] = 0;
         }
         if (timeUnit[1] == 24){
@@ -58,7 +56,9 @@ public class Alarm implements Mode{
 
     public int updateAlarm(Calendar curTime) {
         for (int i = 0; i < alarms.size(); i++) {
-            if (alarms.get(i).equals(curTime) == true && toggle.get(i) == true)
+            if (alarms.get(i).get(Calendar.HOUR)==curTime.get(Calendar.HOUR)&&
+                    alarms.get(i).get(Calendar.MINUTE)==curTime.get(Calendar.MINUTE)&&
+                    alarms.get(i).get(Calendar.SECOND)==curTime.get(Calendar.SECOND)&& toggle.get(i) == true)
                 return 3000;
         }
         return 0;
