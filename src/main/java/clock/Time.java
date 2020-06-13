@@ -76,7 +76,7 @@ public class Time implements Mode{
 
     public int updateTime() {
         this.curTime.add(Calendar.MILLISECOND, 10);
-        if(curTime.get(Calendar.MINUTE) == 0)
+        if(curTime.get(Calendar.MINUTE) == 0 && curTime.get(Calendar.SECOND) == 0)
             return 200;
         return 0;
     }
