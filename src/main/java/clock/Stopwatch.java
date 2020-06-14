@@ -75,7 +75,6 @@ public class Stopwatch implements Mode {
         // TODO implement here
         this.isPaused = false;
         this.isSplit = false;
-
     }
 
     public void pauseStopw() {

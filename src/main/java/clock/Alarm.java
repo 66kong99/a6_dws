@@ -6,7 +6,6 @@ public class Alarm implements Mode{
 
     private List<Calendar> alarms;
     private List<Boolean> toggle;
-    private Buzzer beep;
 
     private int index;
     private static int timeUnit[];
@@ -17,8 +16,7 @@ public class Alarm implements Mode{
     public Alarm() {
         alarms = new LinkedList<Calendar>();
         toggle = new LinkedList<Boolean>();
-        beep = new Buzzer();
-        timeUnit = new int[3];
+        timeUnit = new int[2];
         isSetAlarm = false;
         index = 0;
 
@@ -26,7 +24,7 @@ public class Alarm implements Mode{
         temp.set(0, 0, 0, 0, 0, 0);
         for(int i = 0; i < 4; i++) {
             alarms.add(temp);
-            toggle.add(true);
+            toggle.add(false);
         }
     }
 
@@ -106,8 +104,8 @@ public class Alarm implements Mode{
         if (Longpress && !isSetAlarm){
             isSetAlarm = true;
             Unit = 0;
-            for (int i : timeUnit)
-                i = 0;
+            timeUnit[0] = alarms.get(index).get(Calendar.MINUTE);
+            timeUnit[1] = alarms.get(index).get(Calendar.HOUR);
             return;
         }
         if (isSetAlarm) {
