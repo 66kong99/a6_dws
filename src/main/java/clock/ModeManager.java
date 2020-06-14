@@ -293,7 +293,7 @@ public class ModeManager {
             beepCount = 0;
             return;
         }
-        if(isSet)
+        if(isSet || game.gameState == 1)
             return;
 
         if(isSwapMode == true){
