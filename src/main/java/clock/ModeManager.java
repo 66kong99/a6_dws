@@ -293,6 +293,9 @@ public class ModeManager {
             beepCount = 0;
             return;
         }
+        if(isSet)
+            return;
+
         if(isSwapMode == true){
             isSwapMode = false;
         }

@@ -127,12 +127,12 @@ public class Game extends JPanel implements Mode, Runnable {
     }
 
     @Override
-    public void QPressed(boolean Longpress) {
+    public void APressed() {
 
     }
 
     @Override
-    public void APressed() {
+    public void QPressed(boolean Longpress) {
 
     }
 

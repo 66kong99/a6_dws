@@ -53,7 +53,6 @@ public class Stopwatch implements Mode {
 
         if(isSplit)
             stopwBufferArr[0] = requestSplit();
-//        System.out.println(stopwBufferArr[0] + "\n" + stopwBufferArr[1] + "\n" + stopwBufferArr[2] + "\n" + stopwBufferArr[3]);
         return stopwBufferArr;
     }
 

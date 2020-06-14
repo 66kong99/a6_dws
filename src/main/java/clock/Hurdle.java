@@ -30,7 +30,6 @@ public class Hurdle {
             h.update();
         }
         Cactus hurdle = Hurdles.get(0);
-        System.out.println(hurdle.CactusposX);
         if(hurdle.CactusposX <= 255+speed && hurdle.CactusposX >250)
             Hurdles.add(createCactus());
         if(hurdle.isOutOfScreen()){

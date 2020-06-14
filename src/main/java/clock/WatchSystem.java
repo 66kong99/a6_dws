@@ -138,7 +138,6 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
 
     private void APressed(){
-//        System.out.println("APressed");
         Watch.changeToMode(Watch.nextMode());
         Watch.APressed();
     }
