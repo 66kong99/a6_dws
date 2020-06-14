@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class Cactus {
     public static final int Y_LAND = 575;
 
-    private int CactusposX;
+    public int CactusposX;
     private int width;
     private int height;
 

@@ -17,6 +17,7 @@ public class Game extends JPanel implements Mode, Runnable {
     private Dinosaur dinosaur;
     private Hurdle hurdleManager;
     private Thread thread;
+    float floatSpeed = 0.0f;
 
     public int gameState = START_GAME_STATE;
 
@@ -26,7 +27,7 @@ public class Game extends JPanel implements Mode, Runnable {
     public Game(){
         dinosaur = new Dinosaur();
         background = new Background(550, dinosaur);
-        dinosaur.setSpeedX(4);
+        dinosaur.setSpeedX(0);
         replayButtonImage = Resource.getResourceImage("resources/replay_button.png");
         gameOverButtonImage = Resource.getResourceImage("resources/gameover_text.png");
         hurdleManager = new Hurdle(dinosaur);
@@ -39,14 +40,17 @@ public class Game extends JPanel implements Mode, Runnable {
 
     public void update(){
         if (gameState == GAME_PLAYING_STATE){
+            floatSpeed += 0.001f;
             background.update();
             dinosaur.update();
-            hurdleManager.update();
+            hurdleManager.update(floatSpeed);
             if(hurdleManager.isCollision()){
                 dinosaur.dead(true);
                 gameState = GAME_OVER_STATE;
             }
+            dinosaur.setSpeedX(Math.min((int)(floatSpeed * floatSpeed) / 1, (int)floatSpeed));
         }
+
     }
 
     public void paint(Graphics g){
@@ -79,6 +83,7 @@ public class Game extends JPanel implements Mode, Runnable {
 
         int msSleep;
         int nanoSleep;
+
 
         while(true){
             update();
@@ -118,6 +123,7 @@ public class Game extends JPanel implements Mode, Runnable {
         hurdleManager.reset();
         dinosaur.dead(false);
         dinosaur.reset();
+        floatSpeed = 0.0f;
     }
 
     @Override

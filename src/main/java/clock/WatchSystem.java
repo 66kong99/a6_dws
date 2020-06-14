@@ -105,7 +105,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         int getX = e.getX();
         int getY = e.getY();
 
-        boolean Longpress = (System.nanoTime() - isLongpress) >= 1000000000;
+        boolean Longpress = (System.nanoTime() - isLongpress) >= 500000000;
 //        System.out.println(Longpress);
         if(getX < 60) {
             if(348 < getY && getY < 428){ // TOP-LEFT Button

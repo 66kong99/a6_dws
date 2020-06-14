@@ -127,7 +127,7 @@ public class ModeManager {
                     deactivate[1] = i;
                     break;
                 }
-        System.out.println(deactivate[0] + " " + deactivate[1]);
+//        System.out.println(deactivate[0] + " " + deactivate[1]);
         return temp; // time didn't deactivated(time's number is 0)
     }
 

@@ -51,7 +51,7 @@ public class Dinosaur {
     }
 
     public void setSpeedX(int speedX){
-        this.speedX = speedX;
+        this.speedX = Math.min(speedX+4, 10);
     }
 
     public void draw(Graphics g){

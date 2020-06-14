@@ -25,15 +25,17 @@ public class Hurdle {
         Hurdles.add(createCactus());
     }
 
-    public void update(){
+    public void update(float speed){
         for(Cactus h : Hurdles){
             h.update();
         }
         Cactus hurdle = Hurdles.get(0);
+        System.out.println(hurdle.CactusposX);
+        if(hurdle.CactusposX <= 255+speed && hurdle.CactusposX >250)
+            Hurdles.add(createCactus());
         if(hurdle.isOutOfScreen()){
             dinosaur.upScore();
-            Hurdles.clear();
-            Hurdles.add(createCactus());
+            Hurdles.remove(0);
         }
     }
 
@@ -46,9 +48,9 @@ public class Hurdle {
     private Cactus createCactus(){
         int type= rand.nextInt(2);
         if (type == 0){
-            return new Cactus(dinosaur, 800, cactus1.getWidth() - 10, cactus1.getHeight() - 10, cactus1);
+            return new Cactus(dinosaur, 600 + rand.nextInt(600), cactus1.getWidth() - 10, cactus1.getHeight() - 10, cactus1);
         } else {
-            return new Cactus(dinosaur, 800, cactus2.getWidth() - 10, cactus2.getHeight() - 10, cactus2);
+            return new Cactus(dinosaur, 600 + rand.nextInt(600), cactus2.getWidth() - 10, cactus2.getHeight() - 10, cactus2);
         }
     }
 
