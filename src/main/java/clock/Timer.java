@@ -123,9 +123,11 @@ public class Timer implements Mode{
     @Override
     public void WPressed(boolean Longpress) { // C
         if(Longpress && !isSetTimer){
-            isSetTimer = true;
-            timerUnit = 1;
-            return;
+            if((this.timerTime.get(Calendar.SECOND) ==0 && this.timerTime.get(Calendar.MINUTE) ==0 && this.timerTime.get(Calendar.HOUR_OF_DAY) == 0)&&this.isPaused == true) {
+                isSetTimer = true;
+                timerUnit = 1;
+                return;
+            }
         }
 
         if (isSetTimer){

@@ -59,6 +59,13 @@ public class Stopwatch implements Mode {
     public void updateStopw(){
         if (this.isPaused == false)
             this.stopwTime.add(Calendar.MILLISECOND, 10);
+        if(this.stopwTime.get(Calendar.HOUR) >=1) {
+            this.isPaused = true;
+            this.stopwTime.add(Calendar.HOUR, -1);
+            this.stopwTime.set(Calendar.MINUTE, 59);
+            this.stopwTime.set(Calendar.SECOND, 59);
+            this.stopwTime.set(Calendar.MILLISECOND, 999);
+        }
     }
 
 
