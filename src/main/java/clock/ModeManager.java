@@ -98,7 +98,7 @@ public class ModeManager {
             i = i % 6;
             System.out.println(i);
             if (activated[i] == true) {
-                System.out.println(i + " : true");
+//                System.out.println(i + " : true");
                 return (char)i;
             }
             i++;

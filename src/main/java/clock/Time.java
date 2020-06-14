@@ -166,7 +166,7 @@ public class Time implements Mode{
         if(Longpress && !isSetTime){ //set Time
 //            System.out.println("W Longpressed");
             isSetTime = true;
-            timeUnit = 0;
+            timeUnit = 1;
             return;
         }
 

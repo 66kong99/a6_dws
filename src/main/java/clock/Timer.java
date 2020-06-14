@@ -124,7 +124,7 @@ public class Timer implements Mode{
     public void WPressed(boolean Longpress) { // C
         if(Longpress && !isSetTimer){
             isSetTimer = true;
-            timerUnit = 0;
+            timerUnit = 1;
             return;
         }
 
