@@ -122,38 +122,44 @@ public class Timer implements Mode{
 
     @Override
     public void WPressed(boolean Longpress) { // C
-        if(Longpress && !isSetTimer){
-            if((this.timerTime.get(Calendar.SECOND) ==0 && this.timerTime.get(Calendar.MINUTE) ==0 && this.timerTime.get(Calendar.HOUR_OF_DAY) == 0)&&this.isPaused == true) {
-                isSetTimer = true;
-                timerUnit = 1;
+        if(Longpress){
+            if(isSetTimer){
+            }else{
+                if((this.timerTime.get(Calendar.SECOND) ==0 && this.timerTime.get(Calendar.MINUTE) ==0 && this.timerTime.get(Calendar.HOUR_OF_DAY) == 0)&&this.isPaused == true) {
+                    isSetTimer = true;
+                    timerUnit = 1;
+                    return;
+                }
+            }
+        }else{
+            if(isSetTimer) {
+                isSetTimer = false;
                 return;
             }
-        }
 
-        if (isSetTimer){
-            isSetTimer = false;
-            return;
+            if(isPaused)
+                resetTimer();
         }
-        if (isPaused)
-            resetTimer();
-
     }
 
     @Override
     public void SPressed(boolean Longpress) { // D
-        if (isSetTimer){
-            if(Longpress) {
+        if(Longpress){
+            if(isSetTimer){
                 changeTimerUnit();
                 return;
             }
-            increaseTimerValue();
-            return;
-        }
+        }else{
+            if(isSetTimer){
+                increaseTimerValue();
+                return;
+            }
 
-        if (isPaused)
-            decreaseTimer();
-        else
-            pauseTimer();
+            if(isPaused)
+                decreaseTimer();
+            else
+                pauseTimer();
+        }
     }
 
     public int updateTimer(){

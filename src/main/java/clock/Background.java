@@ -86,5 +86,10 @@ public class Background {
     private class ImageBackground{
         float posX;
         BufferedImage image;
+
+        public ImageBackground(){
+            posX = 0;
+            image = null;
+        }
     }
 }

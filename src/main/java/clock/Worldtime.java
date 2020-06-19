@@ -72,13 +72,17 @@ public class Worldtime implements Mode{
 
     @Override
     public void WPressed(boolean Longpress) {
-        changeIsSummertime();
-        calWorldTime();
+        if(!Longpress) {
+            changeIsSummertime();
+            calWorldTime();
+        }
     }
 
     @Override
     public void SPressed(boolean Longpress) {
-        changeCity();
-        calWorldTime();
+        if(!Longpress) {
+            changeCity();
+            calWorldTime();
+        }
     }
 }
