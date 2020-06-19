@@ -3,6 +3,7 @@ package clock;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,7 +11,7 @@ import javax.swing.JPanel;
 
 import util.Resource;
 
-public class Game extends JPanel implements Mode, Runnable {
+public class Game extends JPanel implements Mode, Runnable, Serializable {
     private static final int START_GAME_STATE = 0;
     private static final int GAME_PLAYING_STATE = 1;
     private static final int GAME_OVER_STATE = 2;
@@ -21,7 +22,7 @@ public class Game extends JPanel implements Mode, Runnable {
     private final Dinosaur dinosaur;
     private final Hurdle hurdleManager;
     private Thread thread;
-    private float floatSpeed = 0.0f;
+    float floatSpeed = 0.0f;
 
     public int gameState = START_GAME_STATE;
 

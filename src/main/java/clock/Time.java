@@ -1,22 +1,16 @@
 package clock;
 
-import sun.util.resources.cldr.es.CalendarData_es_AR;
-
-import java.time.DayOfWeek;
 import java.util.*;
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
 
 
 
 public class Time implements Mode{
 
-    private static int timeUnit = 1;
+    private int timeUnit = 1;
     private final String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 
-    private static boolean isSetTime;
+    private boolean isSetTime;
     public Calendar curTime;
 
 

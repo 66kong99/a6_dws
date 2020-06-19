@@ -5,9 +5,9 @@ import java.util.*;
 public class Timer implements Mode{
     public Calendar timerTime;
 
-    private static boolean isPaused;
-    private static boolean isSetTimer;
-    private static int timerUnit = 1;
+    private boolean isPaused;
+    private boolean isSetTimer;
+    private int timerUnit = 1;
 
 
     public Timer() {
