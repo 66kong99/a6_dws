@@ -30,7 +30,7 @@ public class Background {
         listBackground = new ArrayList<ImageBackground>();
         for(int i = 0; i < numberOfImageBackground; i++){
             ImageBackground imageBackground = new ImageBackground();
-            imageBackground.posX = (float)i * land1.getWidth();
+            imageBackground.posX = (double)i * land1.getWidth();
             setImageBackground(imageBackground);
             listBackground.add(imageBackground);
         }
@@ -41,7 +41,7 @@ public class Background {
         Iterator<ImageBackground> itr = listBackground.iterator();
         ImageBackground firstElement = itr.next();
         firstElement.posX -= dinosaur.getSpeedX();
-        float previousPosX = firstElement.posX;
+        double previousPosX = firstElement.posX;
         while(itr.hasNext()){
             ImageBackground element = itr.next();
             element.posX = previousPosX + land1.getWidth();
@@ -87,7 +87,7 @@ public class Background {
 
 
     private class ImageBackground{
-        private float posX;
+        private double posX;
         private BufferedImage image;
 
         public ImageBackground(){
