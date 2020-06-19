@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Alarm implements Mode{
 
-    private List<Calendar> alarms;
-    private List<Boolean> toggle;
+    private final List<Calendar> alarms;
+    private final List<Boolean> toggle;
 
     private int index;
-    private static int timeUnit[];
-    private static int Unit = 0;
+    private final int[] timeUnit;
+    private int Unit = 0;
 
     private boolean isSetAlarm;
 
@@ -100,7 +100,6 @@ public class Alarm implements Mode{
 
     @Override
     public void WPressed(boolean Longpress) { // C
-//        System.out.println("W Pressed");
         if(Longpress) {
             if (!isSetAlarm) {
                 isSetAlarm = true;
@@ -124,7 +123,7 @@ public class Alarm implements Mode{
     public void SPressed(boolean Longpress) { // D
         if(Longpress){
             if(isSetAlarm){
-                changeAlarmIndex();
+                changeAlarmUnit();
                 return;
             }
         }else{

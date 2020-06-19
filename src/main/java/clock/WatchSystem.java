@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.nio.Buffer;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import util.Resource;
 
@@ -21,11 +23,13 @@ import util.Resource;
 public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable {
     public ModeManager Watch;
 
-    private BufferedImage background;
+    private static final Logger logger = Logger.getLogger(WatchSystem.class.getName());
+
+    private BufferedImage backgroundRender;
     private long isLongpress;
     private long timeOut;
 
-    private Font font;
+    private Font clockFont;
 
     private Thread thread;
 
@@ -35,10 +39,10 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
         Watch = new ModeManager();
 
-        background = Resource.getResourceImage("resources/clock.png");
+        backgroundRender = Resource.getResourceImage("resources/clock.png");
 
         try {
-            font = Resource.getFont("resources/scoreboard.ttf", 32);
+            clockFont = Resource.getFont("resources/scoreboard.ttf", 32);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -147,10 +151,10 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         g.fillRect(0, 0, getWidth(), getHeight());
 
         g.setColor(Color.BLACK);
-        g.setFont(font);
+        g.setFont(clockFont);
         Watch.paint(g);
         setVisible(true);
-        g.drawImage(background, 0, 0, null);
+        g.drawImage(backgroundRender, 0, 0, null);
     }
 
     @Override
@@ -166,7 +170,8 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
             try{
                 Thread.sleep(10);
             }catch (InterruptedException e){
-                e.printStackTrace();
+                logger.log(Level.WARNING, "WatchSystem Thread Interrupted", e);
+                Thread.currentThread().interrupt();
             }
         }
     }

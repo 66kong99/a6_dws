@@ -17,6 +17,8 @@ public class Background {
     private BufferedImage land2;
     private BufferedImage land3;
 
+    private Random rand;
+
     private Dinosaur dinosaur;
 
     public Background(int width, Dinosaur dinosaur){
@@ -28,10 +30,11 @@ public class Background {
         listBackground = new ArrayList<ImageBackground>();
         for(int i = 0; i < numberOfImageBackground; i++){
             ImageBackground imageBackground = new ImageBackground();
-            imageBackground.posX = i * land1.getWidth();
+            imageBackground.posX = (float)i * land1.getWidth();
             setImageBackground(imageBackground);
             listBackground.add(imageBackground);
         }
+        rand = new Random();
     }
 
     public void update(){
@@ -70,7 +73,7 @@ public class Background {
     }
 
     private int getTypeOfBackground(){
-        Random rand = new Random();
+        rand = new Random();
         int type = rand.nextInt(10);
         if(type == 1){
             return 1;

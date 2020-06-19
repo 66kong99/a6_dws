@@ -7,8 +7,6 @@ public class Watch extends JFrame{
     public static final int SCREEN_WIDTH = 735;
     public static final int SCREEN_HEIGHT = 935;
 
-    private Thread timeThread;
-
     private final WatchSystem watchSystem;
 
     public Watch(){

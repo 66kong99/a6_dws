@@ -3,6 +3,8 @@ package clock;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -13,7 +15,9 @@ public class Game extends JPanel implements Mode, Runnable {
     private static final int GAME_PLAYING_STATE = 1;
     private static final int GAME_OVER_STATE = 2;
 
-    private Background background;
+    private static final Logger logger = Logger.getLogger(Game.class.getName());
+
+    private Background backgroundRender;
     private Dinosaur dinosaur;
     private Hurdle hurdleManager;
     private Thread thread;
@@ -26,7 +30,7 @@ public class Game extends JPanel implements Mode, Runnable {
 
     public Game(){
         dinosaur = new Dinosaur();
-        background = new Background(550, dinosaur);
+        backgroundRender = new Background(550, dinosaur);
         dinosaur.setSpeedX(0);
         replayButtonImage = Resource.getResourceImage("resources/replay_button.png");
         gameOverButtonImage = Resource.getResourceImage("resources/gameover_text.png");
@@ -41,7 +45,7 @@ public class Game extends JPanel implements Mode, Runnable {
     public void update(){
         if (gameState == GAME_PLAYING_STATE){
             floatSpeed += 0.001f;
-            background.update();
+            backgroundRender.update();
             dinosaur.update();
             hurdleManager.update(floatSpeed);
             if(hurdleManager.isCollision()){
@@ -61,7 +65,7 @@ public class Game extends JPanel implements Mode, Runnable {
                 break;
             case GAME_PLAYING_STATE:
             case GAME_OVER_STATE:
-                background.draw(g);
+                backgroundRender.draw(g);
                 hurdleManager.draw(g);
                 dinosaur.draw(g);
                 g.setColor(Color.BLACK);
@@ -98,7 +102,8 @@ public class Game extends JPanel implements Mode, Runnable {
             try{
                 Thread.sleep(msSleep, nanoSleep);
             } catch (InterruptedException e){
-                e.printStackTrace();
+                logger.log(Level.WARNING, "Game Thread Interrupted", e);
+                Thread.currentThread().interrupt();
             }
             lastTime = System.nanoTime();
         }
@@ -145,3 +150,4 @@ public class Game extends JPanel implements Mode, Runnable {
         buttonPressed();
     }
 }
+

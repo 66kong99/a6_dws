@@ -13,8 +13,7 @@ public class Resource {
     public static BufferedImage getResourceImage(String path){
         BufferedImage img = null;
         try{
-            URL imageURL = Resource.class.getClassLoader().getResource(path);
-            System.out.println(imageURL);
+            URL imageURL = Thread.currentThread().getContextClassLoader().getResource(path);
             img = ImageIO.read(imageURL);
         } catch(Exception e){
             e.printStackTrace();
@@ -25,7 +24,7 @@ public class Resource {
     public static Font getFont(String path, int size){
         Font font = null;
         try{
-          font = Font.createFont(Font.TRUETYPE_FONT, Resource.class.getClassLoader().getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
+          font = Font.createFont(Font.TRUETYPE_FONT, Thread.currentThread().getContextClassLoader().getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
 
         }catch(Exception e){
             e.printStackTrace();

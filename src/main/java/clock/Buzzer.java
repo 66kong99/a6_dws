@@ -12,7 +12,7 @@ public class Buzzer {
 
     public Buzzer() {
         try {
-            beepSound = Applet.newAudioClip(Resource.class.getClassLoader().getResource("resources/beep.wav"));
+            beepSound = Applet.newAudioClip(Thread.currentThread().getContextClassLoader().getResource("resources/beep.wav"));
         }catch (Exception e){
             e.printStackTrace();
         }
