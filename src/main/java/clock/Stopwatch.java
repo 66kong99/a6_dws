@@ -133,22 +133,26 @@ public class Stopwatch implements Mode {
 
     @Override
     public void WPressed(boolean Longpress) {
-        if(isPaused == true)
-            resetStopw();
-        else {
-            isSplit = true;
-            splitstopwTime = (Calendar)stopwTime.clone();
+        if(Longpress){
+        }else {
+            if (isPaused == true)
+                resetStopw();
+            else {
+                isSplit = true;
+                splitstopwTime = (Calendar) stopwTime.clone();
+            }
         }
     }
     @Override
     public void SPressed(boolean Longpress) { // D
-        if(Longpress == false&&isPaused == true) {
-            increaseStopw();
-            return;
-        }
-        if(Longpress == false&&isPaused == false) {
-            pauseStopw();
-            return;
-        }
+        if(Longpress){
+        }else
+            if (isPaused == true) {
+                increaseStopw();
+                return;
+            } else {
+                pauseStopw();
+                return;
+            }
     }
 }

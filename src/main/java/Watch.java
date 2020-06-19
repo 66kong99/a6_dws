@@ -9,7 +9,7 @@ public class Watch extends JFrame{
 
     private Thread timeThread;
 
-    private WatchSystem watchSystem;
+    private final WatchSystem watchSystem;
 
     public Watch(){
         super("Watch");

@@ -165,9 +165,10 @@ public class ModeManager {
             default:
                 break;
         }
-        if(beepCount == 0)
-            beepCount = tempCount;
-        else {
+
+        beepCount = Math.max(tempCount, beepCount);
+
+        if(beepCount != 0){
             if (beepCount % 100 == 0)
                 beep.beep();
             beepCount--;

@@ -161,32 +161,29 @@ public class Time implements Mode{
 
     @Override
     public void WPressed(boolean Longpress) {
-//        System.out.println("W Pressed");
-
-        if(Longpress && !isSetTime){ //set Time
-//            System.out.println("W Longpressed");
-            isSetTime = true;
-            timeUnit = 1;
-            return;
+        if(Longpress){
+            if(isSetTime){
+            }
+            else{
+                isSetTime = true;
+                timeUnit = 1;
+            }
+        }else{
+            isSetTime = false;
         }
-
-        isSetTime = false;
     }
 
     @Override
     public void SPressed(boolean Longpress) {
-//        System.out.println("S Pressed");
-        if(!Longpress && isSetTime){
-            increaseTimeValue();
-            return;
+        if(Longpress){
+            if(isSetTime){
+                changeTimeUnit();
+            }
+        }else{
+            if(isSetTime){
+                increaseTimeValue();
+            }
         }
-
-        if (Longpress && isSetTime) {
-//            System.out.println("S Longpressed");
-            changeTimeUnit();
-            return;
-        }
-
     }
 
 }

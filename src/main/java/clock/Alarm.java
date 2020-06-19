@@ -101,33 +101,38 @@ public class Alarm implements Mode{
     @Override
     public void WPressed(boolean Longpress) { // C
 //        System.out.println("W Pressed");
-        if (Longpress && !isSetAlarm){
-            isSetAlarm = true;
-            Unit = 0;
-            timeUnit[0] = alarms.get(index).get(Calendar.MINUTE);
-            timeUnit[1] = alarms.get(index).get(Calendar.HOUR);
-            return;
-        }
-        if (isSetAlarm) {
-            isSetAlarm = false;
-            setAlarm();
-            return;
-        }
+        if(Longpress) {
+            if (!isSetAlarm) {
+                isSetAlarm = true;
+                Unit = 0;
+                timeUnit[0] = alarms.get(index).get(Calendar.MINUTE);
+                timeUnit[1] = alarms.get(index).get(Calendar.HOUR);
+                return;
+            }
+        } else{
+            if (isSetAlarm) {
+                isSetAlarm = false;
+                setAlarm();
+                return;
+            }
 
-        changeAlarmIndex();
+            changeAlarmIndex();
+        }
     }
 
     @Override
     public void SPressed(boolean Longpress) { // D
-        if (Longpress && isSetAlarm) {
-            changeAlarmUnit();
-            return;
+        if(Longpress){
+            if(isSetAlarm){
+                changeAlarmIndex();
+                return;
+            }
+        }else{
+            if(isSetAlarm){
+                increaseAlarmValue();
+                return;
+            }
+            changeAlarmToggle();
         }
-        if (isSetAlarm) {
-            increaseAlarmValue();
-            return;
-        }
-        changeAlarmToggle();
-
     }
 }
