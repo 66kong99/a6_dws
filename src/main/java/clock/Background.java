@@ -12,12 +12,14 @@ import util.Resource;
 public class Background {
     public static final int LAND_POSY = 553;
 
-    private List<ImageBackground> listBackground;
-    private BufferedImage land1;
-    private BufferedImage land2;
-    private BufferedImage land3;
+    private final List<ImageBackground> listBackground;
+    private final BufferedImage land1;
+    private final BufferedImage land2;
+    private final BufferedImage land3;
 
-    private Dinosaur dinosaur;
+    private Random rand;
+
+    private final Dinosaur dinosaur;
 
     public Background(int width, Dinosaur dinosaur){
         this.dinosaur = dinosaur;
@@ -28,10 +30,11 @@ public class Background {
         listBackground = new ArrayList<ImageBackground>();
         for(int i = 0; i < numberOfImageBackground; i++){
             ImageBackground imageBackground = new ImageBackground();
-            imageBackground.posX = i * land1.getWidth();
+            imageBackground.posX = (float)i * land1.getWidth();
             setImageBackground(imageBackground);
             listBackground.add(imageBackground);
         }
+        rand = new Random();
     }
 
     public void update(){
@@ -70,7 +73,7 @@ public class Background {
     }
 
     private int getTypeOfBackground(){
-        Random rand = new Random();
+        rand = new Random();
         int type = rand.nextInt(10);
         if(type == 1){
             return 1;
@@ -84,8 +87,8 @@ public class Background {
 
 
     private class ImageBackground{
-        float posX;
-        BufferedImage image;
+        private float posX;
+        private BufferedImage image;
 
         public ImageBackground(){
             posX = 0;

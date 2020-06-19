@@ -18,7 +18,7 @@ public class Dinosaur {
     private static final int JUMPING = 1;
     private static final int DEATH = 2;
 
-    private float posX;
+    private final float posX;
     private float posY;
     private float speedX;
     private float speedY;
@@ -28,11 +28,11 @@ public class Dinosaur {
 
     private int state = NORMAL_RUN;
 
-    private Animation normalRunAnim;
-    private BufferedImage jumping;
-    private BufferedImage deathImage;
+    private final Animation normalRunAnim;
+    private final BufferedImage jumpImage;
+    private final BufferedImage deathImage;
 
-    private Buzzer scoreUpSound;
+    private final Buzzer scoreUpSound;
 
     public Dinosaur() {
         posX = 150;
@@ -41,7 +41,7 @@ public class Dinosaur {
         normalRunAnim = new Animation(90);
         normalRunAnim.addFrame(Resource.getResourceImage("resources/main-character1.png"));
         normalRunAnim.addFrame(Resource.getResourceImage("resources/main-character2.png"));
-        jumping = Resource.getResourceImage("resources/main-character3.png");
+        jumpImage = Resource.getResourceImage("resources/main-character3.png");
         deathImage = Resource.getResourceImage("resources/main-character4.png");
 
         scoreUpSound = new Buzzer();
@@ -60,10 +60,12 @@ public class Dinosaur {
                 g.drawImage(normalRunAnim.getFrame(), (int) posX, (int) posY, null);
                 break;
             case JUMPING:
-                g.drawImage(jumping, (int) posX, (int) posY, null);
+                g.drawImage(jumpImage, (int) posX, (int) posY, null);
                 break;
             case DEATH:
                 g.drawImage(deathImage, (int) posX, (int) posY, null);
+                break;
+            default:
                 break;
         }
     }

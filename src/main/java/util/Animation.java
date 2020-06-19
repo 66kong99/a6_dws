@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animation {
-    private List<BufferedImage> list;
-    private long deltaTime;
+    private final List<BufferedImage> list;
+    private final long deltaTime;
     private int currentFrame = 0;
     private long previousTime;
 

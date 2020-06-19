@@ -9,12 +9,12 @@ import java.util.Random;
 import util.Resource;
 
 public class Hurdle {
-    private BufferedImage cactus1;
-    private BufferedImage cactus2;
-    private Random rand;
+    private final BufferedImage cactus1;
+    private final BufferedImage cactus2;
+    private final Random rand;
 
-    private List<Cactus> Hurdles;
-    private Dinosaur dinosaur;
+    private final List<Cactus> Hurdles;
+    private final Dinosaur dinosaur;
 
     public Hurdle(Dinosaur dinosaur){
         rand = new Random();
@@ -30,7 +30,7 @@ public class Hurdle {
             h.update();
         }
         Cactus hurdle = Hurdles.get(0);
-        if(hurdle.CactusposX <= 255+speed && hurdle.CactusposX >250)
+        if(hurdle.CactusPosX <= 255+speed && hurdle.CactusPosX >250)
             Hurdles.add(createCactus());
         if(hurdle.isOutOfScreen()){
             dinosaur.upScore();

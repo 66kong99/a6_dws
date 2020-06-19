@@ -1,20 +1,19 @@
 package clock;
 
-import util.Resource;
-
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Buzzer {
     private AudioClip beepSound;
+    private static final Logger logger = Logger.getLogger(Buzzer.class.getName());
 
     public Buzzer() {
         try {
-            beepSound = Applet.newAudioClip(Resource.class.getClassLoader().getResource("resources/beep.wav"));
+            beepSound = Applet.newAudioClip(Thread.currentThread().getContextClassLoader().getResource("resources/beep.wav"));
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Buzzer Thread Interrupted", e);
         }
     }
     public void beep() {

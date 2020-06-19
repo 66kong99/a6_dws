@@ -14,8 +14,8 @@ public class Timer implements Mode{
         this.timerTime = Calendar.getInstance();
         this.timerTime.clear();
 
-        this.isPaused = true;
-        this.isSetTimer = false;
+        isPaused = true;
+        isSetTimer = false;
 
     }
 

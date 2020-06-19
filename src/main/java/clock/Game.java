@@ -3,6 +3,8 @@ package clock;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -13,20 +15,22 @@ public class Game extends JPanel implements Mode, Runnable {
     private static final int GAME_PLAYING_STATE = 1;
     private static final int GAME_OVER_STATE = 2;
 
-    private Background background;
-    private Dinosaur dinosaur;
-    private Hurdle hurdleManager;
+    private static final Logger logger = Logger.getLogger(Game.class.getName());
+
+    private final Background backgroundRender;
+    private final Dinosaur dinosaur;
+    private final Hurdle hurdleManager;
     private Thread thread;
-    float floatSpeed = 0.0f;
+    private float floatSpeed = 0.0f;
 
     public int gameState = START_GAME_STATE;
 
-    private BufferedImage replayButtonImage;
-    private BufferedImage gameOverButtonImage;
+    private final BufferedImage replayButtonImage;
+    private final BufferedImage gameOverButtonImage;
 
     public Game(){
         dinosaur = new Dinosaur();
-        background = new Background(550, dinosaur);
+        backgroundRender = new Background(550, dinosaur);
         dinosaur.setSpeedX(0);
         replayButtonImage = Resource.getResourceImage("resources/replay_button.png");
         gameOverButtonImage = Resource.getResourceImage("resources/gameover_text.png");
@@ -41,14 +45,14 @@ public class Game extends JPanel implements Mode, Runnable {
     public void update(){
         if (gameState == GAME_PLAYING_STATE){
             floatSpeed += 0.001f;
-            background.update();
+            backgroundRender.update();
             dinosaur.update();
             hurdleManager.update(floatSpeed);
             if(hurdleManager.isCollision()){
                 dinosaur.dead(true);
                 gameState = GAME_OVER_STATE;
             }
-            dinosaur.setSpeedX(Math.min((int)(floatSpeed * floatSpeed) / 1, (int)floatSpeed));
+            dinosaur.setSpeedX(Math.min((int) (floatSpeed * floatSpeed), (int)floatSpeed));
         }
 
     }
@@ -61,7 +65,7 @@ public class Game extends JPanel implements Mode, Runnable {
                 break;
             case GAME_PLAYING_STATE:
             case GAME_OVER_STATE:
-                background.draw(g);
+                backgroundRender.draw(g);
                 hurdleManager.draw(g);
                 dinosaur.draw(g);
                 g.setColor(Color.BLACK);
@@ -70,6 +74,8 @@ public class Game extends JPanel implements Mode, Runnable {
                     g.drawImage(gameOverButtonImage, 275, 430, null);
                     g.drawImage(replayButtonImage, 357, 450, null);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -98,7 +104,8 @@ public class Game extends JPanel implements Mode, Runnable {
             try{
                 Thread.sleep(msSleep, nanoSleep);
             } catch (InterruptedException e){
-                e.printStackTrace();
+                logger.log(Level.WARNING, "Game Thread Interrupted", e);
+                Thread.currentThread().interrupt();
             }
             lastTime = System.nanoTime();
         }
@@ -115,6 +122,8 @@ public class Game extends JPanel implements Mode, Runnable {
             case GAME_OVER_STATE:
                 gameState = GAME_PLAYING_STATE;
                 resetGame();
+                break;
+            default:
                 break;
         }
     }
@@ -145,3 +154,4 @@ public class Game extends JPanel implements Mode, Runnable {
         buttonPressed();
     }
 }
+

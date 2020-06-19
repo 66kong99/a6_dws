@@ -9,20 +9,20 @@ import java.util.*;
 import javax.swing.*;
 
 public class ModeManager {
-    private Alarm alarm; // 3
-    public Game game; // 5
-    public Time time; // 0
-    private Timer timer; // 2
-    private Worldtime worldtime; // 4
-    private Stopwatch stopwatch; // 1
-    private Buzzer beep;
+    private final Alarm alarm; // 3
+    public final Game game; // 5
+    public final Time time; // 0
+    private final Timer timer; // 2
+    private final Worldtime worldtime; // 4
+    private final Stopwatch stopwatch; // 1
+    private final Buzzer beep;
 
     private char curMode;
-    private boolean activated[];
-    private int deactivate[];
+    private final boolean[] activated;
+    private final int[] deactivate;
     private int count;
 
-    private static int beepCount;
+    private int beepCount;
     private boolean isGray;
     private boolean isSet;
 
@@ -48,13 +48,11 @@ public class ModeManager {
 //        main = new JLabel(time.requestCurTime()[1], SwingConstants.LEFT);
 //        sub = new JLabel(time.requestCurTime()[2], SwingConstants.LEFT);
 
-        try {
-            top = Resource.getFont("resources/scoreboard.ttf", 60);
-            main = Resource.getFont("resources/scoreboard.ttf", 170);
-            sub = Resource.getFont("resources/scoreboard.ttf", 60);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        top = Resource.getFont(60);
+        main = Resource.getFont(170);
+        sub = Resource.getFont(60);
+
 
         activated = new boolean[6];
         Arrays.fill(activated, true);
@@ -96,9 +94,7 @@ public class ModeManager {
     public char nextMode(){
         for(int i = curMode+1;;) {
             i = i % 6;
-            System.out.println(i);
-            if (activated[i] == true) {
-//                System.out.println(i + " : true");
+            if (activated[i]) {
                 return (char)i;
             }
             i++;
