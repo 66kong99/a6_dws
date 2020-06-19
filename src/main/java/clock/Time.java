@@ -12,20 +12,17 @@ import java.io.*;
 
 public class Time implements Mode{
 
-    private DayOfWeek[] dayOfWeeks = DayOfWeek.values();
     private static int timeUnit = 1;
-    private String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+    private final String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 
     private static boolean isSetTime;
-    private int beep;
     public Calendar curTime;
 
 
     public Time() {
         this.curTime = Calendar.getInstance();
         this.isSetTime = false;
-        beep = 0;
     }
 
 

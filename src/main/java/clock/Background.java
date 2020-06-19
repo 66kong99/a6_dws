@@ -12,14 +12,14 @@ import util.Resource;
 public class Background {
     public static final int LAND_POSY = 553;
 
-    private List<ImageBackground> listBackground;
-    private BufferedImage land1;
-    private BufferedImage land2;
-    private BufferedImage land3;
+    private final List<ImageBackground> listBackground;
+    private final BufferedImage land1;
+    private final BufferedImage land2;
+    private final BufferedImage land3;
 
     private Random rand;
 
-    private Dinosaur dinosaur;
+    private final Dinosaur dinosaur;
 
     public Background(int width, Dinosaur dinosaur){
         this.dinosaur = dinosaur;

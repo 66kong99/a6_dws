@@ -11,7 +11,7 @@ public class Stopwatch implements Mode {
     public Calendar stopwTime;
     public Calendar splitstopwTime;
 
-    public static boolean isPaused;
+    public boolean isPaused;
     private boolean isSplit;
 
     public Stopwatch() {

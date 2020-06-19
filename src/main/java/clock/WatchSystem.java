@@ -9,23 +9,17 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.Buffer;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import util.Resource;
 
-
-public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable {
+public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable, Serializable {
     public ModeManager Watch;
 
     private static final Logger logger = Logger.getLogger(WatchSystem.class.getName());
 
-    private BufferedImage backgroundRender;
+    private final BufferedImage backgroundRender;
     private long isLongpress;
     private long timeOut;
 
@@ -42,14 +36,10 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         backgroundRender = Resource.getResourceImage("resources/clock.png");
 
         try {
-            clockFont = Resource.getFont("resources/scoreboard.ttf", 32);
+            clockFont = Resource.getFont(32);
         }catch (Exception e){
             e.printStackTrace();
         }
-
-//        add(Watch.top);
-//        add(Watch.main);
-//        add(Watch.sub);
     }
 
     // Q(81) W(87)
@@ -69,7 +59,6 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     public void keyPressed(KeyEvent e){
         timeOut = 0;
-//        System.out.println(isLongpress);
         isLongpress++;
     }
 
@@ -77,7 +66,6 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         int keycode = e.getKeyCode();
 
         boolean Longpress = (isLongpress >= 10);
-//        System.out.println(Longpress);
         if (keycode == KeyEvent.VK_Q)
             Watch.QPressed(Longpress);
         else if (keycode == KeyEvent.VK_A) {
@@ -93,24 +81,20 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        System.out.println(e.getX() + ":" +  e.getY());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         timeOut = 0;
-//        System.out.println(System.nanoTime());
         isLongpress = System.nanoTime();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-//        System.out.println(System.nanoTime() - isLongpress);
         int getX = e.getX();
         int getY = e.getY();
 
         boolean Longpress = (System.nanoTime() - isLongpress) >= 500000000;
-//        System.out.println(Longpress);
         if(getX < 60) {
             if(348 < getY && getY < 428){ // TOP-LEFT Button
                 Watch.QPressed(Longpress);

@@ -17,16 +17,16 @@ public class Game extends JPanel implements Mode, Runnable {
 
     private static final Logger logger = Logger.getLogger(Game.class.getName());
 
-    private Background backgroundRender;
-    private Dinosaur dinosaur;
-    private Hurdle hurdleManager;
+    private final Background backgroundRender;
+    private final Dinosaur dinosaur;
+    private final Hurdle hurdleManager;
     private Thread thread;
     float floatSpeed = 0.0f;
 
     public int gameState = START_GAME_STATE;
 
-    private BufferedImage replayButtonImage;
-    private BufferedImage gameOverButtonImage;
+    private final BufferedImage replayButtonImage;
+    private final BufferedImage gameOverButtonImage;
 
     public Game(){
         dinosaur = new Dinosaur();
@@ -52,7 +52,7 @@ public class Game extends JPanel implements Mode, Runnable {
                 dinosaur.dead(true);
                 gameState = GAME_OVER_STATE;
             }
-            dinosaur.setSpeedX(Math.min((int)(floatSpeed * floatSpeed) / 1, (int)floatSpeed));
+            dinosaur.setSpeedX(Math.min((int) (floatSpeed * floatSpeed), (int)floatSpeed));
         }
 
     }
@@ -74,6 +74,8 @@ public class Game extends JPanel implements Mode, Runnable {
                     g.drawImage(gameOverButtonImage, 275, 430, null);
                     g.drawImage(replayButtonImage, 357, 450, null);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -120,6 +122,8 @@ public class Game extends JPanel implements Mode, Runnable {
             case GAME_OVER_STATE:
                 gameState = GAME_PLAYING_STATE;
                 resetGame();
+                break;
+            default:
                 break;
         }
     }

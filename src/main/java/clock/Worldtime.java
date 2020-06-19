@@ -5,8 +5,8 @@ import java.util.*;
 public class Worldtime implements Mode{
 
     private int curCity;
-    private int timeDiff[];
-    private String city[];
+    private final int[] timeDiff;
+    private final String[] city;
     private boolean isSummerTime;
     private Calendar worldClock;
     private Calendar GMT9;
@@ -25,7 +25,7 @@ public class Worldtime implements Mode{
         update(curTime);
         calWorldTime();
         // TODO implement here
-        if(isSummerTime == true)
+        if(isSummerTime)
             return new String[] {"WORLD-" + city[curCity] + "(S)", String.format("%02d", worldClock.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", worldClock.get(Calendar.MINUTE)), ":" + String.format("%02d", worldClock.get(Calendar.SECOND)), "X"};
         else
             return new String[] {"WORLD-" + city[curCity], String.format("%02d", worldClock.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", worldClock.get(Calendar.MINUTE)), ":" + String.format("%02d", worldClock.get(Calendar.SECOND)), "X"};
@@ -42,7 +42,7 @@ public class Worldtime implements Mode{
 
     public void changeIsSummertime() {
         // TODO implement here
-        if(isSummerTime == true)
+        if(isSummerTime)
             isSummerTime = false;
         else
             isSummerTime = true;
@@ -52,7 +52,7 @@ public class Worldtime implements Mode{
         // TODO implement here
         worldClock = (Calendar)GMT9.clone();
         worldClock.add(Calendar.HOUR_OF_DAY, timeDiff[curCity]);
-        if(isSummerTime == true)
+        if(isSummerTime)
             worldClock.add(Calendar.HOUR_OF_DAY, 1);
     }
 

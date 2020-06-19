@@ -1,11 +1,7 @@
 package clock;
 
-import util.Resource;
-
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class Buzzer {
     private AudioClip beepSound;

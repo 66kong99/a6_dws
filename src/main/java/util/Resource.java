@@ -21,10 +21,10 @@ public class Resource {
         return img;
     }
 
-    public static Font getFont(String path, int size){
+    public static Font getFont(int size){
         Font font = null;
         try{
-          font = Font.createFont(Font.TRUETYPE_FONT, Thread.currentThread().getContextClassLoader().getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
+          font = Font.createFont(Font.TRUETYPE_FONT, Thread.currentThread().getContextClassLoader().getResourceAsStream("resources/scoreboard.ttf")).deriveFont(Font.PLAIN, size);
 
         }catch(Exception e){
             e.printStackTrace();
