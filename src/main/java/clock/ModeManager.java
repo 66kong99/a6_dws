@@ -182,9 +182,29 @@ public class ModeManager {
         }
     }
 
-    public void requestData(Graphics g, String[] data){
+    public String[] requestData(Graphics g, String[] data){
         // request data
+        switch (curMode) {
+            case 0:
+//                    data = time.requestCurTime(); // Time always update and draw
+                break;
+            case 1:
+                data = stopwatch.requestStopwTime();
+                break;
+            case 2:
+                data = timer.requestTimerTime();
+                break;
+            case 3:
+                data = alarm.requestAlarm();
+                break;
+            case 4:
+                data = worldtime.requestWorldtime(time.curTime);
+                break;
 
+            default:
+                break;
+        }
+        return data;
     }
 
     public void paintBlink(Graphics g, String[] data){
@@ -211,8 +231,9 @@ public class ModeManager {
             isSet = true;
             g.setColor(Color.GRAY);
         }
-        else
+        else {
             g.setColor(Color.BLACK);
+        }
     }
 
 
@@ -231,30 +252,11 @@ public class ModeManager {
             return;
         }
 
-        // request data
-        switch (curMode) {
-            case 0:
-//                    data = time.requestCurTime(); // Time always update and draw
-                break;
-            case 1:
-                data = stopwatch.requestStopwTime();
-                break;
-            case 2:
-                data = timer.requestTimerTime();
-                break;
-            case 3:
-                data = alarm.requestAlarm();
-                break;
-            case 4:
-                data = worldtime.requestWorldtime(time.curTime);
-                break;
-            case 5:
-                game.paint(g);
-                return;
-            default:
-                break;
+        data = requestData(g, data);
+        if(curMode == 5){
+            game.paint(g);
+            return;
         }
-
         // start of top
         if (data[3].equals("X"))
             isSet = false;
