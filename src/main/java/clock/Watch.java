@@ -1,16 +1,17 @@
+package clock;
+
 import javax.swing.*;
 import java.awt.*;
 
-import clock.WatchSystem;
-
+@SuppressWarnings("uncommentedmain")
 public class Watch extends JFrame{
     public static final int SCREEN_WIDTH = 735;
     public static final int SCREEN_HEIGHT = 935;
 
-    private final WatchSystem watchSystem;
+    private transient final WatchSystem watchSystem;
 
     public Watch(){
-        super("Watch");
+        super("clock.Watch");
         Dimension dim = new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
