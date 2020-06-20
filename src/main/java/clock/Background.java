@@ -12,25 +12,25 @@ import util.Resource;
 public class Background {
     public static final int LAND_POSY = 553;
 
-    private final List<ImageBackground> listBackground;
-    private final BufferedImage land1;
-    private final BufferedImage land2;
-    private final BufferedImage land3;
+    private transient final List<ImageBackground> listBackground;
+    private transient final BufferedImage land1;
+    private transient final BufferedImage land2;
+    private transient final BufferedImage land3;
 
-    private Random rand;
+    private transient Random rand;
 
-    private final Dinosaur dinosaur;
+    private transient final Dinosaur dinosaur;
 
     public Background(int width, Dinosaur dinosaur){
         this.dinosaur = dinosaur;
         land1 = Resource.getResourceImage("resources/land1.png");
         land2 = Resource.getResourceImage("resources/land2.png");
         land3 = Resource.getResourceImage("resources/land3.png");
-        int numberOfImageBackground = width / land1.getWidth() + 2;
+        int numberOfImage = width / land1.getWidth() + 2;
         listBackground = new ArrayList<ImageBackground>();
-        for(int i = 0; i < numberOfImageBackground; i++){
+        for(int i = 0; i < numberOfImage; i++){
             ImageBackground imageBackground = new ImageBackground();
-            imageBackground.posX = (float)i * land1.getWidth();
+            imageBackground.posX = (double)i * land1.getWidth();
             setImageBackground(imageBackground);
             listBackground.add(imageBackground);
         }
@@ -41,15 +41,15 @@ public class Background {
         Iterator<ImageBackground> itr = listBackground.iterator();
         ImageBackground firstElement = itr.next();
         firstElement.posX -= dinosaur.getSpeedX();
-        float previousPosX = firstElement.posX;
+        double previousPosX = firstElement.posX;
         while(itr.hasNext()){
             ImageBackground element = itr.next();
-            element.posX = previousPosX + land1.getWidth();
+            element.posX = (double)previousPosX + land1.getWidth();
             previousPosX = element.posX;
         }
         if (firstElement.posX <= -land1.getWidth()){
             listBackground.remove(firstElement);
-            firstElement.posX = previousPosX + land1.getWidth();
+            firstElement.posX = (double)previousPosX + land1.getWidth();
             setImageBackground(firstElement);
             listBackground.add(firstElement);
         }
@@ -86,13 +86,12 @@ public class Background {
 
 
 
-    private class ImageBackground{
-        private float posX;
-        private BufferedImage image;
+    private static class ImageBackground{
+        private transient double posX;
+        private transient BufferedImage image;
 
         public ImageBackground(){
             posX = 0;
-            image = null;
         }
     }
 }

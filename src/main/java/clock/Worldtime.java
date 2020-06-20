@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Worldtime implements Mode{
 
-    private int curCity;
-    private final int[] timeDiff;
-    private final String[] city;
-    private boolean isSummerTime;
-    private Calendar worldClock;
-    private Calendar GMT9;
+    private transient int curCity;
+    private transient final int[] timeDiff;
+    private transient final String[] city;
+    private transient boolean isSummerTime;
+    private transient Calendar worldClock;
+    private transient Calendar GMT9;
 
     public Worldtime(Calendar curTime) {
         timeDiff = new int[] {-20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3};
@@ -18,7 +18,10 @@ public class Worldtime implements Mode{
         isSummerTime = false;
 
         GMT9 = curTime;
-        calWorldTime();
+        worldClock = (Calendar)GMT9.clone();
+        worldClock.add(Calendar.HOUR_OF_DAY, timeDiff[curCity]);
+        if(isSummerTime)
+            worldClock.add(Calendar.HOUR_OF_DAY, 1);
     }
 
     public String[] requestWorldtime(Calendar curTime) {

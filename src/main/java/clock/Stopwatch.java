@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Stopwatch implements Mode {
-    public Calendar stopwTime;
-    public Calendar splitstopwTime;
+    public transient Calendar stopwTime;
+    public transient Calendar splitstopwTime;
 
-    public boolean isPaused;
-    private boolean isSplit;
+    public transient boolean isPaused;
+    private transient boolean isSplit;
 
     public Stopwatch() {
         this.stopwTime = Calendar.getInstance();
@@ -134,7 +134,7 @@ public class Stopwatch implements Mode {
     @Override
     public void WPressed(boolean Longpress) {
         if(!Longpress){
-            if (isPaused == true)
+            if (isPaused)
                 resetStopw();
             else {
                 isSplit = true;
@@ -145,7 +145,7 @@ public class Stopwatch implements Mode {
     @Override
     public void SPressed(boolean Longpress) { // D
         if(!Longpress) {
-            if (isPaused == true) {
+            if (isPaused) {
                 increaseStopw();
             } else {
                 pauseStopw();

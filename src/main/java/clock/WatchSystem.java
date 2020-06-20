@@ -15,13 +15,14 @@ import java.util.logging.Logger;
 
 
 public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable, Serializable {
-    public ModeManager Watch;
+    public transient ModeManager Watch;
 
-    private static final Logger logger = Logger.getLogger(WatchSystem.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(WatchSystem.class.getName());
+    private static final int FONT_SIZE = 32;
 
     private final transient BufferedImage backgroundRender;
-    private long isLongpress;
-    private long timeOut;
+    private transient long isLongpress;
+    private transient long timeOut;
 
     private final Font clockFont;
 
@@ -36,7 +37,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         backgroundRender = Resource.getResourceImage("resources/clock.png");
 
 
-        clockFont = Resource.getFont(32);
+        clockFont = Resource.getFont(FONT_SIZE);
 
     }
 
@@ -129,6 +130,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         Watch.APressed();
     }
 
+    @Override
     public void paint(Graphics g){
         g.setColor(Color.decode("#F7F7F7"));
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -153,7 +155,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
             try{
                 Thread.sleep(10);
             }catch (InterruptedException e){
-                logger.log(Level.WARNING, "WatchSystem Thread Interrupted", e);
+                LOGGER.log(Level.WARNING, "WatchSystem Thread Interrupted", e);
                 Thread.currentThread().interrupt();
             }
         }

@@ -16,25 +16,28 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
     private static final int GAME_PLAYING_STATE = 1;
     private static final int GAME_OVER_STATE = 2;
 
-    private static final Logger logger = Logger.getLogger(Game.class.getName());
+    private static final int WIDTH = 550;
 
-    private final Background backgroundRender;
-    private final Dinosaur dinosaur;
-    private final Hurdle hurdleManager;
+    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
+
+    private transient final Background backgroundRender;
+    private transient final Dinosaur dinosaur;
+    private transient final Hurdle hurdleManager;
     private transient Thread thread;
-    float floatSpeed = 0.0f;
+    private transient float floatSpeed;
 
-    public int gameState = START_GAME_STATE;
+    public transient int gameState = START_GAME_STATE;
 
-    private final transient BufferedImage replayButtonImage;
-    private final transient BufferedImage gameOverButtonImage;
+    private final transient BufferedImage replayImage;
+    private final transient BufferedImage gameOverImage;
 
     public Game(){
+        floatSpeed = 0;
         dinosaur = new Dinosaur();
-        backgroundRender = new Background(550, dinosaur);
+        backgroundRender = new Background(WIDTH, dinosaur);
         dinosaur.setSpeedX(0);
-        replayButtonImage = Resource.getResourceImage("resources/replay_button.png");
-        gameOverButtonImage = Resource.getResourceImage("resources/gameover_text.png");
+        replayImage = Resource.getResourceImage("resources/replay_button.png");
+        gameOverImage = Resource.getResourceImage("resources/gameover_text.png");
         hurdleManager = new Hurdle(dinosaur);
     }
 
@@ -53,31 +56,24 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
                 dinosaur.dead(true);
                 gameState = GAME_OVER_STATE;
             }
-            dinosaur.setSpeedX(Math.min((int) (floatSpeed * floatSpeed), (int)floatSpeed));
+            dinosaur.setSpeedX((int)Math.min((floatSpeed * floatSpeed), floatSpeed));
         }
 
     }
-
+    @Override
     public void paint(Graphics g){
-
-        switch(gameState){
-            case START_GAME_STATE:
-                dinosaur.draw(g);
-                break;
-            case GAME_PLAYING_STATE:
-            case GAME_OVER_STATE:
-                backgroundRender.draw(g);
-                hurdleManager.draw(g);
-                dinosaur.draw(g);
-                g.setColor(Color.BLACK);
-                g.drawString("SCORE : " + dinosaur.score, 450, 320);
-                if (gameState == GAME_OVER_STATE){
-                    g.drawImage(gameOverButtonImage, 275, 430, null);
-                    g.drawImage(replayButtonImage, 357, 450, null);
-                }
-                break;
-            default:
-                break;
+        if (gameState == START_GAME_STATE)
+            dinosaur.draw(g);
+        else {
+            backgroundRender.draw(g);
+            hurdleManager.draw(g);
+            dinosaur.draw(g);
+            g.setColor(Color.BLACK);
+            g.drawString("SCORE : " + dinosaur.getGameScore(), 450, 320);
+            if (gameState == GAME_OVER_STATE){
+                g.drawImage(gameOverImage, 275, 430, null);
+                g.drawImage(replayImage, 357, 450, null);
+            }
         }
     }
 
@@ -105,7 +101,7 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
             try{
                 Thread.sleep(msSleep, nanoSleep);
             } catch (InterruptedException e){
-                logger.log(Level.WARNING, "Game Thread Interrupted", e);
+                LOGGER.log(Level.WARNING, "Game Thread Interrupted", e);
                 Thread.currentThread().interrupt();
             }
             lastTime = System.nanoTime();

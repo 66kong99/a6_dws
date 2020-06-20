@@ -114,7 +114,7 @@ public class ModeManager {
     public String[] deactivateMode() {
         String temp[] = new String[3];
         for (int i = 0; i < 6; i++)
-            if (activated[i] == false)
+            if (activated[i] == false) {
                 if (temp[0] == null) {
                     temp[0] = getModeName(i);
                     deactivate[0] = i;
@@ -123,28 +123,37 @@ public class ModeManager {
                     deactivate[1] = i;
                     break;
                 }
+            }
 //        System.out.println(deactivate[0] + " " + deactivate[1]);
         return temp; // time didn't deactivated(time's number is 0)
     }
 
     public String getModeName(int Mode){
+        String temp;
         switch(Mode){
             case 0:
-                return "Time";
+                temp = "Time";
+                break;
             case 1:
-                return "Stopwatch";
+                temp = "Stopwatch";
+                break;
             case 2:
-                return "Timer";
+                temp = "Timer";
+                break;
             case 3:
-                return "Alarm";
+                temp = "Alarm";
+                break;
             case 4:
-                return "Worldtime";
+                temp = "Worldtime";
+                break;
             case 5:
-                return "Game";
+                temp =  "Game";
+                break;
             default:
+                temp = "ERROR";
                 break;
         }
-        return null;
+        return temp;
     }
 
     public void update(){
@@ -171,10 +180,10 @@ public class ModeManager {
                 beep.beep();
             beepCount--;
         }
-//        System.out.println(tempCount);
     }
 
-    public void paint(Graphics g){ // "Mode Name", "Hour, Minute", "sec", "O" or "X"
+    // "Mode Name", "Hour, Minute", "sec", "O" or "X"
+    public void paint(Graphics g){
         count ++;
         String[] data = new String[4];
         data = time.requestCurTime();

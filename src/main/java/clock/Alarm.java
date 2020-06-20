@@ -4,14 +4,14 @@ import java.util.*;
 
 public class Alarm implements Mode{
 
-    private final List<Calendar> alarms;
-    private final List<Boolean> toggle;
+    private transient final List<Calendar> alarms;
+    private transient final List<Boolean> toggle;
 
-    private int index;
-    private final int[] timeUnit;
-    private int Unit = 0;
+    private transient int index;
+    private transient final int[] timeUnit;
+    private transient int Unit;
 
-    private boolean isSetAlarm;
+    private transient boolean isSetAlarm;
 
     public Alarm() {
         alarms = new LinkedList<Calendar>();
@@ -19,6 +19,7 @@ public class Alarm implements Mode{
         timeUnit = new int[2];
         isSetAlarm = false;
         index = 0;
+        Unit = 0;
 
         Calendar temp = Calendar.getInstance();
         temp.set(0, 0, 0, 0, 0, 0);
@@ -71,7 +72,7 @@ public class Alarm implements Mode{
     }
 
     public String[] requestAlarm(){
-        String swit = new String();
+        String swit;
         Calendar temp = alarms.get(index);
 
         if (toggle.get(index) == false)
