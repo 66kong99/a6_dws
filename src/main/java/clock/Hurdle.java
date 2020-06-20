@@ -25,7 +25,7 @@ public class Hurdle {
         Hurdles.add(createCactus());
     }
 
-    public void update(float speed){
+    public void update(double speed){
         for(Cactus h : Hurdles){
             h.update();
         }

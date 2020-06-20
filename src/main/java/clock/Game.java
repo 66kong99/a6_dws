@@ -30,7 +30,7 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
     private transient final Dinosaur dinosaur;
     private transient final Hurdle hurdleManager;
     private transient Thread thread;
-    private transient float floatSpeed;
+    private transient double floatSpeed;
 
 
 
@@ -70,8 +70,7 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
                 dinosaur.dead(true);
                 gameState = GAME_OVER_STATE;
             }
-            dinosaur.setSpeedX((int)Math.min
-                    ((double)(floatSpeed * floatSpeed), floatSpeed));
+            dinosaur.setSpeedX((int)Math.min((floatSpeed * floatSpeed), floatSpeed));
         }
 
     }
