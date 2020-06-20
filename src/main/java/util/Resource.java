@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 public class Resource {
     private static final Logger logger = Logger.getLogger(Resource.class.getName());
 
-    public Resource(){
+    private Resource(){
     }
 
 

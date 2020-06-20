@@ -9,26 +9,26 @@ import java.util.*;
 import javax.swing.*;
 
 public class ModeManager {
-    private final Alarm alarm; // 3
-    public final Game game; // 5
-    public final Time time; // 0
-    private final Timer timer; // 2
-    private final Worldtime worldtime; // 4
-    private final Stopwatch stopwatch; // 1
-    private final Buzzer beep;
+    private transient final Alarm alarm; // 3
+    public transient final Game game; // 5
+    public transient final Time time; // 0
+    private transient final Timer timer; // 2
+    private transient final Worldtime worldtime; // 4
+    private transient final Stopwatch stopwatch; // 1
+    private transient final Buzzer beep;
 
-    private char curMode;
-    private final boolean[] activated;
-    private final int[] deactivate;
-    private int count;
+    private transient char curMode;
+    private transient final boolean[] activated;
+    private transient final int[] deactivate;
+    private transient int count;
 
-    private int beepCount;
-    private boolean isGray;
-    private boolean isSet;
+    private transient int beepCount;
+    private transient boolean isGray;
+    private transient boolean isSet;
 
-    private boolean isSwapMode;
+    private transient boolean isSwapMode;
 
-    private Font top, main, sub;
+    private transient final Font top, main, sub;
 
 
 //    public JLabel top, main, sub;

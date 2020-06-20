@@ -62,8 +62,9 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
     }
     @Override
     public void paint(Graphics g){
-        if (gameState == START_GAME_STATE)
+        if (gameState == START_GAME_STATE) {
             dinosaur.draw(g);
+        }
         else {
             backgroundRender.draw(g);
             hurdleManager.draw(g);
