@@ -5,19 +5,21 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.security.SecureRandom;
 
 import util.Resource;
 
 public class Hurdle {
     private transient final BufferedImage cactus1;
     private transient final BufferedImage cactus2;
-    private transient final Random rand;
-
+//    private transient final Random rand;
+    private transient final SecureRandom rand;
     private transient final List<Cactus> Hurdles;
     private transient final Dinosaur dinosaur;
 
     public Hurdle(Dinosaur dinosaur){
-        rand = new Random();
+//        rand = new Random();
+        rand = new SecureRandom();
         cactus1 = Resource.getResourceImage("resources/cactus1.png");
         cactus2 = Resource.getResourceImage("resources/cactus2.png");
         Hurdles = new ArrayList<Cactus>();
