@@ -1,11 +1,8 @@
 package clock;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.time.DayOfWeek;
-import java.util.*;
-import javax.swing.*;
-import java.awt.*;
+
+import java.util.Calendar;
+
 
 public class Stopwatch implements Mode {
     public transient Calendar stopwTime;

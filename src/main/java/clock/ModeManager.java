@@ -1,12 +1,10 @@
 package clock;
 
 import util.Resource;
-
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.*;
-import javax.swing.*;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.util.Arrays;
 
 public class ModeManager {
     private transient final Alarm alarm; // 3
@@ -180,6 +178,12 @@ public class ModeManager {
                 beep.beep();
             beepCount--;
         }
+
+        //isGray 1 second update
+        if (count / 100 == 1) {
+            isGray = !isGray;
+            count = 0;
+        }
     }
 
     public String[] requestData(Graphics g, String[] data){
@@ -295,10 +299,6 @@ public class ModeManager {
         g.setFont(sub);
         g.drawString(data[2], 520, 600);
 
-        if (count / 100 == 1) {
-            isGray = !isGray;
-            count = 0;
-        }
     }
     public void APressed(){
         if(beepCount != 0){
