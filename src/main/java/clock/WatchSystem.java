@@ -15,17 +15,18 @@ import java.util.logging.Logger;
 
 
 public class WatchSystem extends JPanel implements MouseListener, KeyListener, Runnable, Serializable {
-    public ModeManager Watch;
+    public transient ModeManager Watch;
 
-    private static final Logger logger = Logger.getLogger(WatchSystem.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(WatchSystem.class.getName());
+    private static final int FONT_SIZE = 32;
 
-    private final BufferedImage backgroundRender;
-    private long isLongpress;
-    private long timeOut;
+    private final transient BufferedImage backgroundRender;
+    private transient long isLongpress;
+    private transient long timeOut;
 
-    private Font clockFont;
+    private final Font clockFont;
 
-    private Thread thread;
+    private transient Thread thread;
 
     public WatchSystem() {
         isLongpress = 0;
@@ -36,7 +37,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         backgroundRender = Resource.getResourceImage("resources/clock.png");
 
 
-        clockFont = Resource.getFont(32);
+        clockFont = Resource.getFont(FONT_SIZE);
 
     }
 
@@ -79,6 +80,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // NOT using
     }
 
     @Override
@@ -114,12 +116,12 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // NOT using
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        // NOT using
     }
 
 
@@ -128,6 +130,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         Watch.APressed();
     }
 
+    @Override
     public void paint(Graphics g){
         g.setColor(Color.decode("#F7F7F7"));
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -152,7 +155,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
             try{
                 Thread.sleep(10);
             }catch (InterruptedException e){
-                logger.log(Level.WARNING, "WatchSystem Thread Interrupted", e);
+                LOGGER.log(Level.WARNING, "WatchSystem Thread Interrupted", e);
                 Thread.currentThread().interrupt();
             }
         }

@@ -3,11 +3,11 @@ package clock;
 import java.util.*;
 
 public class Timer implements Mode{
-    public Calendar timerTime;
+    public transient Calendar timerTime;
 
-    private boolean isPaused;
-    private boolean isSetTimer;
-    private int timerUnit = 1;
+    private transient boolean isPaused;
+    private transient boolean isSetTimer;
+    private transient int timerUnit = 1;
 
 
     public Timer() {
@@ -48,10 +48,10 @@ public class Timer implements Mode{
 
         timerBufferArr[2] = secBuffer.toString();
 
-        if(!isSetTimer)
-            timerBufferArr[3] = "X";
-        else
+        if(isSetTimer)
             timerBufferArr[3] = String.format("%d", timerUnit);
+        else
+            timerBufferArr[3] = "X";
         return timerBufferArr;
     }
 
@@ -123,8 +123,7 @@ public class Timer implements Mode{
     @Override
     public void WPressed(boolean Longpress) { // C
         if(Longpress){
-            if(isSetTimer){
-            }else{
+            if(!isSetTimer) {
                 if((this.timerTime.get(Calendar.SECOND) ==0 && this.timerTime.get(Calendar.MINUTE) ==0 && this.timerTime.get(Calendar.HOUR_OF_DAY) == 0)&&this.isPaused == true) {
                     isSetTimer = true;
                     timerUnit = 1;

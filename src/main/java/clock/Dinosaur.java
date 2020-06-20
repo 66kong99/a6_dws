@@ -1,7 +1,6 @@
 package clock;
 
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -18,21 +17,21 @@ public class Dinosaur {
     private static final int JUMPING = 1;
     private static final int DEATH = 2;
 
-    private final float posX;
-    private float posY;
-    private float speedX;
-    private float speedY;
-    private Rectangle rectBound;
+    private transient final float posX;
+    private transient float posY;
+    private transient float speedX;
+    private transient float speedY;
+    private transient Rectangle rectBound;
 
-    public int score = 0;
+    private transient int gameScore = 0;
 
-    private int state = NORMAL_RUN;
+    private transient int state = NORMAL_RUN;
 
-    private final Animation normalRunAnim;
-    private final BufferedImage jumpImage;
-    private final BufferedImage deathImage;
+    private transient final Animation normalRunAnim;
+    private transient final BufferedImage jumpImage;
+    private transient final BufferedImage deathImage;
 
-    private final Buzzer scoreUpSound;
+    private transient final Buzzer scoreUpSound;
 
     public Dinosaur() {
         posX = 150;
@@ -108,14 +107,18 @@ public class Dinosaur {
 
     public void reset(){
         posY = LAND_POSY;
-        score = 0;
+        gameScore = 0;
     }
 
     public void upScore(){
-        score += 20;
-        if(score % 100 == 0){
+        gameScore += 20;
+        if(gameScore % 100 == 0){
             scoreUpSound.beep();
         }
+    }
+
+    public int getGameScore(){
+        return gameScore;
     }
 
 }

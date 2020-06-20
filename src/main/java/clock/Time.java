@@ -6,12 +6,12 @@ import java.util.*;
 
 public class Time implements Mode{
 
-    private int timeUnit = 1;
-    private final String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+    private transient int timeUnit = 1;
+    private transient final String[] dayOfWeek = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
 
-    private boolean isSetTime;
-    public Calendar curTime;
+    private transient boolean isSetTime;
+    public transient Calendar curTime;
 
 
     public Time() {
@@ -57,10 +57,10 @@ public class Time implements Mode{
 
         timeBufferArr[2] = secBuffer.toString();
 
-        if(!isSetTime) {
-            timeBufferArr[3] = "X";
-        }else
+        if(isSetTime) {
             timeBufferArr[3] = String.format("%d", timeUnit);
+        }else
+            timeBufferArr[3] = "X";
 
         return timeBufferArr;
     }
@@ -153,9 +153,7 @@ public class Time implements Mode{
     @Override
     public void WPressed(boolean Longpress) {
         if(Longpress){
-            if(isSetTime){
-            }
-            else{
+            if(!isSetTime){
                 isSetTime = true;
                 timeUnit = 1;
             }

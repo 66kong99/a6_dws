@@ -30,7 +30,6 @@ public class Watch extends JFrame{
     }
 
     public void start(){
-        System.out.println("START");
         setVisible(true);
         watchSystem.start();
     }

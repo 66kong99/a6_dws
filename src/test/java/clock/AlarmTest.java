@@ -5,11 +5,13 @@ import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AlarmTest {
+    private static final Logger logger = Logger.getLogger(Alarm.class.getName());
 
     @Test
     void setAlarm() {
@@ -28,7 +30,7 @@ class AlarmTest {
 
             assertNotEquals(tempCal, ret.get(0));
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.CONFIG, "setAlarm Test ERROR", e);
             return;
         }
     }
@@ -46,7 +48,7 @@ class AlarmTest {
             assertNotEquals(curIndex, (int)field.get(temp));
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.CONFIG, "changeAlarmIndex Test ERROR", e);
             return;
         }
     }
@@ -65,7 +67,7 @@ class AlarmTest {
             assertEquals(true, ret.get(0));
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.CONFIG, "changeAlarmToggle Test ERROR", e);
             return;
         }
     }
@@ -86,9 +88,9 @@ class AlarmTest {
                 }
             }
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            logger.log(Level.CONFIG, "changeAlarmUnit - NoSuchField ERROR", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.CONFIG, "changeAlarmUnit - IllegalAccess ERROR", e);
         }
     }
 
@@ -127,10 +129,10 @@ class AlarmTest {
             fieldList = (int[]) field.get(alarm);
             assertEquals(fieldList[0], 0); // check: minute is 0
             assertEquals(fieldList[1], 0); // check: hour is 0
-        }catch(NoSuchFieldException e){
-            e.printStackTrace();
-        }catch(IllegalAccessException e){
-
+        }catch (NoSuchFieldException e) {
+            logger.log(Level.CONFIG, "increaseAlarmValue - NoSuchField ERROR", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.CONFIG, "increaseAlarmValue - IllegalAccess ERROR", e);
         }
     }
 
@@ -176,7 +178,7 @@ class AlarmTest {
 
             assertNotEquals(tempString, temp.requestAlarm());
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.CONFIG, "requestAlarm Test ERROR", e);
             return;
         }
     }

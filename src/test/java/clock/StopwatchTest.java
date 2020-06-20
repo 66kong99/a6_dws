@@ -11,12 +11,14 @@ import java.util.Calendar;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StopwatchTest {
+    private Field field;
+
 
     @Test
     void requestStopwTime() {
-        Stopwatch st = new Stopwatch();
         try{
-            Field field = st.getClass().getDeclaredField("isPaused");
+            Stopwatch st = new Stopwatch();
+            field = st.getClass().getDeclaredField("isPaused");
             field.setAccessible(true);
             boolean value = (boolean)field.get(st);
             assertTrue(value); // isPaused = true checking
@@ -42,7 +44,7 @@ class StopwatchTest {
         Stopwatch st = new Stopwatch();
         Calendar cal = (Calendar) st.stopwTime.clone();
         try{
-            Field field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField("isPaused");
             field.setAccessible(true);
             st.SPressed(false); //increase stopw
             st.updateStopw(); //stopw millisecond + 10
@@ -63,7 +65,7 @@ class StopwatchTest {
         Stopwatch st = new Stopwatch();
         Calendar cal = (Calendar) st.stopwTime.clone();
         try{
-            Field field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField("isPaused");
             field.setAccessible(true);
             st.SPressed(false); // increase stopw
             boolean value = (boolean)field.get(st);
@@ -85,7 +87,7 @@ class StopwatchTest {
         Stopwatch st = new Stopwatch();
         Calendar cal = (Calendar) st.stopwTime.clone();
         try{
-            Field field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField("isPaused");
             field.setAccessible(true);
             st.SPressed(false); // increase stopw
             st.updateStopw(); //stopw millisecond + 10
@@ -105,8 +107,8 @@ class StopwatchTest {
     void requestSplit() {
         Stopwatch st = new Stopwatch();
         try{
-            Field field1 = st.getClass().getDeclaredField("isPaused");
-            field1.setAccessible(true);
+            field = st.getClass().getDeclaredField("isPaused");
+            field.setAccessible(true);
             Field field2 = st.getClass().getDeclaredField("isSplit");
             field2.setAccessible(true);
             boolean isSplit1 = (boolean)field2.get(st);
@@ -115,7 +117,7 @@ class StopwatchTest {
             st.updateStopw(); //stopw millisecond + 10
             st.WPressed(false);
             String splitTime = st.requestSplit(); // stopw split
-            boolean isPaused = (boolean)field1.get(st);
+            boolean isPaused = (boolean)field.get(st);
             assertFalse(isPaused); // isPaused = false checking
             boolean isSplit2 = (boolean)field2.get(st);
             assertTrue(isSplit2); // isSplit = true checking
@@ -128,19 +130,4 @@ class StopwatchTest {
         }
     }
 
-    @Test
-    void QPressed() {
-    }
-
-    @Test
-    void APressed() {
-    }
-
-    @Test
-    void WPressed() {
-    }
-
-    @Test
-    void SPressed() {
-    }
 }
