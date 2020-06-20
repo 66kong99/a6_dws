@@ -141,6 +141,8 @@ public class ModeManager {
                 return "Worldtime";
             case 5:
                 return "Game";
+            default:
+                break;
         }
         return null;
     }
@@ -183,99 +185,105 @@ public class ModeManager {
             g.drawString(data[1], 100, 588);
             g.drawString("->", 570, 388);
             g.drawString("->", 570, 588);
+            return;
         }
-        else if (curMode == 5)// game
-            game.paint(g);
-        else {
-            switch (curMode) {
-                case 0:
+
+        // request data
+        switch (curMode) {
+            case 0:
 //                    data = time.requestCurTime(); // Time always update and draw
-                    break;
-                case 1:
-                    data = stopwatch.requestStopwTime();
-                    break;
-                case 2:
-                    data = timer.requestTimerTime();
-                    break;
-                case 3:
-                    data = alarm.requestAlarm();
-                    break;
-                case 4:
-                    data = worldtime.requestWorldtime(time.curTime);
-                    break;
-                default:
-                    break;
-            }
-//            System.out.println(data[0] + " " + data[1] + " " + data[2] + " " + data[3]);
-//            System.out.println(data[3] == "1");
+                break;
+            case 1:
+                data = stopwatch.requestStopwTime();
+                break;
+            case 2:
+                data = timer.requestTimerTime();
+                break;
+            case 3:
+                data = alarm.requestAlarm();
+                break;
+            case 4:
+                data = worldtime.requestWorldtime(time.curTime);
+                break;
+            case 5:
+                game.paint(g);
+                return;
+            default:
+                break;
+        }
 
-            if (data[3].equals("X"))
-                isSet = false;
+        // start of top
 
-            if (isGray && !data[3].equals("X")){
-                isSet = true;
-                g.setColor(Color.GRAY);
-            }else
-                g.setColor(Color.BLACK);
+        if (data[3].equals("X"))
+            isSet = false;
 
-            g.setFont(top);
-            if(curMode == 0){//time keeping mode **** ** ** *** 14
-                g.drawString(data[0], 100, 388);
-                if(isGray) {
-                    if (data[3].equals("6")) {
-                        g.drawString(data[0].substring(0, 5), 100, 388);
-                        g.setColor(Color.BLACK);
-                        g.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
-                    }
-                    else if (data[3].equals("5")) {
-                        g.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
-                        g.setColor(Color.BLACK);
-                        g.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
-                        g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
-                    }
-                    else if (data[3].equals("4")) {
-                        g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
-                        g.setColor(Color.BLACK);
-                        g.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
-                    }
+        if (isGray && !data[3].equals("X")){
+            isSet = true;
+            g.setColor(Color.GRAY);
+        }else
+            g.setColor(Color.BLACK);
+
+        g.setFont(top);
+        if(curMode == 0){//time keeping mode **** ** ** *** 14
+            g.drawString(data[0], 100, 388);
+            if(isGray) {
+                if (data[3].equals("6")) {
+                    g.drawString(data[0].substring(0, 5), 100, 388);
+                    g.setColor(Color.BLACK);
+                    g.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
+                }
+                else if (data[3].equals("5")) {
+                    g.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
+                    g.setColor(Color.BLACK);
+                    g.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
+                    g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+                }
+                else if (data[3].equals("4")) {
+                    g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+                    g.setColor(Color.BLACK);
+                    g.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
                 }
             }
-            else // other mode
-                g.drawString(data[0], 100, 388);
+        }
+        else // other mode
+            g.drawString(data[0], 100, 388);
+        // end of Top
 
-            if (isGray && data[3].equals("3")){
-                isSet = true;
-                g.setColor(Color.GRAY);
-            } else
-                g.setColor(Color.BLACK);
-
-            g.setFont(main);
-            g.drawString(data[1].substring(0, 2), 95, 600);
-
+        // start of main
+        if (isGray && data[3].equals("3")){
+            isSet = true;
+            g.setColor(Color.GRAY);
+        } else
             g.setColor(Color.BLACK);
-            g.drawString(data[1].substring(2, 3), 265, 600); // :
 
-            if (isGray && data[3].equals("2")){
-                isSet = true;
-                g.setColor(Color.GRAY);
-            } else
-                g.setColor(Color.BLACK);
+        g.setFont(main);
+        g.drawString(data[1].substring(0, 2), 95, 600);
 
-            g.drawString(data[1].substring(3, 5), 340, 600);
+        g.setColor(Color.BLACK);
+        g.drawString(data[1].substring(2, 3), 265, 600); // :
 
-            if (isGray && data[3].equals("1")){
-                isSet = true;
-                g.setColor(Color.GRAY);
-            } else
-                g.setColor(Color.BLACK);
+        if (isGray && data[3].equals("2")){
+            isSet = true;
+            g.setColor(Color.GRAY);
+        } else
+            g.setColor(Color.BLACK);
 
-            g.setFont(sub);
-            g.drawString(data[2], 520, 600);
+        g.drawString(data[1].substring(3, 5), 340, 600);
 
-            if (count / 100 == 1) {
-                isGray = !isGray;
-                count = 0;
-            }
+        if (isGray && data[3].equals("1")){
+            isSet = true;
+            g.setColor(Color.GRAY);
+        } else
+            g.setColor(Color.BLACK);
+        // end of main
+
+        // sub
+        g.setFont(sub);
+        g.drawString(data[2], 520, 600);
+
+        if (count / 100 == 1) {
+            isGray = !isGray;
+            count = 0;
         }
     }
     public void APressed(){

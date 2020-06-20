@@ -21,13 +21,13 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
     private final Background backgroundRender;
     private final Dinosaur dinosaur;
     private final Hurdle hurdleManager;
-    private Thread thread;
+    private transient Thread thread;
     float floatSpeed = 0.0f;
 
     public int gameState = START_GAME_STATE;
 
-    private final BufferedImage replayButtonImage;
-    private final BufferedImage gameOverButtonImage;
+    private final transient BufferedImage replayButtonImage;
+    private final transient BufferedImage gameOverButtonImage;
 
     public Game(){
         dinosaur = new Dinosaur();

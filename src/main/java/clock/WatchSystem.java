@@ -19,13 +19,13 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     private static final Logger logger = Logger.getLogger(WatchSystem.class.getName());
 
-    private final BufferedImage backgroundRender;
+    private final transient BufferedImage backgroundRender;
     private long isLongpress;
     private long timeOut;
 
-    private Font clockFont;
+    private final Font clockFont;
 
-    private Thread thread;
+    private transient Thread thread;
 
     public WatchSystem() {
         isLongpress = 0;
@@ -79,6 +79,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // NOT using
     }
 
     @Override
@@ -114,12 +115,12 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        // NOT using
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        // NOT using
     }
 
 

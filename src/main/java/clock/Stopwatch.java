@@ -133,8 +133,7 @@ public class Stopwatch implements Mode {
 
     @Override
     public void WPressed(boolean Longpress) {
-        if(Longpress){
-        }else {
+        if(!Longpress){
             if (isPaused == true)
                 resetStopw();
             else {
@@ -145,14 +144,12 @@ public class Stopwatch implements Mode {
     }
     @Override
     public void SPressed(boolean Longpress) { // D
-        if(Longpress){
-        }else
+        if(!Longpress) {
             if (isPaused == true) {
                 increaseStopw();
-                return;
             } else {
                 pauseStopw();
-                return;
             }
+        }
     }
 }

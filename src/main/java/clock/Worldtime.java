@@ -24,7 +24,6 @@ public class Worldtime implements Mode{
     public String[] requestWorldtime(Calendar curTime) {
         update(curTime);
         calWorldTime();
-        // TODO implement here
         if(isSummerTime)
             return new String[] {"WORLD-" + city[curCity] + "(S)", String.format("%02d", worldClock.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", worldClock.get(Calendar.MINUTE)), ":" + String.format("%02d", worldClock.get(Calendar.SECOND)), "X"};
         else
@@ -33,7 +32,6 @@ public class Worldtime implements Mode{
 
 
     public void changeCity() {
-        // TODO implement here
         if(curCity >= 23)
             curCity = 0;
         else
@@ -41,7 +39,6 @@ public class Worldtime implements Mode{
     }
 
     public void changeIsSummertime() {
-        // TODO implement here
         if(isSummerTime)
             isSummerTime = false;
         else
@@ -49,7 +46,6 @@ public class Worldtime implements Mode{
     }
 
     public void calWorldTime() {
-        // TODO implement here
         worldClock = (Calendar)GMT9.clone();
         worldClock.add(Calendar.HOUR_OF_DAY, timeDiff[curCity]);
         if(isSummerTime)
