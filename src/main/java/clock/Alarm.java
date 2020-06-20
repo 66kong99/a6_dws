@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 public class Alarm implements Mode{
 
+
     private transient final List<Calendar> alarms;
     private transient final List<Boolean> toggle;
 
@@ -14,6 +15,8 @@ public class Alarm implements Mode{
     private transient int Unit;
 
     private transient boolean isSetAlarm;
+
+    private transient final String stringformat = "%02d";
 
     public Alarm() {
         alarms = new LinkedList<Calendar>();
@@ -82,9 +85,9 @@ public class Alarm implements Mode{
         else
             swit = " ON";
         if (isSetAlarm){
-            return new String[]{"ALARM " + (index+1), String.format("%02d", timeUnit[1]) + ":" + String.format("%02d", timeUnit[0]), "SET", String.format("%d", Unit+2)};
+            return new String[]{"ALARM " + (index+1), String.format(stringformat, timeUnit[1]) + ":" + String.format(stringformat, timeUnit[0]), "SET", String.format("%d", Unit+2)};
         }else {
-            return new String[]{"ALARM " + (index+1), String.format("%02d", temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", temp.get(Calendar.MINUTE)), swit, "X"};
+            return new String[]{"ALARM " + (index+1), String.format(stringformat, temp.get(Calendar.HOUR_OF_DAY)) + ":" + String.format(stringformat, temp.get(Calendar.MINUTE)), swit, "X"};
         }
     }
 

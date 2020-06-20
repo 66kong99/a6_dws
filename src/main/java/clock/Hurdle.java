@@ -30,7 +30,7 @@ public class Hurdle {
             h.update();
         }
         Cactus hurdle = Hurdles.get(0);
-        if(hurdle.cactusPosX <= (double)255+speed && hurdle.cactusPosX >250)
+        if(hurdle.getCactusPosX() <= (double)255+speed && hurdle.getCactusPosX() >250)
             Hurdles.add(createCactus());
         if(hurdle.isOutOfScreen()){
             dinosaur.upScore();

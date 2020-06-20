@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class Cactus {
     public static final int Y_LAND = 575;
 
-    public transient int cactusPosX;
+    private transient int cactusPosX;
     private transient final int width;
     private transient final int height;
 
@@ -42,6 +42,14 @@ public class Cactus {
         rectBound.width = width;
         rectBound.height = height;
         return rectBound;
+    }
+
+    public int getCactusPosX() {
+        return cactusPosX;
+    }
+
+    public void setCactusPosX(int cactusPosX) {
+        this.cactusPosX = cactusPosX;
     }
 
     public boolean isOutOfScreen(){

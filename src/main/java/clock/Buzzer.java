@@ -4,11 +4,12 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 
 public class Buzzer {
-    private transient AudioClip beepSound;
+    private transient final AudioClip beepSound;
 
     public Buzzer() {
 
-        beepSound = Applet.newAudioClip(Thread.currentThread().getContextClassLoader().getResource("resources/beep.wav"));
+        beepSound = Applet.newAudioClip(Thread.currentThread().getContextClassLoader().
+                getResource("resources/beep.wav"));
 
     }
     public void beep() {

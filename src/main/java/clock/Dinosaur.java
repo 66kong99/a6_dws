@@ -16,6 +16,8 @@ public class Dinosaur {
     private static final int NORMAL_RUN = 0;
     private static final int JUMPING = 1;
     private static final int DEATH = 2;
+    private static final int SCORE_INC = 20;
+    private static final int SCORE_BEEP = 100;
 
     private transient final float posX;
     private transient float posY;
@@ -23,7 +25,7 @@ public class Dinosaur {
     private transient float speedY;
     private transient Rectangle rectBound;
 
-    private transient int gameScore = 0;
+    private transient int gameScore;
 
     private transient int state = NORMAL_RUN;
 
@@ -42,7 +44,7 @@ public class Dinosaur {
         normalRunAnim.addFrame(Resource.getResourceImage("resources/main-character2.png"));
         jumpImage = Resource.getResourceImage("resources/main-character3.png");
         deathImage = Resource.getResourceImage("resources/main-character4.png");
-
+        gameScore = 0;
         scoreUpSound = new Buzzer();
     }
     public float getSpeedX(){
@@ -111,8 +113,8 @@ public class Dinosaur {
     }
 
     public void upScore(){
-        gameScore += 20;
-        if(gameScore % 100 == 0){
+        gameScore += SCORE_INC;
+        if(gameScore % SCORE_BEEP == 0){
             scoreUpSound.beep();
         }
     }

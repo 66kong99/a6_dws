@@ -70,7 +70,7 @@ public class WatchSystem extends JPanel implements MouseListener, KeyListener, R
         if (keycode == KeyEvent.VK_Q)
             Watch.QPressed(Longpress);
         else if (keycode == KeyEvent.VK_A) {
-            if (Watch.getIntCurMode() != 5 && Watch.game.gameState != 1)
+            if (Watch.getIntCurMode() != 5 && Watch.game.getGameState()!= 1)
                 this.APressed();
         }
         else if (keycode == KeyEvent.VK_W)

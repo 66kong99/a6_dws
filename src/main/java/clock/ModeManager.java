@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class ModeManager {
     private transient final Alarm alarm; // 3
     public transient final Game game; // 5
-    public transient final Time time; // 0
+    private transient final Time time; // 0
     private transient final Timer timer; // 2
     private transient final Worldtime worldtime; // 4
     private transient final Stopwatch stopwatch; // 1
@@ -26,8 +26,11 @@ public class ModeManager {
 
     private transient boolean isSwapMode;
 
-    private transient final Font top, main, sub;
+    private transient final Font top;
+    private transient final Font main;
+    private transient final Font sub;
 
+    private transient static final int BEEP_CYCLE = 100;
 
 //    public JLabel top, main, sub;
 
@@ -101,7 +104,7 @@ public class ModeManager {
     }
 
     public void changeToMode(char Mode) {
-        if(game.gameState == 1) {
+        if(game.getGameState() == 1) {
             return;
         }
         if(isSet) {
@@ -113,7 +116,7 @@ public class ModeManager {
     // calling deactivating mode
     public String[] deactivateMode() {
         String temp[] = new String[3];
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++) {
             if (activated[i] == false) {
                 if (temp[0] == null) {
                     temp[0] = getModeName(i);
@@ -124,6 +127,7 @@ public class ModeManager {
                     break;
                 }
             }
+        }
 //        System.out.println(deactivate[0] + " " + deactivate[1]);
         return temp; // time didn't deactivated(time's number is 0)
     }
@@ -147,7 +151,7 @@ public class ModeManager {
                 temp = "Worldtime";
                 break;
             case 5:
-                temp =  "Game";
+                temp = "Game";
                 break;
             default:
                 temp = "ERROR";
@@ -176,7 +180,7 @@ public class ModeManager {
         beepCount = Math.max(tempCount, beepCount);
 
         if(beepCount != 0){
-            if (beepCount % 100 == 0) {
+            if (beepCount % BEEP_CYCLE == 0) {
                 beep.beep();
             }
             beepCount--;
@@ -189,7 +193,7 @@ public class ModeManager {
         }
     }
 
-    public String[] requestData(Graphics g, String[] data){
+    public String[] requestData(String[] data){
         // request data
         switch (curMode) {
             case 0:
@@ -214,54 +218,54 @@ public class ModeManager {
         return data;
     }
 
-    public void paintBlink(Graphics g, String[] data){
+    public void paintBlink(Graphics graphics, String[] data){
         if (data[3].equals("6")) {
-            g.drawString(data[0].substring(0, 5), 100, 388);
-            g.setColor(Color.BLACK);
-            g.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
+            graphics.drawString(data[0].substring(0, 5), 100, 388);
+            graphics.setColor(Color.BLACK);
+            graphics.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
         }
         else if (data[3].equals("5")) {
-            g.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
-            g.setColor(Color.BLACK);
-            g.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
-            g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+            graphics.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
+            graphics.setColor(Color.BLACK);
+            graphics.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
+            graphics.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
         }
         else if (data[3].equals("4")) {
-            g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
-            g.setColor(Color.BLACK);
-            g.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
+            graphics.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+            graphics.setColor(Color.BLACK);
+            graphics.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
         }
     }
 
-    public void paintGray(Graphics g, boolean grayCond){
+    public void paintGray(Graphics graphics, boolean grayCond){
         if(grayCond == true){
             isSet = true;
-            g.setColor(Color.GRAY);
+            graphics.setColor(Color.GRAY);
         }
         else {
-            g.setColor(Color.BLACK);
+            graphics.setColor(Color.BLACK);
         }
     }
 
 
     // "Mode Name", "Hour, Minute", "sec", "O" or "X"
-    public void paint(Graphics g){
+    public void paint(Graphics graphics){
         count ++;
         String[] data = new String[4];
         data = time.requestCurTime();
         if (isSwapMode) {
             data = deactivateMode();
-            g.setFont(top);
-            g.drawString(data[0], 100, 388);
-            g.drawString(data[1], 100, 588);
-            g.drawString("->", 570, 388);
-            g.drawString("->", 570, 588);
+            graphics.setFont(top);
+            graphics.drawString(data[0], 100, 388);
+            graphics.drawString(data[1], 100, 588);
+            graphics.drawString("->", 570, 388);
+            graphics.drawString("->", 570, 588);
             return;
         }
 
-        data = requestData(g, data);
+        data = requestData(data);
         if(curMode == 5){
-            game.paint(g);
+            game.paint(graphics);
             return;
         }
         // start of top
@@ -269,39 +273,39 @@ public class ModeManager {
             isSet = false;
         }
 
-        paintGray(g, isGray && !data[3].equals("X"));
+        paintGray(graphics, isGray && !data[3].equals("X"));
 
-        g.setFont(top);
+        graphics.setFont(top);
         if(curMode == 0){//time keeping mode **** ** ** *** 14
-            g.drawString(data[0], 100, 388);
+            graphics.drawString(data[0], 100, 388);
             if(isGray) {
-                paintBlink(g, data);
+                paintBlink(graphics, data);
             }
         }
         else { // other mode
-            g.drawString(data[0], 100, 388);
+            graphics.drawString(data[0], 100, 388);
         }// end of Top
 
         // start of main
 
-        paintGray(g,isGray && data[3].equals("3"));
-        g.setFont(main);
-        g.drawString(data[1].substring(0, 2), 95, 600);
+        paintGray(graphics,isGray && data[3].equals("3"));
+        graphics.setFont(main);
+        graphics.drawString(data[1].substring(0, 2), 95, 600);
 
-        g.setColor(Color.BLACK);
-        g.drawString(data[1].substring(2, 3), 265, 600); // :
-
-
-        paintGray(g, isGray && data[3].equals("2"));
-        g.drawString(data[1].substring(3, 5), 340, 600);
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(data[1].substring(2, 3), 265, 600); // :
 
 
-        paintGray(g, isGray && data[3].equals("1"));
+        paintGray(graphics, isGray && data[3].equals("2"));
+        graphics.drawString(data[1].substring(3, 5), 340, 600);
+
+
+        paintGray(graphics, isGray && data[3].equals("1"));
         // end of main
 
         // sub
-        g.setFont(sub);
-        g.drawString(data[2], 520, 600);
+        graphics.setFont(sub);
+        graphics.drawString(data[2], 520, 600);
 
     }
     public void APressed(){
@@ -316,7 +320,7 @@ public class ModeManager {
             beepCount = 0;
             return;
         }
-        if(isSet || game.gameState == 1)
+        if(isSet || game.getGameState() == 1)
             return;
 
         if(isSwapMode == true){
@@ -364,10 +368,10 @@ public class ModeManager {
     }
 
     public void returnTimeMode() {
-        if (stopwatch.isPaused == false) {
+        if (!stopwatch.isPaused) {
             return;
         }
-        if (game.gameState == 1) {
+        if (game.getGameState() == 1) {
             return;
         }
         if (isSet) {

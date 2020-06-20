@@ -17,6 +17,12 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
     private static final int GAME_OVER_STATE = 2;
 
     private static final int WIDTH = 550;
+    private static final int SCORE_X = 450;
+    private static final int SCORE_Y = 320;
+    private static final int GAMEOVER_X = 275;
+    private static final int GAMEOVER_Y = 430;
+    private static final int REPLAY_X = 357;
+    private static final int REPLAY_Y = 450;
 
     private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
 
@@ -26,7 +32,9 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
     private transient Thread thread;
     private transient float floatSpeed;
 
-    public transient int gameState = START_GAME_STATE;
+
+
+    private transient int gameState = START_GAME_STATE;
 
     private final transient BufferedImage replayImage;
     private final transient BufferedImage gameOverImage;
@@ -36,9 +44,15 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
         dinosaur = new Dinosaur();
         backgroundRender = new Background(WIDTH, dinosaur);
         dinosaur.setSpeedX(0);
-        replayImage = Resource.getResourceImage("resources/replay_button.png");
-        gameOverImage = Resource.getResourceImage("resources/gameover_text.png");
+        replayImage = Resource.getResourceImage
+                ("resources/replay_button.png");
+        gameOverImage = Resource.getResourceImage
+                ("resources/gameover_text.png");
         hurdleManager = new Hurdle(dinosaur);
+    }
+
+    public int getGameState() {
+        return gameState;
     }
 
     public void start(){
@@ -56,7 +70,8 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
                 dinosaur.dead(true);
                 gameState = GAME_OVER_STATE;
             }
-            dinosaur.setSpeedX((int)Math.min((double)(floatSpeed * floatSpeed), floatSpeed));
+            dinosaur.setSpeedX((int)Math.min
+                    ((double)(floatSpeed * floatSpeed), floatSpeed));
         }
 
     }
@@ -70,10 +85,10 @@ public class Game extends JPanel implements Mode, Runnable, Serializable {
             hurdleManager.draw(g);
             dinosaur.draw(g);
             g.setColor(Color.BLACK);
-            g.drawString("SCORE : " + dinosaur.getGameScore(), 450, 320);
+            g.drawString("SCORE : " + dinosaur.getGameScore(), SCORE_X, SCORE_Y);
             if (gameState == GAME_OVER_STATE){
-                g.drawImage(gameOverImage, 275, 430, null);
-                g.drawImage(replayImage, 357, 450, null);
+                g.drawImage(gameOverImage, GAMEOVER_X, GAMEOVER_Y, null);
+                g.drawImage(replayImage, REPLAY_X, REPLAY_Y, null);
             }
         }
     }
