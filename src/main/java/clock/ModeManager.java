@@ -182,6 +182,40 @@ public class ModeManager {
         }
     }
 
+    public void requestData(Graphics g, String[] data){
+        // request data
+
+    }
+
+    public void paintBlink(Graphics g, String[] data){
+        if (data[3].equals("6")) {
+            g.drawString(data[0].substring(0, 5), 100, 388);
+            g.setColor(Color.BLACK);
+            g.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
+        }
+        else if (data[3].equals("5")) {
+            g.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
+            g.setColor(Color.BLACK);
+            g.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
+            g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+        }
+        else if (data[3].equals("4")) {
+            g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
+            g.setColor(Color.BLACK);
+            g.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
+        }
+    }
+
+    public void paintGray(Graphics g, boolean grayCond){
+        if(grayCond == true){
+            isSet = true;
+            g.setColor(Color.GRAY);
+        }
+        else
+            g.setColor(Color.BLACK);
+    }
+
+
     // "Mode Name", "Hour, Minute", "sec", "O" or "X"
     public void paint(Graphics g){
         count ++;
@@ -222,36 +256,16 @@ public class ModeManager {
         }
 
         // start of top
-
         if (data[3].equals("X"))
             isSet = false;
 
-        if (isGray && !data[3].equals("X")){
-            isSet = true;
-            g.setColor(Color.GRAY);
-        }else
-            g.setColor(Color.BLACK);
+        paintGray(g, isGray && !data[3].equals("X"));
 
         g.setFont(top);
         if(curMode == 0){//time keeping mode **** ** ** *** 14
             g.drawString(data[0], 100, 388);
             if(isGray) {
-                if (data[3].equals("6")) {
-                    g.drawString(data[0].substring(0, 5), 100, 388);
-                    g.setColor(Color.BLACK);
-                    g.drawString(String.format("%14s",data[0].substring(5, 14)), 100 , 388);
-                }
-                else if (data[3].equals("5")) {
-                    g.drawString(String.format("%8s",data[0].substring(5, 8)), 100 , 388);
-                    g.setColor(Color.BLACK);
-                    g.drawString(String.format("%5s",data[0].substring(0, 5)), 100 , 388);
-                    g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
-                }
-                else if (data[3].equals("4")) {
-                    g.drawString(String.format("%14s",data[0].substring(8, 14)), 100 , 388);
-                    g.setColor(Color.BLACK);
-                    g.drawString(String.format("%8s",data[0].substring(0, 8)), 100 , 388);
-                }
+                paintBlink(g, data);
             }
         }
         else // other mode
@@ -259,31 +273,20 @@ public class ModeManager {
         // end of Top
 
         // start of main
-        if (isGray && data[3].equals("3")){
-            isSet = true;
-            g.setColor(Color.GRAY);
-        } else
-            g.setColor(Color.BLACK);
 
+        paintGray(g,isGray && data[3].equals("3"));
         g.setFont(main);
         g.drawString(data[1].substring(0, 2), 95, 600);
 
         g.setColor(Color.BLACK);
         g.drawString(data[1].substring(2, 3), 265, 600); // :
 
-        if (isGray && data[3].equals("2")){
-            isSet = true;
-            g.setColor(Color.GRAY);
-        } else
-            g.setColor(Color.BLACK);
 
+        paintGray(g, isGray && data[3].equals("2"));
         g.drawString(data[1].substring(3, 5), 340, 600);
 
-        if (isGray && data[3].equals("1")){
-            isSet = true;
-            g.setColor(Color.GRAY);
-        } else
-            g.setColor(Color.BLACK);
+
+        paintGray(g, isGray && data[3].equals("1"));
         // end of main
 
         // sub

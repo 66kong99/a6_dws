@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.security.SecureRandom;
 
 import util.Resource;
@@ -18,7 +17,6 @@ public class Background {
     private transient final BufferedImage land2;
     private transient final BufferedImage land3;
 
-//    private transient Random rand;
     private transient SecureRandom rand;
 
     private transient final Dinosaur dinosaur;
@@ -36,7 +34,7 @@ public class Background {
             setImageBackground(imageBackground);
             listBackground.add(imageBackground);
         }
-//        rand = new Random();
+
         rand = new SecureRandom();
     }
 
@@ -77,7 +75,6 @@ public class Background {
 
     private int getTypeOfBackground(){
         rand = new SecureRandom();
-//        rand = new Random();
         int type = rand.nextInt(10);
         if(type == 1){
             return 1;

@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StopwatchTest {
     private Field field;
-
+    private static final String ISPAUSED = "isPaused";
 
     @Test
     void requestStopwTime() {
         try{
             Stopwatch st = new Stopwatch();
-            field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField(ISPAUSED);
             field.setAccessible(true);
             boolean value = (boolean)field.get(st);
             assertTrue(value); // isPaused = true checking
@@ -44,7 +44,7 @@ class StopwatchTest {
         Stopwatch st = new Stopwatch();
         Calendar cal = (Calendar) st.stopwTime.clone();
         try{
-            field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField(ISPAUSED);
             field.setAccessible(true);
             st.SPressed(false); //increase stopw
             st.updateStopw(); //stopw millisecond + 10
@@ -65,7 +65,7 @@ class StopwatchTest {
         Stopwatch st = new Stopwatch();
         Calendar cal = (Calendar) st.stopwTime.clone();
         try{
-            field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField(ISPAUSED);
             field.setAccessible(true);
             st.SPressed(false); // increase stopw
             boolean value = (boolean)field.get(st);
@@ -87,7 +87,7 @@ class StopwatchTest {
         Stopwatch st = new Stopwatch();
         Calendar cal = (Calendar) st.stopwTime.clone();
         try{
-            field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField(ISPAUSED);
             field.setAccessible(true);
             st.SPressed(false); // increase stopw
             st.updateStopw(); //stopw millisecond + 10
@@ -107,7 +107,7 @@ class StopwatchTest {
     void requestSplit() {
         Stopwatch st = new Stopwatch();
         try{
-            field = st.getClass().getDeclaredField("isPaused");
+            field = st.getClass().getDeclaredField(ISPAUSED);
             field.setAccessible(true);
             Field field2 = st.getClass().getDeclaredField("isSplit");
             field2.setAccessible(true);
