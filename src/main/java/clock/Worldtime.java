@@ -20,8 +20,7 @@ public class Worldtime implements Mode{
         GMT9 = curTime;
         worldClock = (Calendar)GMT9.clone();
         worldClock.add(Calendar.HOUR_OF_DAY, timeDiff[curCity]);
-        if(isSummerTime)
-            worldClock.add(Calendar.HOUR_OF_DAY, 1);
+        worldClock.add(Calendar.HOUR_OF_DAY, 1);
     }
 
     public String[] requestWorldtime(Calendar curTime) {
