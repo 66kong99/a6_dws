@@ -101,10 +101,12 @@ public class ModeManager {
     }
 
     public void changeToMode(char Mode) {
-        if(game.gameState == 1)
+        if(game.gameState == 1) {
             return;
-        if(isSet)
+        }
+        if(isSet) {
             return;
+        }
         this.curMode = Mode;
     }
 
@@ -174,8 +176,9 @@ public class ModeManager {
         beepCount = Math.max(tempCount, beepCount);
 
         if(beepCount != 0){
-            if (beepCount % 100 == 0)
+            if (beepCount % 100 == 0) {
                 beep.beep();
+            }
             beepCount--;
         }
 
@@ -262,8 +265,9 @@ public class ModeManager {
             return;
         }
         // start of top
-        if (data[3].equals("X"))
+        if (data[3].equals("X")) {
             isSet = false;
+        }
 
         paintGray(g, isGray && !data[3].equals("X"));
 
@@ -274,9 +278,9 @@ public class ModeManager {
                 paintBlink(g, data);
             }
         }
-        else // other mode
+        else { // other mode
             g.drawString(data[0], 100, 388);
-        // end of Top
+        }// end of Top
 
         // start of main
 
@@ -322,8 +326,9 @@ public class ModeManager {
             isSwapMode = true;
             deactivateMode();
         }
-        else
+        else {
             getCurMode().QPressed(Longpress);
+        }
     }
 
     public void WPressed(boolean Longpress){
@@ -337,8 +342,9 @@ public class ModeManager {
             curMode = (char)deactivate[0];
             activated[deactivate[0]] = true;
             isSwapMode = false;
-        }else
+        }else {
             getCurMode().WPressed(Longpress);
+        }
     }
 
     public void SPressed(boolean Longpress){
@@ -352,17 +358,21 @@ public class ModeManager {
             curMode = (char)deactivate[1];
             activated[deactivate[1]] = true;
             isSwapMode = false;
-        } else
+        } else {
             getCurMode().SPressed(Longpress);
+        }
     }
 
     public void returnTimeMode() {
-        if (stopwatch.isPaused == false)
+        if (stopwatch.isPaused == false) {
             return;
-        if (game.gameState == 1)
+        }
+        if (game.gameState == 1) {
             return;
-        if (isSet)
+        }
+        if (isSet) {
             return;
+        }
         curMode = 0;
     }
 }
