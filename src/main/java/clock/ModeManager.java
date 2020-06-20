@@ -320,9 +320,9 @@ public class ModeManager {
             beepCount = 0;
             return;
         }
-        if(isSet || game.getGameState() == 1)
+        if(isSet || game.getGameState() == 1) {
             return;
-
+        }
         if(isSwapMode == true){
             isSwapMode = false;
         }
